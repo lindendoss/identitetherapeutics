@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, shrink-to-fit=no" />
+<title>IDENTIT&Eacute; Therapeutics</title>
+<meta name="description" content="A clinical-stage company developing first-in-class surface therapeutics." />
+<link rel="canonical" href="https://identitetherapeutics.com/" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+<meta property="og:title" content="IDENTIT&Eacute; Therapeutics" />
+<meta property="og:description" content="A clinical-stage company developing first-in-class surface therapeutics." />
+<meta property="og:image" content="https://identitetherapeutics.com/images/og-image.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:url" content="https://identitetherapeutics.com" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="IDENTIT&Eacute; Therapeutics" />
+<meta name="twitter:description" content="First-in-class surface therapeutics." />
+<meta name="twitter:image" content="https://identitetherapeutics.com/images/og-image.jpg" />
+<meta name="theme-color" content="#0A0A0D" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Hanken+Grotesk:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0A0A0D;--bone:#EFE7D6;--bone-dim:#B8AE97;--gold:#C79A4F;--gold-deep:#9E7728;--cool:#8FB6CC;
+    --cream:#F7F4EE;--charcoal:#2D2926;--olive:#6B7B3E;--olive-light:#8A9B5C;--taupe:#9B8E7E;
+    --warm-gray:#C8C0B4;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:#0A0A0D;color:var(--bone);font-family:'Hanken Grotesk',sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+  ::selection{background:var(--gold-deep);color:var(--bone);}
+
+  /* Fixed UI */
+  .wordmark-fixed{position:fixed;top:20px;left:24px;z-index:40;}
+  .wordmark-fixed img{height:42px;width:auto;}
+  .vault-btn{position:fixed;top:22px;right:24px;z-index:40;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;cursor:pointer;text-decoration:none;transition:all .2s;backdrop-filter:blur(4px);}
+  .vault-btn:hover{background:rgba(199,154,79,.15);border-color:var(--gold);}
+  .vault-btn svg{width:16px;height:16px;stroke:var(--bone-dim);transition:stroke .2s;}
+  .vault-btn:hover svg{stroke:var(--gold);}
+  .rail{position:fixed;right:30px;top:50%;transform:translateY(-50%);z-index:40;display:flex;flex-direction:column;gap:12px;align-items:flex-end;}
+  .rail .tick{font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.18em;color:#6a6450;display:flex;align-items:center;gap:9px;transition:color .5s ease;text-shadow:0 1px 8px rgba(0,0,0,.6);}
+  .rail .tick .bar{width:14px;height:1.5px;background:#6a6450;transition:all .5s ease;}
+  .rail .tick.on{color:var(--bone);} .rail .tick.on .bar{width:28px;background:var(--gold);}
+
+  /* Scrolling hero */
+  .scroll-root{position:relative;height:680vh;}
+  .stage{position:-webkit-sticky;position:sticky;top:0;height:100vh;width:100%;overflow:hidden;}
+  canvas#gl{position:absolute;inset:0;width:100%;height:100%;display:block;}
+  .topscrim{position:absolute;top:0;left:0;right:0;height:188px;z-index:8;pointer-events:none;background:linear-gradient(to bottom,rgba(8,8,11,.66),rgba(8,8,11,.30) 52%,rgba(8,8,11,0));}
+  .grain{position:absolute;inset:0;z-index:5;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+
+  /* Hero overlay content */
+  .content{position:absolute;z-index:10;pointer-events:none;left:0;right:0;bottom:0;height:56vh;
+    padding:0 26px calc(46px + env(safe-area-inset-bottom));display:flex;flex-direction:column;justify-content:flex-end;
+    background:linear-gradient(to top,rgba(8,8,11,.97) 20%,rgba(8,8,11,.88) 42%,rgba(8,8,11,.45) 68%,rgba(8,8,11,0) 100%);}
+  .beat{position:absolute;left:26px;right:26px;bottom:46px;opacity:0;will-change:opacity,transform;}
+  .beat .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;display:flex;gap:12px;align-items:center;}
+  .beat .eyebrow .ln{width:30px;height:1px;background:var(--gold);opacity:.55;}
+  .beat h2{font-family:'Fraunces',serif;font-weight:300;font-size:clamp(42px,10vw,62px);line-height:1.02;letter-spacing:-.015em;color:var(--bone);margin-bottom:18px;text-shadow:0 2px 28px rgba(5,5,9,.7);}
+  .beat h2 em{font-style:italic;color:var(--gold);}
+  .beat p{font-size:clamp(16px,4.6vw,18px);line-height:1.55;color:#E0D7C0;max-width:34ch;font-weight:300;text-shadow:0 1px 16px rgba(5,5,9,.6);}
+  .beat .note{margin-top:18px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.04em;color:#BEB291;line-height:1.7;text-shadow:0 1px 12px rgba(5,5,9,.6);}
+
+  .hero{position:absolute;inset:0;z-index:11;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;pointer-events:none;will-change:opacity,transform;padding:0 24px;}
+  .hero .kicker{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.4em;text-transform:uppercase;color:#F2ECDE;margin-bottom:24px;text-shadow:0 1px 2px rgba(0,0,0,.95),0 0 4px rgba(0,0,0,.9),0 0 18px rgba(0,0,0,.7);}
+  .hero h1{font-family:'Fraunces',serif;font-weight:300;font-size:clamp(50px,12vw,140px);line-height:.92;letter-spacing:.01em;color:var(--bone);text-shadow:0 8px 60px rgba(0,0,0,.55);}
+  .hero h1 .acc{font-style:italic;font-weight:400;color:#F0D9A8;}
+  .hero .sub{margin-top:26px;font-size:clamp(14px,3.6vw,18px);color:#E3DAC4;max-width:28ch;line-height:1.55;font-weight:300;text-shadow:0 2px 16px rgba(0,0,0,.6);}
+  .hero .cue{position:absolute;bottom:38px;left:50%;transform:translateX(-50%);font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:#E3DAC4;display:flex;flex-direction:column;align-items:center;gap:12px;text-shadow:0 2px 10px rgba(0,0,0,.6);}
+  .hero .cue .line{width:1px;height:38px;background:linear-gradient(#E3DAC4,transparent);animation:drip 2.4s ease-in-out infinite;}
+  @keyframes drip{0%{transform:scaleY(.3);opacity:.4;transform-origin:top;}50%{transform:scaleY(1);opacity:1;}100%{transform:scaleY(.3);opacity:.4;transform-origin:bottom;}}
+
+  /* Outro */
+  .outro{position:relative;z-index:2;min-height:40vh;background:var(--ink);color:var(--bone);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 24px;border-top:1px solid #1d1c22;}
+  .outro h3{font-family:'Fraunces',serif;font-weight:300;font-size:clamp(30px,4.5vw,54px);letter-spacing:.03em;line-height:1.06;}
+  .outro h3 em{font-style:italic;color:var(--cool);}
+  .outro p{margin-top:22px;max-width:46ch;color:var(--bone-dim);font-size:16px;line-height:1.65;font-weight:300;}
+  .outro .tag{margin-top:34px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);}
+
+  /* Section utilities */
+  .section-cream{background:var(--cream);color:var(--charcoal);padding:80px 24px;}
+  .section-white{background:#fff;color:var(--charcoal);padding:80px 24px;}
+  .section-alt{background:#F5F1EB;color:var(--charcoal);padding:80px 24px;}
+  .section-inner{max-width:1100px;margin:0 auto;}
+  .section-header{text-align:center;margin-bottom:64px;}
+  .eyebrow-label{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--olive);display:block;margin-bottom:24px;}
+  .heading-lg{font-family:'Fraunces',serif;font-weight:300;font-size:clamp(36px,5vw,64px);line-height:1.05;letter-spacing:-.01em;}
+  .heading-md{font-family:'Fraunces',serif;font-weight:300;font-size:clamp(32px,4vw,48px);line-height:1.08;letter-spacing:-.01em;}
+  .body-text{font-size:15px;line-height:1.65;color:var(--charcoal);opacity:.55;font-weight:300;}
+  .body-sm{font-size:13px;line-height:1.6;color:var(--charcoal);opacity:.45;font-weight:300;}
+
+
+
+  /* Mechanism */
+  .mech-grid{display:grid;grid-template-columns:1fr;gap:24px;max-width:900px;margin:0 auto;}
+  .mech-card{background:#fff;border-radius:12px;padding:40px;position:relative;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06);border:1px solid rgba(200,192,180,.2);}
+  .mech-accent{position:absolute;top:0;left:0;right:0;height:3px;}
+  .mech-divider{display:flex;align-items:center;justify:center;gap:20px;margin-top:56px;}
+  .mech-divider .line{width:64px;height:1px;}
+
+
+
+
+
+
+
+  /* Tree */
+  .tree-section{position:relative;width:100%;overflow:hidden;min-height:55vh;display:flex;align-items:flex-end;}
+  .tree-bg{position:absolute;inset:0;}
+  .tree-bg img{width:100%;height:100%;object-fit:cover;}
+  .tree-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(45,41,38,.8) 0%,rgba(45,41,38,.3) 50%,transparent 100%);}
+  .tree-content{position:relative;z-index:10;padding:0 24px 48px;max-width:1100px;margin:0 auto;width:100%;}
+
+  /* Footer */
+  .footer{background:var(--cream);border-top:1px solid rgba(200,192,180,.3);padding:40px 24px 24px;}
+  .footer-grid{display:grid;grid-template-columns:1fr;gap:40px;max-width:1100px;margin:0 auto;}
+  .footer-col h4{font-weight:600;font-size:13px;margin-bottom:16px;}
+  .footer-col a,.footer-col li{font-size:13px;opacity:.4;transition:opacity .2s;text-decoration:none;color:var(--charcoal);display:block;margin-bottom:8px;}
+  .footer-col a:hover{opacity:.7;}
+  .footer-bottom{margin-top:48px;padding-top:24px;border-top:1px solid rgba(200,192,180,.3);display:flex;flex-direction:column;gap:8px;opacity:.3;font-size:11px;}
+
+  /* Animations */
+  .reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease;}
+  .reveal.visible{opacity:1;transform:translateY(0);}
+  .reveal-delay-1{transition-delay:.1s;}
+  .reveal-delay-2{transition-delay:.2s;}
+  .reveal-delay-3{transition-delay:.3s;}
+
+  /* Loader */
+  .loader{position:fixed;inset:0;z-index:60;background:#0A0A0D;display:flex;align-items:center;justify-content:center;transition:opacity .8s ease;}
+  .loader span{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);}
+
+  @media (min-width:860px){
+    .content{left:0;top:0;bottom:0;width:44vw;height:auto;justify-content:center;padding:0 0 0 6vw;
+      background:linear-gradient(to right,rgba(8,8,11,.9) 28%,rgba(8,8,11,0) 100%);}
+    .beat{left:6vw;right:auto;bottom:auto;max-width:32vw;}
+    .beat h2{font-size:clamp(46px,4.8vw,66px);} .beat p{font-size:18px;max-width:30ch;}
+    .section-cream,.section-white,.section-alt{padding:100px 24px;}
+    .footer-grid{grid-template-columns:1.5fr 1fr 1fr;}
+  }
+  @media (min-width:1024px){
+    .footer-bottom{flex-direction:row;justify-content:space-between;}
+  }
+  @media (max-width:859px){ .rail{display:none;} }
+</style>
+</head>
+<body>
+<noscript><style>.scroll-root{height:auto !important;}#loader{display:none !important;}.hero{position:relative !important;height:auto !important;padding:80px 24px !important;}.content{display:none !important;}#gl{display:none !important;}</style><div style="text-align:center;padding:40px 24px;background:#0A0A0D;color:#EFE7D6;font-family:'Hanken Grotesk',sans-serif;"><p>Please enable JavaScript to see the full interactive experience.</p></div></noscript>
+  <div class="loader" id="loader"><span>Generating ocean&hellip;</span></div>
+
+  <!-- Fixed wordmark - swaps white/dark based on scroll position -->
+  <div class="wordmark-fixed" id="wordmark">
+    <img src="/images/logo-white.png" data-dark="/images/logo-dark.png" data-white="/images/logo-white.png" alt="IDENTIT&Eacute;" id="logo-img" style="height:64px;width:auto;transition:opacity .25s ease;">
+  </div>
+  <!-- Vault button -->
+  <a href="/vault.html" class="vault-btn" title="Vault">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+  </a>
+
+
+  <!-- Scroll-driven ocean hero -->
+  <div class="scroll-root" id="root">
+    <div class="stage" id="stage">
+      <canvas id="gl"></canvas>
+      <div class="grain"></div>
+      <div class="topscrim"></div>
+      <!-- Hero title overlay -->
+      <div class="hero" id="hero">
+        <div class="kicker">A clinical-stage company</div>
+        <h1 style="font-family:'Fraunces',serif;font-weight:300;font-size:clamp(50px,12vw,140px);line-height:.92;letter-spacing:.01em;color:var(--bone);text-shadow:0 8px 60px rgba(0,0,0,.55);margin:0;">The surface,<br><span class="acc">resolved.</span></h1>
+        <div class="sub">Developing first-in-class surface therapeutics.</div>
+        <div class="cue"><span>Scroll</span><span class="line"></span></div>
+      </div>
+
+    </div>
+  </div>
+  <div id="hero-sentinel" style="height:1px;"></div>
+
+  <main>
+  <!-- Outro -->
+  <section class="outro">
+    <h3 class="reveal">Where <em>identity</em> meets intent.</h3>
+    <p class="reveal reveal-delay-1">We are a clinical-stage company developing first-in-class therapeutics for conditions of the surface.</p>
+    <div class="tag reveal reveal-delay-2"><a href="/vault.html" style="color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(199,154,79,.3);padding-bottom:2px;">Learn more &rarr;</a></div>
+  </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- TREE / IDENTITY -->
+  <section class="tree-section">
+    <div class="tree-bg">
+      <img src="/images/pine-forest.jpg" alt="Bristlecone pine forest at dusk — representing Identite Therapeutics' resilience and longevity" loading="lazy">
+      <div class="tree-overlay"></div>
+    </div>
+    <div class="tree-content">
+      <span class="eyebrow-label reveal" style="color:var(--olive-light);margin-bottom:20px;">Our Identity</span>
+      <h2 class="reveal reveal-delay-1" style="font-family:'Fraunces',serif;color:#fff;max-width:500px;margin-bottom:20px;font-size:clamp(40px,6vw,80px);line-height:1.0;">Rooted in<br>resilience</h2>
+      <p class="reveal reveal-delay-2" style="font-size:15px;color:rgba(255,255,255,.55);max-width:400px;line-height:1.65;margin-bottom:32px;">The bristlecone pine thrives for thousands of years in the harshest conditions. Like the tree, we believe in patient endurance and deep roots in science.</p>
+      <div class="reveal reveal-delay-3">
+        <p style="font-family:'Fraunces',serif;color:#fff;font-size:22px;">Identit&eacute;</p>
+        <p style="font-size:10px;color:rgba(255,255,255,.35);margin-top:4px;letter-spacing:.15em;text-transform:uppercase;">Root &middot; Identity &middot; Origin</p>
+      </div>
+    </div>
+  </section>
+
+  </main>
+  <!-- FOOTER -->
+  <footer class="footer" id="footer">
+    <div class="footer-grid">
+      <div>
+        <img src="/images/logo-dark.png" alt="Identite Therapeutics" style="height:32px;margin-bottom:16px;">
+        <div class="body-sm" style="line-height:1.7;">
+          <p>Identit&eacute; Therapeutics</p>
+          <p>Santa Barbara, California</p>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="/vault.html">Science Vault</a>
+        <a href="/contact.html">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn &nearr;</a>
+        <a href="https://stemcell.ucsb.edu" target="_blank" rel="noopener">UCSB &nearr;</a>
+      </div>
+    </div>
+    <div class="footer-bottom" style="max-width:1100px;margin:24px auto 0;">
+      <span>&copy; 2026 Identit&eacute; Therapeutics</span>
+      <span>Privacy &middot; Terms</span>
+    </div>
+  </footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+/* ===== THREE.JS OCEAN HERO ===== */
+(()=>{
+  // Guard: if Three.js didn't load, skip the hero animation and show content
+  if (!window.THREE) {
+    document.getElementById('loader').style.display='none';
+    document.getElementById('hero').style.opacity=1;
+    return;
+  }
+  const THREE=window.THREE;
+  const cv=document.getElementById('gl'),root=document.getElementById('root'),hero=document.getElementById('hero'),loader=document.getElementById('loader');
+  const beats=[...document.querySelectorAll('.beat[data-i]')],ticks=[...document.querySelectorAll('.rail .tick')];
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const clamp=(v,a,b)=>v<a?a:v>b?b:v,lerp=(a,b,t)=>a+(b-a)*t,seg=(p,a,b)=>b===a?0:clamp((p-a)/(b-a),0,1);
+  const smooth=t=>t*t*(3-2*t);
+  const SC=[{in:0,full:.02,end:.12,out:.16},{in:.14,full:.18,end:.27,out:.31},{in:.30,full:.35,end:.47,out:.51},
+    {in:.50,full:.55,end:.65,out:.70},{in:.68,full:.73,end:.84,out:.88},{in:.87,full:.91,end:1,out:1.01}];
+  const sA=(p,s)=>smooth(seg(p,s.in,s.full))*(1-smooth(seg(p,s.end,s.out)));
+  const C=(r,g,b)=>new THREE.Color(r,g,b);
+  const lc=(a,b,t,o)=>{o.r=lerp(a.r,b.r,t);o.g=lerp(a.g,b.g,t);o.b=lerp(a.b,b.b,t);return o;};
+
+  const PAL={
+    sunW:C(1.0,0.6,0.32), sunC:C(0.55,0.66,0.92),
+    skyTopW:C(0.10,0.15,0.28), skyTopC:C(0.03,0.06,0.16),
+    skyHorW:C(0.48,0.27,0.13), skyHorC:C(0.10,0.16,0.30),
+    deepW:C(0.01,0.035,0.06), deepC:C(0.006,0.02,0.05),
+    shalW:C(0.07,0.14,0.17), shalC:C(0.03,0.09,0.16)
+  };
+  const uSun=C(1,1,1),uSkyTop=C(1,1,1),uSkyHor=C(1,1,1),uDeep=C(1,1,1),uShal=C(1,1,1);
+
+  let renderer,scene,camera,W,H,DPR,ocean,sky;
+  let RT={},fsScene,fsCam,fsQuad,brightMat,blurMat,dofMat,compMat;
+  const VERT=`varying vec2 vUv;void main(){vUv=uv;gl_Position=vec4(position.xy,0.0,1.0);}`;
+
+  const SKYFN=`
+    uniform vec3 uSunDir;uniform vec3 uSunCol;uniform vec3 uSkyTop;uniform vec3 uSkyHor;
+    vec3 skyCol(vec3 dir){
+      float t=clamp(dir.y,0.0,1.0);
+      vec3 c=mix(uSkyHor,uSkyTop,pow(t,0.45));
+      float s=max(dot(normalize(dir),uSunDir),0.0);
+      c+=uSunCol*pow(s,3000.0)*3.2;
+      c+=uSunCol*pow(s,300.0)*0.16;
+      return c;
+    }`;
+
+  function makeRT(w,h,depth){const o={type:THREE.HalfFloatType,format:THREE.RGBAFormat,minFilter:THREE.LinearFilter,magFilter:THREE.LinearFilter,depthBuffer:!!depth,stencilBuffer:false};
+    const rt=new THREE.WebGLRenderTarget(Math.max(1,Math.floor(w)),Math.max(1,Math.floor(h)),o);
+    if(depth){rt.depthTexture=new THREE.DepthTexture(rt.width,rt.height);rt.depthTexture.type=THREE.UnsignedShortType;}return rt;}
+  function buildPasses(){
+    fsScene=new THREE.Scene();fsCam=new THREE.OrthographicCamera(-1,1,1,-1,0,1);fsQuad=new THREE.Mesh(new THREE.PlaneGeometry(2,2),null);fsScene.add(fsQuad);
+    brightMat=new THREE.ShaderMaterial({uniforms:{tDiffuse:{value:null},threshold:{value:1.6}},vertexShader:VERT,
+      fragmentShader:`uniform sampler2D tDiffuse;uniform float threshold;varying vec2 vUv;void main(){vec3 c=texture2D(tDiffuse,vUv).rgb;
+      float l=dot(c,vec3(0.2126,0.7152,0.0722));float k=max(l-threshold,0.0);gl_FragColor=vec4(c*(k/max(l,1e-4)),1.0);}`});
+    blurMat=new THREE.ShaderMaterial({uniforms:{tDiffuse:{value:null},dir:{value:new THREE.Vector2(1,0)},res:{value:new THREE.Vector2(1,1)}},vertexShader:VERT,
+      fragmentShader:`uniform sampler2D tDiffuse;uniform vec2 dir;uniform vec2 res;varying vec2 vUv;void main(){vec2 px=dir/res;
+      vec3 s=texture2D(tDiffuse,vUv).rgb*0.227027;s+=texture2D(tDiffuse,vUv+px*1.3846).rgb*0.316216;s+=texture2D(tDiffuse,vUv-px*1.3846).rgb*0.316216;
+      s+=texture2D(tDiffuse,vUv+px*3.2308).rgb*0.07027;s+=texture2D(tDiffuse,vUv-px*3.2308).rgb*0.07027;gl_FragColor=vec4(s,1.0);}`});
+    dofMat=new THREE.ShaderMaterial({uniforms:{tDiffuse:{value:null},tDepth:{value:null},res:{value:new THREE.Vector2(1,1)},near:{value:0.1},far:{value:2200},focus:{value:60},range:{value:120},maxCoC:{value:1.6}},vertexShader:VERT,
+      fragmentShader:`uniform sampler2D tDiffuse;uniform sampler2D tDepth;uniform vec2 res;uniform float near;uniform float far;uniform float focus;uniform float range;uniform float maxCoC;varying vec2 vUv;
+      float vz(float d){return (near*far)/((far-near)*d-far);}void main(){float d=texture2D(tDepth,vUv).x;float dist=-vz(d);
+      float coc=clamp(abs(dist-focus)/range,0.0,1.0)*maxCoC;if(coc<0.6){gl_FragColor=vec4(texture2D(tDiffuse,vUv).rgb,1.0);return;}
+      vec3 col=vec3(0.0);const int N=12;for(int i=0;i<N;i++){float a=float(i)*2.39996323;float r=sqrt(float(i)/float(N));
+      vec2 off=vec2(cos(a),sin(a))*r*coc/res;col+=texture2D(tDiffuse,vUv+off).rgb;}gl_FragColor=vec4(col/float(N),1.0);}`});
+    compMat=new THREE.ShaderMaterial({uniforms:{tDOF:{value:null},tBloom:{value:null},bloomStr:{value:0.6},exposure:{value:1.0}},vertexShader:VERT,
+      fragmentShader:`uniform sampler2D tDOF;uniform sampler2D tBloom;uniform float bloomStr;uniform float exposure;varying vec2 vUv;
+      vec3 ACES(vec3 x){float a=2.51,b=0.03,c=2.43,d=0.59,e=0.14;return clamp((x*(a*x+b))/(x*(c*x+d)+e),0.0,1.0);}
+      void main(){vec3 c=texture2D(tDOF,vUv).rgb+texture2D(tBloom,vUv).rgb*bloomStr;c*=exposure;c=ACES(c);c=pow(c,vec3(1.0/2.2));gl_FragColor=vec4(c,1.0);}`});
+  }
+  function sizeRT(){const b=new THREE.Vector2();renderer.getDrawingBufferSize(b);for(const k in RT){if(RT[k]&&RT[k].dispose)RT[k].dispose();}
+    RT.scene=makeRT(b.x,b.y,true);RT.dof=makeRT(b.x,b.y,false);RT.bright=makeRT(b.x/2,b.y/2,false);RT.a=makeRT(b.x/2,b.y/2,false);RT.bb=makeRT(b.x/2,b.y/2,false);
+    dofMat.uniforms.res.value.set(b.x,b.y);}
+  function pass(mat,target){fsQuad.material=mat;renderer.setRenderTarget(target||null);renderer.render(fsScene,fsCam);}
+
+  function build(){
+    renderer=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:false});
+    var _md=(window.matchMedia&&window.matchMedia('(pointer:coarse)').matches)||window.innerWidth<768;DPR=Math.min(_md?1.35:1.5,window.devicePixelRatio||1);renderer.setPixelRatio(DPR);
+    scene=new THREE.Scene();
+    camera=new THREE.PerspectiveCamera(48,1,0.1,2200);camera.position.set(0,4.5,12);
+
+    const waveDefs=[[10,0.55,120],[-16,0.55,72],[24,0.72,46],[-32,0.8,30],[44,0.66,20],[-56,0.46,14],[68,0.24,9],[-78,0.14,6]];
+    const wv=waveDefs.map(w=>new THREE.Vector4(Math.cos(w[0]*Math.PI/180),Math.sin(w[0]*Math.PI/180),w[1],w[2]));
+
+    const _seg=((window.matchMedia&&window.matchMedia('(pointer:coarse)').matches)||window.innerWidth<768)?320:512;
+    const oGeo=new THREE.PlaneGeometry(2000,2000,_seg,_seg);oGeo.rotateX(-Math.PI/2);
+    const oMat=new THREE.ShaderMaterial({
+      uniforms:{uTime:{value:0},uChop:{value:1},uCalm:{value:0},uWaves:{value:wv},uSteep:{value:0.65},
+        uSunDir:{value:new THREE.Vector3(0,0.2,-1)},uSunCol:{value:uSun},uSkyTop:{value:uSkyTop},uSkyHor:{value:uSkyHor},
+        uDeep:{value:uDeep},uShal:{value:uShal},uFog:{value:0.0020},uDetail:{value:0.045},uFoam:{value:0.0}},
+      vertexShader:`
+        uniform float uTime;uniform float uChop;uniform float uCalm;uniform vec4 uWaves[8];uniform float uSteep;
+        varying vec3 vWorld;varying vec3 vNormal;varying float vCrest;varying float vFold;
+        void main(){
+          vec3 p=position;vec3 nrm=vec3(0.0,1.0,0.0);vec3 acc=vec3(0.0);float crest=0.0;float fold=0.0;
+          float gp=dot(p.xz,vec2(0.62,0.39))*0.02+uTime*0.045;
+          float env=1.0+0.22*sin(gp)+0.10*sin(gp*0.43+2.1);
+          for(int i=0;i<8;i++){
+            vec2 d=normalize(uWaves[i].xy);float L=uWaves[i].w;float A=uWaves[i].z*uChop*env;
+            float dmp=mix(1.0,smoothstep(40.0,90.0,L),uCalm);
+            float k=6.2831853/L;float c=sqrt(9.8/k);
+            float f=k*(dot(d,p.xz)-c*uTime);float Sf=sin(f),Cf=cos(f);
+            float Qi=uSteep/(k*A*8.0);
+            acc.x+=dmp*Qi*A*d.x*Cf;acc.z+=dmp*Qi*A*d.y*Cf;acc.y+=dmp*A*Sf;
+            float WA=k*A;nrm.x-=dmp*d.x*WA*Cf;nrm.z-=dmp*d.y*WA*Cf;nrm.y-=dmp*Qi*WA*Sf;
+            crest+=dmp*A*Sf;fold+=dmp*Qi*WA*Sf;
+          }
+          vec3 disp=vec3(p.x+acc.x,acc.y,p.z+acc.z);
+          vNormal=normalize(nrm);vCrest=crest;vFold=fold;
+          vec4 wp=modelMatrix*vec4(disp,1.0);vWorld=wp.xyz;
+          gl_Position=projectionMatrix*viewMatrix*wp;
+        }`,
+      fragmentShader:SKYFN+`
+        uniform float uTime;uniform vec3 uDeep;uniform vec3 uShal;uniform float uFog;uniform float uDetail;uniform float uFoam;
+        varying vec3 vWorld;varying vec3 vNormal;varying float vCrest;varying float vFold;
+        vec3 mod289(vec3 x){return x-floor(x*(1.0/289.0))*289.0;}
+        vec2 mod289(vec2 x){return x-floor(x*(1.0/289.0))*289.0;}
+        vec3 permute(vec3 x){return mod289(((x*34.0)+1.0)*x);}
+        float snoise(vec2 v){const vec4 C=vec4(0.211324865405187,0.366025403784439,-0.577350269189626,0.024390243902439);
+          vec2 i=floor(v+dot(v,C.yy));vec2 x0=v-i+dot(i,C.xx);
+          vec2 i1=(x0.x>x0.y)?vec2(1.0,0.0):vec2(0.0,1.0);
+          vec4 x12=x0.xyxy+C.xxzz;x12.xy-=i1;i=mod289(i);
+          vec3 pp=permute(permute(i.y+vec3(0.0,i1.y,1.0))+i.x+vec3(0.0,i1.x,1.0));
+          vec3 m=max(0.5-vec3(dot(x0,x0),dot(x12.xy,x12.xy),dot(x12.zw,x12.zw)),0.0);m=m*m;m=m*m;
+          vec3 x=2.0*fract(pp*C.www)-1.0;vec3 h=abs(x)-0.5;vec3 ox=floor(x+0.5);vec3 a0=x-ox;
+          m*=1.79284291400159-0.85373472095314*(a0*a0+h*h);
+          vec3 g;g.x=a0.x*x0.x+h.x*x0.y;g.yz=a0.yz*x12.xz+h.yz*x12.yw;return 130.0*dot(m,g);}
+        float fbm(vec2 p,float t){float f=0.0,amp=0.55;vec2 q=p*0.5;vec2 dr=vec2(0.9,0.5);
+          for(int i=0;i<7;i++){f+=amp*snoise(q+dr*t);q*=2.07;amp*=0.5;dr=vec2(dr.x*0.6-dr.y*0.8,dr.x*0.8+dr.y*0.6);t*=1.3;}return f;}
+        void main(){
+          vec3 Nmacro=normalize(vNormal);vec3 N=Nmacro;
+          vec2 P=vWorld.xz;float e=0.07;
+          float h0=fbm(P,uTime);float hx=fbm(P+vec2(e,0.0),uTime);float hz=fbm(P+vec2(0.0,e),uTime);
+          vec2 gr=vec2(hx-h0,hz-h0)/e;
+          vec2 Pf=P*vec2(3.4,1.7);float ef=0.05;
+          float f0=fbm(Pf,uTime*1.7);float fx=fbm(Pf+vec2(ef,0.0),uTime*1.7);float fz=fbm(Pf+vec2(0.0,ef),uTime*1.7);
+          vec2 grf=vec2(fx-f0,fz-f0)/ef;
+          N=normalize(N+vec3(-gr.x,0.0,-gr.y)*uDetail+vec3(-grf.x,0.0,-grf.y)*uDetail*0.55);
+          vec2 Pg=P*vec2(2.8,1.6);float eg=0.05;
+          float g0=fbm(Pg,uTime*2.0);float gx=fbm(Pg+vec2(eg,0.0),uTime*2.0);float gz=fbm(Pg+vec2(0.0,eg),uTime*2.0);
+          vec2 grg=vec2(gx-g0,gz-g0)/eg;
+          vec3 Ng=normalize(N+vec3(-grg.x,0.0,-grg.y)*0.5);
+          vec3 V=normalize(cameraPosition-vWorld);
+          vec3 Rr=reflect(-V,N);Rr.y=abs(Rr.y);
+          float fres=0.02+0.98*pow(1.0-max(dot(N,V),0.0),5.0);
+          vec3 refl=skyCol(Rr);
+          float facing=clamp(dot(N,V),0.0,1.0);
+          vec3 water=mix(uShal,uDeep,pow(facing,1.2));
+          water+=uShal*0.18*clamp(vCrest*0.30,0.0,1.0);
+          vec3 H=normalize(uSunDir+V);
+          vec3 Nroad=normalize(Nmacro+vec3(-gr.x,0.0,-gr.y)*uDetail);
+          float road=pow(max(dot(Nroad,H),0.0),170.0);
+          float spark=pow(max(dot(Ng,H),0.0),1100.0)*smoothstep(0.02,0.16,road)*(1.0-smoothstep(0.5,0.9,road));
+          spark*=1.0-smoothstep(70.0,180.0,length(cameraPosition-vWorld));
+          float spec=road*1.5+spark*7.0;
+          vec3 col=mix(water,refl,fres)+uSunCol*spec;
+          float br=smoothstep(0.30,0.65,vFold);
+          float ft=snoise(vWorld.xz*0.7+vec2(uTime*0.3,uTime*0.2))*0.5+0.5;
+          float ft2=snoise(vWorld.xz*2.3-vec2(uTime*0.4,uTime*0.3))*0.5+0.5;
+          float foamTex=smoothstep(0.42,0.8,ft*0.5+ft2*0.6);
+          float foam=br*foamTex*uFoam;
+          float res=smoothstep(0.18,0.5,vFold)*smoothstep(0.55,0.9,ft2)*uFoam*0.35;
+          foam=clamp(max(foam,res),0.0,1.0);
+          vec3 foamCol=mix(vec3(0.66,0.69,0.73),vec3(0.98,0.97,0.94),foamTex);
+          col=mix(col,foamCol,foam);
+          float dist=length(cameraPosition-vWorld);
+          float fog=clamp(1.0-exp(-dist*uFog),0.0,1.0);
+          fog=fog*fog*(3.0-2.0*fog);
+          col=mix(col,uSkyHor*1.04,fog);
+          gl_FragColor=vec4(col,1.0);
+        }`
+    });
+    ocean=new THREE.Mesh(oGeo,oMat);ocean.frustumCulled=false;scene.add(ocean);
+
+    const sMat=new THREE.ShaderMaterial({side:THREE.BackSide,depthWrite:false,
+      uniforms:{uSunDir:{value:oMat.uniforms.uSunDir.value},uSunCol:{value:uSun},uSkyTop:{value:uSkyTop},uSkyHor:{value:uSkyHor}},
+      vertexShader:`varying vec3 vDir;void main(){vDir=position;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}`,
+      fragmentShader:SKYFN+`varying vec3 vDir;void main(){gl_FragColor=vec4(skyCol(normalize(vDir)),1.0);}`});
+    sky=new THREE.Mesh(new THREE.SphereGeometry(1200,48,32),sMat);sky.frustumCulled=false;scene.add(sky);
+
+    buildPasses();window.addEventListener('resize',onResize);onResize();
+    loader.style.opacity=0;setTimeout(()=>loader.remove(),800);
+  }
+  function onResize(){W=window.innerWidth;H=window.innerHeight;renderer.setSize(W,H,false);camera.aspect=W/H;camera.updateProjectionMatrix();sizeRT();}
+
+  function frameState(p,time){
+    const cool=smooth(seg(p,0.18,0.96));
+    const calm=smooth(seg(p,0.55,1.0));
+    const par=reduce?0:1;
+    lc(PAL.sunW,PAL.sunC,cool,uSun); lc(PAL.skyTopW,PAL.skyTopC,cool,uSkyTop); lc(PAL.skyHorW,PAL.skyHorC,cool,uSkyHor);
+    lc(PAL.deepW,PAL.deepC,cool,uDeep); lc(PAL.shalW,PAL.shalC,cool,uShal);
+    const el=lerp(0.07,0.03,cool); ocean.material.uniforms.uSunDir.value.set(0.12,el,-1).normalize();
+    ocean.material.uniforms.uTime.value=time*0.001;
+    ocean.material.uniforms.uChop.value=lerp(1.0,0.95,calm);
+    ocean.material.uniforms.uCalm.value=calm;
+    ocean.material.uniforms.uSteep.value=lerp(0.9,0.22,calm);
+    ocean.material.uniforms.uDetail.value=lerp(0.17,0.018,calm);
+    ocean.material.uniforms.uFoam.value=lerp(0.5,0.0,smooth(seg(p,0.12,0.55)));
+    const bob=Math.sin(time*0.00026)*0.16*par;
+    const camY=lerp(4.4,3.9,smooth(p))+bob;
+    camera.position.set(Math.sin(time*0.00011)*0.4*par,camY,lerp(11.5,10,smooth(p)));
+    camera.lookAt(Math.sin(time*0.00015)*0.5*par, lerp(2.6,1.9,smooth(p))+bob*0.35, -40);
+    sky.position.copy(camera.position);
+    dofMat.uniforms.focus.value=46;
+    compMat.uniforms.exposure.value=lerp(1.06,1.14,calm);
+
+  }
+  function overlays(p){
+    const ha=1-smooth(seg(p,0.02,0.12));hero.style.opacity=ha;hero.style.transform=`translateY(${(1-ha)*-30}px) scale(${lerp(1,0.97,1-ha)})`;
+    beats.forEach(b=>{const i=+b.dataset.i,al=sA(p,SC[i]);b.style.opacity=al;b.style.transform=`translateY(${(1-al)*22}px)`;});
+    let active=0,best=0;SC.forEach((s,i)=>{const al=sA(p,s);if(al>best){best=al;active=i;}});
+    ticks.forEach(t=>t.classList.toggle('on',+t.dataset.i===active));
+  }
+  function renderPipeline(){
+    renderer.toneMapping=THREE.NoToneMapping;renderer.outputEncoding=THREE.LinearEncoding;
+    renderer.setRenderTarget(RT.scene);renderer.clear();renderer.render(scene,camera);
+    dofMat.uniforms.tDiffuse.value=RT.scene.texture;dofMat.uniforms.tDepth.value=RT.scene.depthTexture;pass(dofMat,RT.dof);
+    brightMat.uniforms.tDiffuse.value=RT.scene.texture;pass(brightMat,RT.bright);
+    const bw=RT.bright.width,bh=RT.bright.height;let src=RT.bright;
+    for(let it=0;it<2;it++){const sc=it+1.0;blurMat.uniforms.tDiffuse.value=src.texture;blurMat.uniforms.res.value.set(bw,bh);blurMat.uniforms.dir.value.set(sc,0);pass(blurMat,RT.a);
+      blurMat.uniforms.tDiffuse.value=RT.a.texture;blurMat.uniforms.dir.value.set(0,sc);pass(blurMat,RT.bb);src=RT.bb;}
+    compMat.uniforms.tDOF.value=RT.dof.texture;compMat.uniforms.tBloom.value=RT.bb.texture;pass(compMat,null);
+    renderer.setRenderTarget(null);
+  }
+  let target=0,cur=0;
+  const wmEl=document.querySelector('.wordmark-fixed');
+  function computeTarget(){const r=root.getBoundingClientRect();const total=root.offsetHeight-window.innerHeight;return total>0?clamp(-r.top,0,total)/total:0;}
+  function frame(time){target=computeTarget();cur+=(target-cur)*(reduce?1:0.085);if(Math.abs(target-cur)<0.0002)cur=target;
+    if(wmEl){const r=root.getBoundingClientRect();const extra=(-r.top)-(root.offsetHeight-window.innerHeight);wmEl.style.opacity=clamp(1.0-extra/(window.innerHeight*0.5),0,1);}
+    frameState(cur,time);overlays(cur);renderPipeline();requestAnimationFrame(frame);}
+  setTimeout(function(){if(loader&&loader.parentNode){loader.style.opacity=0;setTimeout(function(){if(loader&&loader.parentNode)loader.remove();},800);}},1600);
+  try{build();requestAnimationFrame(frame);}catch(e){console.error(e);loader.innerHTML='<span>WebGL unavailable</span>';}
+})();
+
+/* ===== SCROLL REVEAL ===== */
+(()=>{
+  const obs=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');}});
+  },{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+  /* Logo color swap — sentinel-based */
+  const logoImg=document.getElementById('logo-img');
+  const sentinel=document.getElementById('hero-sentinel');
+  if(logoImg&&sentinel){
+    let isDark=false;
+    const logoObs=new IntersectionObserver((entries)=>{
+      const visible=entries[0].isIntersecting;
+      if(visible&&!isDark){logoImg.src=logoImg.dataset.dark;isDark=true;}
+      else if(!visible&&isDark){logoImg.src=logoImg.dataset.white;isDark=false;}
+    },{threshold:0});
+    logoObs.observe(sentinel);
+  }
+})();
+</script>
+</body>
+</html>
+<!-- Tue Jun  9 02:03:56 CST 2026 -->

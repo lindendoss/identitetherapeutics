@@ -51,7 +51,7 @@
   .rail .tick.on{color:var(--bone);} .rail .tick.on .bar{width:28px;background:var(--gold);}
 
   /* Scrolling hero */
-  .scroll-root{position:relative;height:680vh;}
+  .scroll-root{position:relative;height:580vh;}
   .stage{position:-webkit-sticky;position:sticky;top:0;height:100vh;width:100%;overflow:hidden;}
   canvas#gl{position:absolute;inset:0;width:100%;height:100%;display:block;}
   .topscrim{position:absolute;top:0;left:0;right:0;height:188px;z-index:8;pointer-events:none;background:linear-gradient(to bottom,rgba(8,8,11,.66),rgba(8,8,11,.30) 52%,rgba(8,8,11,0));}
@@ -128,6 +128,43 @@
   .footer-col a:hover{opacity:.7;}
   .footer-bottom{margin-top:48px;padding-top:24px;border-top:1px solid rgba(200,192,180,.3);display:flex;flex-direction:column;gap:8px;opacity:.3;font-size:11px;}
 
+  /* Section: dark (ink background) */
+  .section-dark{background:var(--ink);color:var(--bone);padding:120px 24px;}
+
+  /* Editorial layout */
+  .editorial{max-width:720px;margin:0 auto;}
+  .editorial .heading-lg{margin-bottom:48px;text-wrap:balance;}
+  .editorial-body{max-width:640px;}
+  .editorial-body p{font-size:15px;line-height:1.75;color:var(--bone-dim);font-weight:300;margin-bottom:20px;}
+  .editorial-body p.lead{font-family:'Fraunces',serif;font-size:clamp(18px,2.5vw,22px);line-height:1.55;color:var(--bone);font-weight:300;margin-bottom:28px;text-wrap:pretty;}
+  .editorial-body p.closing{margin-top:32px;padding-top:24px;border-top:1px solid rgba(255,255,255,.08);color:var(--cool);font-style:italic;}
+  .section-cream .editorial-body p.lead{color:var(--charcoal);}
+  .section-cream .editorial-body p{color:var(--charcoal);opacity:.65;}
+  .section-white .editorial-body p.lead{color:var(--charcoal);}
+  .section-white .editorial-body p{color:var(--charcoal);opacity:.65;}
+
+  /* Approach grid */
+  .approach-grid{display:grid;grid-template-columns:1fr;gap:40px;margin-top:64px;max-width:900px;}
+  .approach-item{border-top:1px solid rgba(200,192,180,.25);padding-top:24px;}
+  .section-dark .approach-item{border-top-color:rgba(255,255,255,.08);}
+  .approach-num{font-family:'Fraunces',serif;font-size:28px;color:var(--olive);opacity:.25;margin-bottom:8px;}
+  .approach-item h4{font-family:'Fraunces',serif;font-size:20px;font-weight:400;color:var(--charcoal);margin-bottom:10px;line-height:1.3;}
+  .section-dark .approach-item h4{color:var(--bone);}
+  .approach-item p{font-size:14px;line-height:1.65;color:var(--charcoal);opacity:.55;font-weight:300;}
+  .section-dark .approach-item p{color:var(--bone-dim);opacity:1;}
+
+  /* Gate section */
+  .gate-section{padding:100px 24px 80px;}
+  .gate-cta{display:inline-block;margin-top:36px;padding:16px 40px;border-radius:8px;background:var(--gold);color:var(--ink);font-family:'Hanken Grotesk',sans-serif;font-weight:500;font-size:15px;text-decoration:none;letter-spacing:.02em;transition:opacity .2s;}
+  .gate-cta:hover{opacity:.85;}
+
+  /* Pipeline */
+  .pipeline-grid{display:grid;grid-template-columns:1fr;gap:24px;margin-top:48px;}
+  .pipeline-item{padding:28px;border-radius:12px;background:#fff;border:1px solid rgba(200,192,180,.2);}
+  .pipeline-stage{display:block;font-family:'Fraunces',serif;font-size:20px;margin-bottom:8px;}
+  .pipeline-desc{font-size:14px;color:var(--charcoal);opacity:.55;}
+  .pipeline-item::before{content:'';display:block;width:24px;height:2px;background:var(--olive);margin-bottom:16px;border-radius:999px;}
+
   /* Animations */
   .reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease;}
   .reveal.visible{opacity:1;transform:translateY(0);}
@@ -146,6 +183,8 @@
     .beat h2{font-size:clamp(46px,4.8vw,66px);} .beat p{font-size:18px;max-width:30ch;}
     .section-cream,.section-white,.section-alt{padding:100px 24px;}
     .footer-grid{grid-template-columns:1.5fr 1fr 1fr;}
+    .approach-grid{grid-template-columns:repeat(3,1fr);gap:48px;}
+    .editorial{max-width:780px;}
   }
   @media (min-width:1024px){
     .footer-bottom{flex-direction:row;justify-content:space-between;}
@@ -162,7 +201,7 @@
     <img src="/images/logo-white.png" data-dark="/images/logo-dark.png" data-white="/images/logo-white.png" alt="IDENTIT&Eacute;" id="logo-img" style="height:64px;width:auto;transition:opacity .25s ease;">
   </div>
   <!-- Vault button -->
-  <a href="/vault.html" class="vault-btn" title="Vault">
+  <a href="/vault" class="vault-btn" title="Vault">
     <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
   </a>
 
@@ -173,52 +212,161 @@
       <canvas id="gl"></canvas>
       <div class="grain"></div>
       <div class="topscrim"></div>
+
       <!-- Hero title overlay -->
       <div class="hero" id="hero">
         <div class="kicker">A clinical-stage company</div>
-        <h1 style="font-family:'Fraunces',serif;font-weight:300;font-size:clamp(50px,12vw,140px);line-height:.92;letter-spacing:.01em;color:var(--bone);text-shadow:0 8px 60px rgba(0,0,0,.55);margin:0;">The surface,<br><span class="acc">resolved.</span></h1>
-        <div class="sub">Developing first-in-class surface therapeutics.</div>
+        <h1 style="font-family:'Fraunces',serif;font-weight:300;font-size:clamp(50px,12vw,140px);line-height:.92;letter-spacing:.01em;color:var(--bone);text-shadow:0 8px 60px rgba(0,0,0,.55);margin:0;">Identit&eacute; Therapeutics.<br><span class="acc">To calm the storm.</span></h1>
+        <div class="sub">For the eye that feels every blink.<br>Innate immune resolution for the ocular surface.</div>
         <div class="cue"><span>Scroll</span><span class="line"></span></div>
+      </div>
+
+      <!-- Scroll narrative: as the ocean calms, the surface story unfolds -->
+      <div class="content">
+        <div class="beat" data-i="0">
+          <div class="eyebrow">The Disease <span class="ln"></span> 01</div>
+          <h2>Dry eye is not dryness.<br>It's <em>inflammation</em> that will not rest.</h2>
+          <p>Burning.<br>Grit.<br>A sandpaper blink.</p>
+        </div>
+        <div class="beat" data-i="1">
+          <div class="eyebrow">The Gap <span class="ln"></span> 02</div>
+          <h2>All inflammation has <em>TWO</em> arms.<br>Medicine has answered <em>ONE.</em></h2>
+          <p>Today's therapies quiet the slower, learned immune response.<br>The faster native arm rages unchecked.</p>
+        </div>
+        <div class="beat" data-i="2">
+          <div class="eyebrow">The Shift <span class="ln"></span> 03</div>
+          <h2>We seek not <em>suppression.</em><br>But <em>relief.</em></h2>
+          <p>Inflammation is meant to end.<br>The body carries an active program for closure.<br>We aim to restore that program.</p>
+        </div>
+        <div class="beat" data-i="3">
+          <div class="eyebrow">The Approach <span class="ln"></span> 04</div>
+          <h2>We begin at the <em>mechanism.</em></h2>
+          <p>Not more tears. Not immunosuppression.<br>Resolution biology, in the rigor of a clinical program.</p>
+        </div>
+        <div class="beat" data-i="4">
+          <div class="eyebrow">The Close <span class="ln"></span> 05</div>
+          <h2>Til at last:<br>A surface at <em>rest.</em></h2>
+        </div>
       </div>
 
     </div>
   </div>
   <div id="hero-sentinel" style="height:1px;"></div>
 
+  <!-- Rail: scroll progress -->
+  <nav class="rail" id="rail">
+    <div class="tick" data-i="0"><span>DISEASE</span><span class="bar"></span></div>
+    <div class="tick" data-i="1"><span>THE GAP</span><span class="bar"></span></div>
+    <div class="tick" data-i="2"><span>THE SHIFT</span><span class="bar"></span></div>
+    <div class="tick" data-i="3"><span>APPROACH</span><span class="bar"></span></div>
+    <div class="tick" data-i="4"><span>THE CLOSE</span><span class="bar"></span></div>
+  </nav>
+
   <main>
-  <!-- Outro -->
-  <section class="outro">
-    <h3 class="reveal">Where <em>identity</em> meets intent.</h3>
-    <p class="reveal reveal-delay-1">We are a clinical-stage company developing first-in-class therapeutics for conditions of the surface.</p>
-    <div class="tag reveal reveal-delay-2"><a href="/vault.html" style="color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(199,154,79,.3);padding-bottom:2px;">Learn more &rarr;</a></div>
+
+  <!-- SECTION 1 -->
+  <section class="section-dark">
+    <div class="section-inner">
+      <span class="eyebrow-label reveal" style="color:var(--gold);">01 · The Disease</span>
+      <h2 class="reveal reveal-delay-1" style="font-family:'Fraunces',serif;color:#fff;font-size:clamp(36px,6vw,72px);font-weight:300;line-height:1.05;max-width:700px;margin:16px 0 24px;">Dry eye is not dryness.<br>It's <em>inflammation</em> that will not rest.</h2>
+      <p class="reveal reveal-delay-2" style="font-size:clamp(16px,2vw,20px);color:var(--bone-dim);max-width:520px;line-height:1.5;">Burning. Grit. A sandpaper blink. A raw surface sends distress signals &mdash; and eventually, the signals deepen the wounds.</p>
+    </div>
   </section>
 
+  <!-- SECTION 2 -->
+  <section class="section-cream">
+    <div class="section-inner">
+      <span class="eyebrow-label reveal">02 · The Gap</span>
+      <h2 class="reveal reveal-delay-1" style="font-family:'Fraunces',serif;color:var(--charcoal);font-size:clamp(36px,6vw,72px);font-weight:300;line-height:1.05;max-width:700px;margin:16px 0 24px;">All inflammation has <em>TWO</em> arms.<br>Medicine has answered <em>ONE.</em></h2>
+      <p class="reveal reveal-delay-2" style="font-size:clamp(16px,2vw,20px);color:var(--charcoal);opacity:.6;max-width:520px;line-height:1.5;">Today's therapies quiet the slower, learned immune response. The faster native arm rages unchecked.</p>
+    </div>
+  </section>
 
+  <!-- SECTION 3 -->
+  <section class="section-white">
+    <div class="section-inner">
+      <span class="eyebrow-label reveal">03 · The Shift</span>
+      <h2 class="reveal reveal-delay-1" style="font-family:'Fraunces',serif;color:var(--charcoal);font-size:clamp(36px,6vw,72px);font-weight:300;line-height:1.05;max-width:700px;margin:16px 0 24px;">We seek not <em>suppression.</em><br>But <em>relief.</em></h2>
+      <p class="reveal reveal-delay-2" style="font-size:clamp(16px,2vw,20px);color:var(--charcoal);opacity:.6;max-width:520px;line-height:1.5;">Inflammation is meant to end. The body carries an active program for closure. We aim to restore that program.</p>
+      <div style="display:flex;gap:48px;margin-top:64px;flex-wrap:wrap;" class="reveal reveal-delay-3">
+        <div style="max-width:280px;">
+          <span style="font-family:'Fraunces',serif;font-size:48px;color:var(--olive);opacity:.15;display:block;margin-bottom:8px;">01</span>
+          <span style="font-family:'Fraunces',serif;font-size:18px;color:var(--charcoal);">Resolution biology</span>
+          <p style="font-size:14px;color:var(--charcoal);opacity:.5;margin-top:6px;line-height:1.5;">Not suppression. Restoration of what the surface has forgotten it can do.</p>
+        </div>
+        <div style="max-width:280px;">
+          <span style="font-family:'Fraunces',serif;font-size:48px;color:var(--olive);opacity:.15;display:block;margin-bottom:8px;">02</span>
+          <span style="font-family:'Fraunces',serif;font-size:18px;color:var(--charcoal);">Established safety</span>
+          <p style="font-size:14px;color:var(--charcoal);opacity:.5;margin-top:6px;line-height:1.5;">Extensive human safety data. An efficient clinical path.</p>
+        </div>
+        <div style="max-width:280px;">
+          <span style="font-family:'Fraunces',serif;font-size:48px;color:var(--olive);opacity:.15;display:block;margin-bottom:8px;">03</span>
+          <span style="font-family:'Fraunces',serif;font-size:18px;color:var(--charcoal);">Local by design</span>
+          <p style="font-size:14px;color:var(--charcoal);opacity:.5;margin-top:6px;line-height:1.5;">Acts where applied. Minimal systemic exposure.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
+  <!-- SECTION 4 -->
+  <section class="section-alt">
+    <div class="section-inner">
+      <span class="eyebrow-label reveal">04 · The Approach</span>
+      <h2 class="reveal reveal-delay-1" style="font-family:'Fraunces',serif;color:var(--charcoal);font-size:clamp(36px,6vw,72px);font-weight:300;line-height:1.05;max-width:700px;margin:16px 0 24px;">We begin at the <em>mechanism.</em></h2>
+      <p class="reveal reveal-delay-2" style="font-size:clamp(16px,2vw,20px);color:var(--charcoal);opacity:.6;max-width:520px;line-height:1.5;">Not more tears. Not immunosuppression. Resolution biology, in the rigor of a clinical program.</p>
+    </div>
+  </section>
 
+  <!-- SECTION 5 -->
+  <section class="section-dark">
+    <div class="section-inner" style="text-align:center;">
+      <span class="eyebrow-label reveal" style="color:var(--gold);">05 · The Close</span>
+      <h2 class="reveal reveal-delay-1" style="font-family:'Fraunces',serif;color:#fff;font-size:clamp(36px,6vw,72px);font-weight:300;line-height:1.05;margin:16px 0 24px;">Til at last:<br>A surface at <em>rest.</em></h2>
+    </div>
+  </section>
 
+  <!-- SECTION 6: Pipeline -->
+  <section class="section-cream" id="pipeline">
+    <div class="section-inner">
+      <span class="eyebrow-label reveal">Pipeline</span>
+      <h2 class="reveal reveal-delay-1" style="font-family:'Fraunces',serif;color:var(--charcoal);font-size:clamp(36px,6vw,72px);font-weight:300;line-height:1.05;max-width:700px;margin:16px 0 48px;">Our path<br><em>forward.</em></h2>
+      <div style="display:flex;gap:24px;flex-wrap:wrap;" class="reveal reveal-delay-2">
+        <div style="flex:1;min-width:240px;padding:32px;background:#fff;border-radius:12px;">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--olive);">Observational</span>
+          <p style="font-family:'Fraunces',serif;font-size:20px;color:var(--charcoal);margin-top:8px;">Filamentary Keratitis / Severe Dry Eye</p>
+        </div>
+        <div style="flex:1;min-width:240px;padding:32px;background:#fff;border-radius:12px;">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--olive);">Preclinical</span>
+          <p style="font-family:'Fraunces',serif;font-size:20px;color:var(--charcoal);margin-top:8px;">Ophthalmic Safety</p>
+        </div>
+        <div style="flex:1;min-width:240px;padding:32px;background:#fff;border-radius:12px;">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--olive);">IND Enabling</span>
+          <p style="font-family:'Fraunces',serif;font-size:20px;color:var(--charcoal);margin-top:8px;">Dry Eye Trial</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-
-
-
-
-
-
-
-  <!-- TREE / IDENTITY -->
+  <!-- Tree -->
   <section class="tree-section">
     <div class="tree-bg">
-      <img src="/images/pine-forest.jpg" alt="Bristlecone pine forest at dusk — representing Identite Therapeutics' resilience and longevity" loading="lazy">
+      <img src="/images/pine-forest.jpg" alt="Bristlecone pine forest at dusk" loading="lazy">
       <div class="tree-overlay"></div>
     </div>
     <div class="tree-content">
       <span class="eyebrow-label reveal" style="color:var(--olive-light);margin-bottom:20px;">Our Identity</span>
-      <h2 class="reveal reveal-delay-1" style="font-family:'Fraunces',serif;color:#fff;max-width:500px;margin-bottom:20px;font-size:clamp(40px,6vw,80px);line-height:1.0;">Rooted in<br>resilience</h2>
-      <p class="reveal reveal-delay-2" style="font-size:15px;color:rgba(255,255,255,.55);max-width:400px;line-height:1.65;margin-bottom:32px;">The bristlecone pine thrives for thousands of years in the harshest conditions. Like the tree, we believe in patient endurance and deep roots in science.</p>
-      <div class="reveal reveal-delay-3">
-        <p style="font-family:'Fraunces',serif;color:#fff;font-size:22px;">Identit&eacute;</p>
-        <p style="font-size:10px;color:rgba(255,255,255,.35);margin-top:4px;letter-spacing:.15em;text-transform:uppercase;">Root &middot; Identity &middot; Origin</p>
-      </div>
+      <h2 class="reveal reveal-delay-1" style="font-family:'Fraunces',serif;color:#fff;font-size:clamp(40px,6vw,80px);line-height:1.0;">Rooted in<br>resilience.</h2>
+      <p class="reveal reveal-delay-2" style="font-size:16px;color:rgba(255,255,255,.5);max-width:400px;line-height:1.6;margin-top:20px;">Patient, deep-rooted, unhurried. Durable science, built to last.</p>
+    </div>
+  </section>
+
+  <!-- Gate -->
+  <section class="section-dark gate-section">
+    <div class="section-inner" style="text-align:center;">
+      <span class="eyebrow-label reveal" style="color:var(--gold);">For Partners &amp; Investors</span>
+      <h2 class="reveal reveal-delay-1" style="font-family:'Fraunces',serif;color:#fff;font-size:clamp(36px,6vw,72px);font-weight:300;line-height:1.05;margin:16px 0 24px;">Learn more.</h2>
+      <p class="reveal reveal-delay-2" style="font-size:clamp(16px,2vw,20px);color:var(--bone-dim);max-width:520px;margin:0 auto;line-height:1.5;">Science, data, and pipeline &mdash; shared under confidentiality.</p>
+      <a href="/vault" class="gate-cta reveal reveal-delay-3">Enter the vault &rarr;</a>
     </div>
   </section>
 
@@ -235,7 +383,7 @@
       </div>
       <div class="footer-col">
         <h4>Company</h4>
-        <a href="/vault.html">Science Vault</a>
+        <a href="/vault">Science Vault</a>
         <a href="/contact.html">Contact</a>
       </div>
       <div class="footer-col">
@@ -266,8 +414,8 @@
   const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
   const clamp=(v,a,b)=>v<a?a:v>b?b:v,lerp=(a,b,t)=>a+(b-a)*t,seg=(p,a,b)=>b===a?0:clamp((p-a)/(b-a),0,1);
   const smooth=t=>t*t*(3-2*t);
-  const SC=[{in:0,full:.02,end:.12,out:.16},{in:.14,full:.18,end:.27,out:.31},{in:.30,full:.35,end:.47,out:.51},
-    {in:.50,full:.55,end:.65,out:.70},{in:.68,full:.73,end:.84,out:.88},{in:.87,full:.91,end:1,out:1.01}];
+  const SC=[{in:0,full:.02,end:.18,out:.22},{in:.20,full:.25,end:.38,out:.42},{in:.40,full:.45,end:.58,out:.62},
+    {in:.60,full:.65,end:.78,out:.82},{in:.80,full:.85,end:.98,out:1.0}];
   const sA=(p,s)=>smooth(seg(p,s.in,s.full))*(1-smooth(seg(p,s.end,s.out)));
   const C=(r,g,b)=>new THREE.Color(r,g,b);
   const lc=(a,b,t,o)=>{o.r=lerp(a.r,b.r,t);o.g=lerp(a.g,b.g,t);o.b=lerp(a.b,b.b,t);return o;};

@@ -1,7 +1,15 @@
 {
   "version": 2,
+  "rewrites": [
+    { "source": "/vault", "destination": "https://identite-api.onrender.com/vault" },
+    { "source": "/api/:path*", "destination": "https://identite-api.onrender.com/api/:path*" }
+  ],
   "routes": [
-    { "handle": "filesystem" },
-    { "src": "/.*", "dest": "/index.html" }
+    { "src": "/robots\\.txt", "dest": "/robots.txt" },
+    { "src": "/sitemap\\.xml", "dest": "/sitemap.xml" },
+    { "src": "/images/(.*)", "dest": "/images/$1" },
+    { "src": "/contact", "dest": "/contact.html" },
+    { "src": "/", "dest": "/index.html" },
+    { "handle": "filesystem" }
   ]
 }

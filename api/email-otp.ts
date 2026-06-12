@@ -15,7 +15,7 @@ export async function sendOtpEmail(to: string, code: string): Promise<void> {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      from: "vault@identitetherapeutics.com",
+      from: "vault@resend.dev",
       to,
       subject: "Your Identité Vault verification code",
       html: `<!DOCTYPE html>

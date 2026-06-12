@@ -90,7 +90,7 @@ The signed NDA PDF is attached.
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      from: "vault@identitetherapeutics.com",
+      from: "vault@resend.dev",
       to: ownerEmail,
       subject,
       html: htmlBody,

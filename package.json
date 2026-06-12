@@ -1,0 +1,26 @@
+{
+  "name": "identite-therapeutics-api",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "esbuild api/boot.ts --platform=node --bundle --format=esm --outdir=dist --banner:js=\"import { createRequire } from 'module';const require = createRequire(import.meta.url);\"",
+    "start": "NODE_ENV=production node dist/boot.js"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.14.3",
+    "@trpc/server": "^11.8.1",
+    "cookie": "^1.1.1",
+    "dotenv": "^17.2.3",
+    "hono": "^4.8.3",
+    "jose": "6.1.3",
+    "pdf-lib": "^1.17.1",
+    "resend": "^6.12.4",
+    "superjson": "^2.2.6",
+    "zod": "^4.3.5"
+  },
+  "devDependencies": {
+    "esbuild": "^0.27.2",
+    "typescript": "~5.9.3"
+  }
+}

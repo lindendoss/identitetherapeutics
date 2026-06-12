@@ -3,88 +3,182 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, shrink-to-fit=no" />
-<title>IDENTIT&Eacute; Therapeutics</title>
-<meta name="description" content="A clinical-stage company developing first-in-class surface therapeutics." />
+<title>Identit&eacute; Therapeutics | First-in-Class Ocular Surface Therapeutics</title>
+<meta name="description" content="Identit&eacute; Therapeutics develops first-in-class innate immune resolution therapies for dry eye disease and ocular surface inflammation. Clinical-stage biotech company." />
+<meta name="keywords" content="dry eye disease, ocular surface, innate immunity, immune resolution, therapeutics, clinical stage, biotech, ocular inflammation, MAS receptor, ocular surface disease" />
 <link rel="canonical" href="https://identitetherapeutics.com/" />
+<link rel="icon" type="image/png" sizes="512x512" href="/images/favicon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
-<meta property="og:title" content="IDENTIT&Eacute; Therapeutics" />
-<meta property="og:description" content="A clinical-stage company developing first-in-class surface therapeutics." />
+<meta property="og:title" content="Identit&eacute; Therapeutics | First-in-Class Ocular Surface Therapeutics" />
+<meta property="og:description" content="First-in-class innate immune resolution for the ocular surface. Clinical-stage biotech developing novel therapies for dry eye disease." />
 <meta property="og:image" content="https://identitetherapeutics.com/images/og-image.jpg" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:url" content="https://identitetherapeutics.com" />
 <meta property="og:type" content="website" />
+<meta property="og:site_name" content="Identit&eacute; Therapeutics" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="IDENTIT&Eacute; Therapeutics" />
-<meta name="twitter:description" content="First-in-class surface therapeutics." />
+<meta name="twitter:title" content="Identit&eacute; Therapeutics | First-in-Class Ocular Surface Therapeutics" />
+<meta name="twitter:description" content="First-in-class innate immune resolution for the ocular surface. Clinical-stage biotech." />
 <meta name="twitter:image" content="https://identitetherapeutics.com/images/og-image.jpg" />
-<meta name="theme-color" content="#0A0A0D" />
+<meta name="theme-color" content="#142433" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Hanken+Grotesk:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#0A0A0D;--bone:#EFE7D6;--bone-dim:#B8AE97;--gold:#C79A4F;--gold-deep:#9E7728;--cool:#8FB6CC;
-    --cream:#F7F4EE;--charcoal:#2D2926;--olive:#6B7B3E;--olive-light:#8A9B5C;--taupe:#9B8E7E;
-    --warm-gray:#C8C0B4;
+    /* MATTE PARCHMENT COLOR SYSTEM — editorial, clinical, calm */
+    /* Rule: ivory + ink navy + muted ochre. Never white + bright gold + black shadow. */
+
+    /* Primary text on image — warm ivory, not pure white */
+    --ivory:#F2E8D8;
+    /* Secondary text — parchment gray-beige */
+    --parchment:#D8CABB;
+    /* Accent — muted ochre, not gold. Use sparingly: 5% of composition max */
+    --ochre:#A98255;
+    /* Deep overlay navy — refined, clinical, calm */
+    --navy:#142433;
+    /* Warm shadow / atmospheric veil — muted taupe-brown */
+    --veil:#4A3A35;
+    /* Off-white page background */
+    --page:#EFE6D8;
+    --page-alt:#F3EBDD;
+
+    /* Legacy aliases for backward compatibility */
+    --ink:#0A0A0D;--bone:var(--ivory);--bone-dim:var(--parchment);
+    --gold:var(--ochre);--gold-deep:#7D5F3A;--cool:#8FB6CC;
+    --cream:var(--page);--charcoal:#2D2926;--olive:#6B7B3E;--olive-light:#8A9B5C;
+    --taupe:#9B8E7E;--warm-gray:#C8C0B4;
+
+    /* Ink on light (#FFFFFF) — measured contrast ratios */
+    --ink-strong:#1A1A1D;  /* headings  — ~16.5:1 (AAA) */
+    --ink-body:#4D4D4D;    /* body      — ~ 8.4:1 (AAA) */
+    --ink-muted:#6E6E6E;   /* captions  — ~ 5.1:1 (AA only) */
+
+    /* Ink on dark / photo — matte ivory system, not bright white */
+    --ink-on-dark:var(--ivory);       /* #F2E8D8 on navy */
+    --ink-on-dark-body:var(--parchment); /* #D8CABB secondary */
+    --ink-on-dark-muted:rgba(216,202,187,.55); /* muted parchment */
+    /* Accent on dark — muted ochre */
+    --accent-on-dark:var(--navy);     /* #142433 — replaced ochre with navy for text */
+    --accent-on-light:#142433;        /* navy on light bg */
+
+    /* Font families */
+    --font-display:'Cormorant Garamond',Georgia,serif;
+    --font-sans:'Inter',system-ui,sans-serif;
+    --font-mono:'IBM Plex Mono',monospace;
+
+    /* Fluid type scale: clamp(MIN, PREF, MAX). 320px -> 1280px */
+    --fs-eyebrow:clamp(0.6875rem, 0.66rem + 0.14vw, 0.75rem);  /* 11 -> 12 px */
+    --fs-body:clamp(1rem, 0.95rem + 0.25vw, 1.125rem);          /* 16 -> 18 px */
+    --fs-lead:clamp(1.125rem, 1.05rem + 0.40vw, 1.375rem);      /* 18 -> 22 px */
+    --fs-h-card:clamp(1.5rem, 1.30rem + 1.00vw, 1.875rem);      /* 24 -> 30 px */
+    --fs-h-section:clamp(2rem, 1.50rem + 2.40vw, 3rem);          /* 32 -> 48 px */
+    --fs-hero:clamp(2.5rem, 1.70rem + 4.00vw, 4.5rem);           /* 40 -> 72 px */
+    --fs-numeral:clamp(3rem, 2.00rem + 5.00vw, 6rem);            /* 48 -> 96 px */
+    /* Line height / rhythm */
+    --lh-body:1.6;--lh-lead:1.55;--lh-heading:1.08;--lh-hero:0.92;--lh-tight:1.0;
+    /* Tracking */
+    --tracking-eyebrow:0.24em;--tracking-hero:-0.045em;
+    /* Measure (line length) */
+    --measure-body:64ch;--measure-lead:46ch;--measure-hero:20ch;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   html{scroll-behavior:smooth;}
-  body{background:#0A0A0D;color:var(--bone);font-family:'Hanken Grotesk',sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
-  ::selection{background:var(--gold-deep);color:var(--bone);}
+  body{background:#0A0A0D;color:var(--bone);font-family:var(--font-sans);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+  ::selection{background:var(--ochre);color:#fff;}
+
+  /* HERO PARCHMENT VEIL — matte color overlay over ocean photo */
+  .stage::before{
+    content:"";position:absolute;inset:0;z-index:6;pointer-events:none;
+    /* Layered: deep navy → warm taupe → navy + parchment warmth */
+    background:
+      linear-gradient(to bottom,
+        rgba(20,24,31,0.62) 0%,
+        rgba(91,70,61,0.22) 38%,
+        rgba(20,36,51,0.48) 100%),
+      rgba(239,230,216,0.08);
+  }
 
   /* Fixed UI */
   .wordmark-fixed{position:fixed;top:20px;left:24px;z-index:40;}
   .wordmark-fixed img{height:42px;width:auto;}
-  .vault-btn{position:fixed;top:22px;right:24px;z-index:40;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;cursor:pointer;text-decoration:none;transition:all .2s;backdrop-filter:blur(4px);}
-  .vault-btn:hover{background:rgba(199,154,79,.15);border-color:var(--gold);}
-  .vault-btn svg{width:16px;height:16px;stroke:var(--bone-dim);transition:stroke .2s;}
-  .vault-btn:hover svg{stroke:var(--gold);}
+  .vault-btn{position:fixed;top:22px;right:24px;z-index:40;width:36px;height:36px;border-radius:50%;background:rgba(242,232,216,.06);border:1px solid rgba(242,232,216,.12);display:flex;align-items:center;justify-content:center;cursor:pointer;text-decoration:none;transition:all .2s;backdrop-filter:blur(4px);}
+  .vault-btn:hover{background:rgba(20,36,51,.15);border-color:var(--navy);}
+  .vault-btn svg{width:16px;height:16px;stroke:var(--parchment);transition:stroke .2s;}
+  .vault-btn:hover svg{stroke:var(--navy);}
   .rail{position:fixed;right:30px;top:50%;transform:translateY(-50%);z-index:40;display:flex;flex-direction:column;gap:12px;align-items:flex-end;}
-  .rail .tick{font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.18em;color:#6a6450;display:flex;align-items:center;gap:9px;transition:color .5s ease;text-shadow:0 1px 8px rgba(0,0,0,.6);}
-  .rail .tick .bar{width:14px;height:1.5px;background:#6a6450;transition:all .5s ease;}
-  .rail .tick.on{color:var(--bone);} .rail .tick.on .bar{width:28px;background:var(--gold);}
+  .rail .tick{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.18em;color:var(--parchment);opacity:.5;display:flex;align-items:center;gap:9px;transition:color .5s ease;
+    text-shadow:0 1px 12px rgba(20,24,31,0.22);}
+  .rail .tick .bar{width:14px;height:1.5px;background:var(--parchment);opacity:.5;transition:all .5s ease;}
+  .rail .tick.on{color:var(--ivory);opacity:1;} .rail .tick.on .bar{width:28px;background:var(--navy);opacity:.7;}
 
   /* Scrolling hero */
-  .scroll-root{position:relative;height:580vh;}
+  .scroll-root{position:relative;height:720vh;}
   .stage{position:-webkit-sticky;position:sticky;top:0;height:100vh;width:100%;overflow:hidden;}
   canvas#gl{position:absolute;inset:0;width:100%;height:100%;display:block;}
   .topscrim{position:absolute;top:0;left:0;right:0;height:188px;z-index:8;pointer-events:none;background:linear-gradient(to bottom,rgba(8,8,11,.66),rgba(8,8,11,.30) 52%,rgba(8,8,11,0));}
   .grain{position:absolute;inset:0;z-index:5;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
 
-  /* Hero overlay content */
-  .content{position:absolute;z-index:10;pointer-events:none;left:0;right:0;bottom:0;height:56vh;
-    padding:0 26px calc(46px + env(safe-area-inset-bottom));display:flex;flex-direction:column;justify-content:flex-end;
-    background:linear-gradient(to top,rgba(8,8,11,.97) 20%,rgba(8,8,11,.88) 42%,rgba(8,8,11,.45) 68%,rgba(8,8,11,0) 100%);}
-  .beat{position:absolute;left:26px;right:26px;bottom:46px;opacity:0;will-change:opacity,transform;}
-  .beat .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;display:flex;gap:12px;align-items:center;}
-  .beat .eyebrow .ln{width:30px;height:1px;background:var(--gold);opacity:.55;}
-  .beat h2{font-family:'Fraunces',serif;font-weight:300;font-size:clamp(42px,10vw,62px);line-height:1.02;letter-spacing:-.015em;color:var(--bone);margin-bottom:18px;text-shadow:0 2px 28px rgba(5,5,9,.7);}
-  .beat h2 em{font-style:italic;color:var(--gold);}
-  .beat p{font-size:clamp(16px,4.6vw,18px);line-height:1.55;color:#E0D7C0;max-width:34ch;font-weight:300;text-shadow:0 1px 16px rgba(5,5,9,.6);}
-  .beat .note{margin-top:18px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.04em;color:#BEB291;line-height:1.7;text-shadow:0 1px 12px rgba(5,5,9,.6);}
+  /* Hero overlay content — .scrim darkens only behind text, not the whole image */
+  .content{position:absolute;z-index:10;pointer-events:none;left:0;right:0;bottom:0;height:62vh;
+    padding:0 26px calc(160px + env(safe-area-inset-bottom));display:flex;flex-direction:column;justify-content:flex-end;}
+  .content.scrim::before{content:"";position:absolute;inset:0;z-index:-1;
+    /* Parchment-tinted scrim — warm, not cold black. Concentrated at bottom. */
+    background:linear-gradient(to top,
+      rgba(20,36,51,.88) 0%,     /* deep navy — body text zone */
+      rgba(74,58,53,.65) 18%,    /* warm veil taupe — headline zone */
+      rgba(20,36,51,.40) 32%,    /* lighter navy — eyebrow zone */
+      rgba(20,36,51,.12) 48%,    /* breathing room */
+      rgba(20,36,51,0)   62%);}  /* transparent — photo shines through */
+  .beat{position:absolute;left:26px;right:26px;bottom:160px;opacity:0;will-change:opacity,transform;}
+  .beat .eyebrow{font-family:var(--font-mono);font-size:var(--fs-eyebrow);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--ivory);margin-bottom:16px;display:flex;gap:12px;align-items:center;font-weight:500;
+    /* Ivory — legible against ocean */
+    text-shadow:0 1px 12px rgba(20,24,31,0.22);}
+  .beat .eyebrow .ln{width:30px;height:1px;background:var(--navy);opacity:.45;}
+  .beat h2{font-family:var(--font-display);font-weight:300;font-size:clamp(32px,8vw,56px);line-height:var(--lh-heading);letter-spacing:-.01em;color:var(--ivory);margin-bottom:14px;
+    /* Single minimal shadow — flat, not metallic */
+    text-shadow:0 1px 12px rgba(20,24,31,0.22);}
+  .beat h2 em{font-style:italic;color:var(--ivory);
+    text-shadow:0 1px 12px rgba(20,24,31,0.22);}
+  .beat p{font-size:clamp(15px,3.6vw,18px);line-height:var(--lh-body);color:var(--parchment);max-width:32ch;font-weight:400;
+    /* Minimal shadow for legibility */
+    text-shadow:0 1px 12px rgba(20,24,31,0.22);}
+  .beat .note{margin-top:14px;font-family:var(--font-mono);font-size:11px;letter-spacing:.04em;color:rgba(216,202,187,.55);line-height:1.7;
+    text-shadow:0 1px 12px rgba(20,24,31,0.22);}
 
-  .hero{position:absolute;inset:0;z-index:11;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;pointer-events:none;will-change:opacity,transform;padding:0 24px;}
-  .hero .kicker{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.4em;text-transform:uppercase;color:#F2ECDE;margin-bottom:24px;text-shadow:0 1px 2px rgba(0,0,0,.95),0 0 4px rgba(0,0,0,.9),0 0 18px rgba(0,0,0,.7);}
-  .hero h1{font-family:'Fraunces',serif;font-weight:300;font-size:clamp(50px,12vw,140px);line-height:.92;letter-spacing:.01em;color:var(--bone);text-shadow:0 8px 60px rgba(0,0,0,.55);}
-  .hero h1 .acc{font-style:italic;font-weight:400;color:#F0D9A8;}
-  .hero .sub{margin-top:26px;font-size:clamp(14px,3.6vw,18px);color:#E3DAC4;max-width:28ch;line-height:1.55;font-weight:300;text-shadow:0 2px 16px rgba(0,0,0,.6);}
-  .hero .cue{position:absolute;bottom:38px;left:50%;transform:translateX(-50%);font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:#E3DAC4;display:flex;flex-direction:column;align-items:center;gap:12px;text-shadow:0 2px 10px rgba(0,0,0,.6);}
-  .hero .cue .line{width:1px;height:38px;background:linear-gradient(#E3DAC4,transparent);animation:drip 2.4s ease-in-out infinite;}
+  .hero{position:absolute;inset:0;z-index:11;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;pointer-events:none;will-change:opacity,transform;padding:0 24px 180px;}
+  .hero .kicker{font-family:var(--font-mono);font-size:var(--fs-eyebrow);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--parchment);opacity:.85;margin-bottom:20px;
+    /* Minimal flat shadow for legibility only — no metallic glow */
+    text-shadow:0 1px 12px rgba(20,24,31,0.22);}
+  .hero h1{font-family:var(--font-display);font-weight:300;font-size:clamp(40px,11vw,120px);line-height:var(--lh-hero);letter-spacing:var(--tracking-hero);color:var(--ivory);margin:0;
+    /* Single minimal shadow — flat, not metallic */
+    text-shadow:0 1px 12px rgba(20,24,31,0.22);}
+  .hero h1 .calm{font-style:italic;font-weight:400;color:var(--navy);letter-spacing:-0.035em;
+    /* Navy accent on ivory — no shadow needed, natural contrast */
+    text-shadow:0 1px 12px rgba(20,24,31,0.22);}
+  .hero .sub{margin-top:20px;font-size:clamp(17px,2.8vw,22px);line-height:var(--lh-lead);font-weight:400;color:var(--parchment);max-width:32ch;
+    /* Minimal shadow for legibility */
+    text-shadow:0 1px 12px rgba(20,24,31,0.22);}
+  .hero .cue{position:absolute;bottom:38px;left:50%;transform:translateX(-50%);font-family:var(--font-mono);font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--parchment);display:flex;flex-direction:column;align-items:center;gap:12px;opacity:.7;
+    text-shadow:0 1px 12px rgba(20,24,31,0.22);}
+  .hero .cue .line{width:1px;height:38px;background:linear-gradient(var(--parchment),transparent);animation:drip 2.4s ease-in-out infinite;}
   @keyframes drip{0%{transform:scaleY(.3);opacity:.4;transform-origin:top;}50%{transform:scaleY(1);opacity:1;}100%{transform:scaleY(.3);opacity:.4;transform-origin:bottom;}}
 
   /* Outro */
   .outro{position:relative;z-index:2;min-height:40vh;background:var(--ink);color:var(--bone);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 24px;border-top:1px solid #1d1c22;}
-  .outro h3{font-family:'Fraunces',serif;font-weight:300;font-size:clamp(30px,4.5vw,54px);letter-spacing:.03em;line-height:1.06;}
+  .outro h3{font-family:var(--font-display);font-weight:300;font-size:clamp(30px,4.5vw,54px);letter-spacing:.03em;line-height:1.06;}
   .outro h3 em{font-style:italic;color:var(--cool);}
-  .outro p{margin-top:22px;max-width:46ch;color:var(--bone-dim);font-size:16px;line-height:1.65;font-weight:300;}
-  .outro .tag{margin-top:34px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);}
+  .outro p{margin-top:22px;max-width:46ch;color:var(--parchment);font-size:16px;line-height:1.65;font-weight:400;}
+  .outro .tag{margin-top:34px;font-family:var(--font-mono);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--navy);}
 
   /* Section utilities */
   .section-cream{background:var(--cream);color:var(--charcoal);padding:80px 24px;}
@@ -92,11 +186,11 @@
   .section-alt{background:#F5F1EB;color:var(--charcoal);padding:80px 24px;}
   .section-inner{max-width:1100px;margin:0 auto;}
   .section-header{text-align:center;margin-bottom:64px;}
-  .eyebrow-label{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--olive);display:block;margin-bottom:24px;}
-  .heading-lg{font-family:'Fraunces',serif;font-weight:300;font-size:clamp(36px,5vw,64px);line-height:1.05;letter-spacing:-.01em;}
-  .heading-md{font-family:'Fraunces',serif;font-weight:300;font-size:clamp(32px,4vw,48px);line-height:1.08;letter-spacing:-.01em;}
-  .body-text{font-size:15px;line-height:1.65;color:var(--charcoal);opacity:.55;font-weight:300;}
-  .body-sm{font-size:13px;line-height:1.6;color:var(--charcoal);opacity:.45;font-weight:300;}
+  .eyebrow-label{font-family:var(--font-mono);font-size:var(--fs-eyebrow);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--olive);display:block;margin-bottom:24px;}
+  .heading-lg{font-family:var(--font-display);font-weight:300;font-size:clamp(36px,5vw,64px);line-height:1.05;letter-spacing:-.01em;}
+  .heading-md{font-family:var(--font-display);font-weight:300;font-size:clamp(32px,4vw,48px);line-height:1.08;letter-spacing:-.01em;}
+  .body-text{font-size:var(--fs-body);line-height:var(--lh-body);color:var(--ink-body);font-weight:400;}
+  .body-sm{font-size:13px;line-height:1.6;color:var(--ink-muted);font-weight:400;}
 
 
 
@@ -135,33 +229,36 @@
   .editorial{max-width:720px;margin:0 auto;}
   .editorial .heading-lg{margin-bottom:48px;text-wrap:balance;}
   .editorial-body{max-width:640px;}
-  .editorial-body p{font-size:15px;line-height:1.75;color:var(--bone-dim);font-weight:300;margin-bottom:20px;}
-  .editorial-body p.lead{font-family:'Fraunces',serif;font-size:clamp(18px,2.5vw,22px);line-height:1.55;color:var(--bone);font-weight:300;margin-bottom:28px;text-wrap:pretty;}
+  .editorial-body p{font-size:15px;line-height:1.75;color:var(--bone-dim);font-weight:400;margin-bottom:20px;}
+  .editorial-body p.lead{font-family:var(--font-display);font-size:clamp(18px,2.5vw,22px);line-height:1.55;color:var(--bone);font-weight:400;margin-bottom:28px;text-wrap:pretty;}
   .editorial-body p.closing{margin-top:32px;padding-top:24px;border-top:1px solid rgba(255,255,255,.08);color:var(--cool);font-style:italic;}
-  .section-cream .editorial-body p.lead{color:var(--charcoal);}
-  .section-cream .editorial-body p{color:var(--charcoal);opacity:.65;}
-  .section-white .editorial-body p.lead{color:var(--charcoal);}
-  .section-white .editorial-body p{color:var(--charcoal);opacity:.65;}
+  .section-cream .editorial-body p.lead{color:var(--ink-strong);font-weight:400;}
+  .section-cream .editorial-body p{color:var(--ink-body);font-weight:400;}
+  .section-white .editorial-body p.lead{color:var(--ink-strong);font-weight:400;}
+  .section-white .editorial-body p{color:var(--ink-body);font-weight:400;}
+  /* Captions / secondary on light — ink-muted only (AA, not AAA) */
+  .section-cream .editorial-body p.caption,
+  .section-white .editorial-body p.caption{color:var(--ink-muted);font-weight:400;}
 
   /* Approach grid */
   .approach-grid{display:grid;grid-template-columns:1fr;gap:40px;margin-top:64px;max-width:900px;}
   .approach-item{border-top:1px solid rgba(200,192,180,.25);padding-top:24px;}
   .section-dark .approach-item{border-top-color:rgba(255,255,255,.08);}
-  .approach-num{font-family:'Fraunces',serif;font-size:28px;color:var(--olive);opacity:.25;margin-bottom:8px;}
-  .approach-item h4{font-family:'Fraunces',serif;font-size:20px;font-weight:400;color:var(--charcoal);margin-bottom:10px;line-height:1.3;}
+  .approach-num{font-family:var(--font-display);font-size:28px;color:var(--ink-strong);opacity:.12;margin-bottom:8px;}
+  .approach-item h4{font-family:var(--font-display);font-size:20px;font-weight:400;color:var(--charcoal);margin-bottom:10px;line-height:1.3;}
   .section-dark .approach-item h4{color:var(--bone);}
-  .approach-item p{font-size:14px;line-height:1.65;color:var(--charcoal);opacity:.55;font-weight:300;}
+  .approach-item p{font-size:14px;line-height:1.65;color:var(--ink-body);font-weight:400;}
   .section-dark .approach-item p{color:var(--bone-dim);opacity:1;}
 
   /* Gate section */
   .gate-section{padding:100px 24px 80px;}
-  .gate-cta{display:inline-block;margin-top:36px;padding:16px 40px;border-radius:8px;background:var(--gold);color:var(--ink);font-family:'Hanken Grotesk',sans-serif;font-weight:500;font-size:15px;text-decoration:none;letter-spacing:.02em;transition:opacity .2s;}
+  .gate-cta{display:inline-block;margin-top:36px;padding:16px 40px;border-radius:8px;background:var(--ochre);color:#fff;font-family:var(--font-sans);font-weight:500;font-size:15px;text-decoration:none;letter-spacing:.02em;transition:opacity .2s;}
   .gate-cta:hover{opacity:.85;}
 
   /* Pipeline */
   .pipeline-grid{display:grid;grid-template-columns:1fr;gap:24px;margin-top:48px;}
   .pipeline-item{padding:28px;border-radius:12px;background:#fff;border:1px solid rgba(200,192,180,.2);}
-  .pipeline-stage{display:block;font-family:'Fraunces',serif;font-size:20px;margin-bottom:8px;}
+  .pipeline-stage{display:block;font-family:var(--font-display);font-size:20px;margin-bottom:8px;}
   .pipeline-desc{font-size:14px;color:var(--charcoal);opacity:.55;}
   .pipeline-item::before{content:'';display:block;width:24px;height:2px;background:var(--olive);margin-bottom:16px;border-radius:999px;}
 
@@ -174,9 +271,13 @@
 
   /* Loader */
   .loader{position:fixed;inset:0;z-index:60;background:#0A0A0D;display:flex;align-items:center;justify-content:center;transition:opacity .8s ease;}
-  .loader span{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);}
+  .loader span{font-family:var(--font-mono);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--navy);}
 
   @media (min-width:860px){
+    .hero{padding:0 24px 80px;}
+    .hero h1{font-size:clamp(50px,12vw,140px);line-height:.92;}
+    .hero .kicker{font-size:11px;margin-bottom:24px;}
+    .hero .sub{font-size:clamp(14px,3.6vw,18px);margin-top:26px;}
     .content{left:0;top:0;bottom:0;width:44vw;height:auto;justify-content:center;padding:0 0 0 6vw;
       background:linear-gradient(to right,rgba(8,8,11,.9) 28%,rgba(8,8,11,0) 100%);}
     .beat{left:6vw;right:auto;bottom:auto;max-width:32vw;}
@@ -191,14 +292,29 @@
   }
   @media (max-width:859px){ .rail{display:none;} }
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Identit\u00e9 Therapeutics",
+  "alternateName": "Identite Therapeutics",
+  "description": "Clinical-stage biotech company developing first-in-class innate immune resolution therapies for dry eye disease and ocular surface inflammation.",
+  "url": "https://identitetherapeutics.com",
+  "logo": "https://identitetherapeutics.com/images/logo-dark.png",
+  "image": "https://identitetherapeutics.com/images/og-image.jpg",
+  "sameAs": [],
+  "areaServed": "US",
+  "knowsAbout": ["Dry Eye Disease", "Ocular Surface Inflammation", "Innate Immune Resolution", "Clinical Stage Biotech", "Ophthalmology"]
+}
+</script>
 </head>
 <body>
-<noscript><style>.scroll-root{height:auto !important;}#loader{display:none !important;}.hero{position:relative !important;height:auto !important;padding:80px 24px !important;}.content{display:none !important;}#gl{display:none !important;}</style><div style="text-align:center;padding:40px 24px;background:#0A0A0D;color:#EFE7D6;font-family:'Hanken Grotesk',sans-serif;"><p>Please enable JavaScript to see the full interactive experience.</p></div></noscript>
+<noscript><style>.scroll-root{height:auto !important;}#loader{display:none !important;}.hero{position:relative !important;height:auto !important;padding:80px 24px !important;}.content{display:none !important;}#gl{display:none !important;}</style><div style="text-align:center;padding:40px 24px;background:#0A0A0D;color:#EFE7D6;font-family:var(--font-sans);"><p>Please enable JavaScript to see the full interactive experience.</p></div></noscript>
   <div class="loader" id="loader"><span>Generating ocean&hellip;</span></div>
 
   <!-- Fixed wordmark - swaps white/dark based on scroll position -->
   <div class="wordmark-fixed" id="wordmark">
-    <img src="/images/logo-white.png" data-dark="/images/logo-dark.png" data-white="/images/logo-white.png" alt="IDENTIT&Eacute;" id="logo-img" style="height:64px;width:auto;transition:opacity .25s ease;">
+    <img src="/images/logo-white.png" data-dark="/images/logo-dark.png" data-white="/images/logo-white.png" alt="IDENTIT&Eacute;" id="logo-img" width="280" height="64" style="height:64px;width:auto;transition:opacity .25s ease;">
   </div>
   <!-- Vault button -->
   <a href="/vault" class="vault-btn" title="Vault">
@@ -216,13 +332,13 @@
       <!-- Hero title overlay -->
       <div class="hero" id="hero">
         <div class="kicker">A clinical-stage company</div>
-        <h1 style="font-family:'Fraunces',serif;font-weight:300;font-size:clamp(50px,12vw,140px);line-height:.92;letter-spacing:.01em;color:var(--bone);text-shadow:0 8px 60px rgba(0,0,0,.55);margin:0;">Identit&eacute; Therapeutics.<br><span class="acc">To calm the storm.</span></h1>
+        <h1>Identit&eacute; Therapeutics.<br>To <span class="calm">calm</span> the storm.</h1>
         <div class="sub">For the eye that feels every blink.<br>Innate immune resolution for the ocular surface.</div>
         <div class="cue"><span>Scroll</span><span class="line"></span></div>
       </div>
 
       <!-- Scroll narrative: as the ocean calms, the surface story unfolds -->
-      <div class="content">
+      <div class="content scrim">
         <div class="beat" data-i="0">
           <div class="eyebrow">The Disease <span class="ln"></span> 01</div>
           <h2>Dry eye is not dryness.<br>It's <em>inflammation</em> that will not rest.</h2>
@@ -264,84 +380,48 @@
 
   <main>
 
-  <!-- SECTION 1 -->
-  <section class="section-dark">
-    <div class="section-inner">
-      <span class="eyebrow-label reveal" style="color:var(--gold);">01 · The Disease</span>
-      <h2 class="reveal reveal-delay-1" style="font-family:'Fraunces',serif;color:#fff;font-size:clamp(36px,6vw,72px);font-weight:300;line-height:1.05;max-width:700px;margin:16px 0 24px;">Dry eye is not dryness.<br>It's <em>inflammation</em> that will not rest.</h2>
-      <p class="reveal reveal-delay-2" style="font-size:clamp(16px,2vw,20px);color:var(--bone-dim);max-width:520px;line-height:1.5;">Burning. Grit. A sandpaper blink. A raw surface sends distress signals &mdash; and eventually, the signals deepen the wounds.</p>
-    </div>
-  </section>
+  <!-- Why Us -->
+<main>
 
-  <!-- SECTION 2 -->
-  <section class="section-cream">
-    <div class="section-inner">
-      <span class="eyebrow-label reveal">02 · The Gap</span>
-      <h2 class="reveal reveal-delay-1" style="font-family:'Fraunces',serif;color:var(--charcoal);font-size:clamp(36px,6vw,72px);font-weight:300;line-height:1.05;max-width:700px;margin:16px 0 24px;">All inflammation has <em>TWO</em> arms.<br>Medicine has answered <em>ONE.</em></h2>
-      <p class="reveal reveal-delay-2" style="font-size:clamp(16px,2vw,20px);color:var(--charcoal);opacity:.6;max-width:520px;line-height:1.5;">Today's therapies quiet the slower, learned immune response. The faster native arm rages unchecked.</p>
-    </div>
-  </section>
-
-  <!-- SECTION 3 -->
   <section class="section-white">
     <div class="section-inner">
-      <span class="eyebrow-label reveal">03 · The Shift</span>
-      <h2 class="reveal reveal-delay-1" style="font-family:'Fraunces',serif;color:var(--charcoal);font-size:clamp(36px,6vw,72px);font-weight:300;line-height:1.05;max-width:700px;margin:16px 0 24px;">We seek not <em>suppression.</em><br>But <em>relief.</em></h2>
-      <p class="reveal reveal-delay-2" style="font-size:clamp(16px,2vw,20px);color:var(--charcoal);opacity:.6;max-width:520px;line-height:1.5;">Inflammation is meant to end. The body carries an active program for closure. We aim to restore that program.</p>
-      <div style="display:flex;gap:48px;margin-top:64px;flex-wrap:wrap;" class="reveal reveal-delay-3">
+      <div style="display:flex;gap:48px;flex-wrap:wrap;" class="reveal">
         <div style="max-width:280px;">
-          <span style="font-family:'Fraunces',serif;font-size:48px;color:var(--olive);opacity:.15;display:block;margin-bottom:8px;">01</span>
-          <span style="font-family:'Fraunces',serif;font-size:18px;color:var(--charcoal);">Resolution biology</span>
+          <span style="font-family:var(--font-display);font-size:48px;color:var(--olive);opacity:.15;display:block;margin-bottom:8px;">01</span>
+          <span style="font-family:var(--font-display);font-size:18px;color:var(--charcoal);">Resolution biology</span>
           <p style="font-size:14px;color:var(--charcoal);opacity:.5;margin-top:6px;line-height:1.5;">Not suppression. Restoration of what the surface has forgotten it can do.</p>
         </div>
         <div style="max-width:280px;">
-          <span style="font-family:'Fraunces',serif;font-size:48px;color:var(--olive);opacity:.15;display:block;margin-bottom:8px;">02</span>
-          <span style="font-family:'Fraunces',serif;font-size:18px;color:var(--charcoal);">Established safety</span>
+          <span style="font-family:var(--font-display);font-size:48px;color:var(--olive);opacity:.15;display:block;margin-bottom:8px;">02</span>
+          <span style="font-family:var(--font-display);font-size:18px;color:var(--charcoal);">Established safety</span>
           <p style="font-size:14px;color:var(--charcoal);opacity:.5;margin-top:6px;line-height:1.5;">Extensive human safety data. An efficient clinical path.</p>
         </div>
         <div style="max-width:280px;">
-          <span style="font-family:'Fraunces',serif;font-size:48px;color:var(--olive);opacity:.15;display:block;margin-bottom:8px;">03</span>
-          <span style="font-family:'Fraunces',serif;font-size:18px;color:var(--charcoal);">Local by design</span>
+          <span style="font-family:var(--font-display);font-size:48px;color:var(--olive);opacity:.15;display:block;margin-bottom:8px;">03</span>
+          <span style="font-family:var(--font-display);font-size:18px;color:var(--charcoal);">Local by design</span>
           <p style="font-size:14px;color:var(--charcoal);opacity:.5;margin-top:6px;line-height:1.5;">Acts where applied. Minimal systemic exposure.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- SECTION 4 -->
-  <section class="section-alt">
-    <div class="section-inner">
-      <span class="eyebrow-label reveal">04 · The Approach</span>
-      <h2 class="reveal reveal-delay-1" style="font-family:'Fraunces',serif;color:var(--charcoal);font-size:clamp(36px,6vw,72px);font-weight:300;line-height:1.05;max-width:700px;margin:16px 0 24px;">We begin at the <em>mechanism.</em></h2>
-      <p class="reveal reveal-delay-2" style="font-size:clamp(16px,2vw,20px);color:var(--charcoal);opacity:.6;max-width:520px;line-height:1.5;">Not more tears. Not immunosuppression. Resolution biology, in the rigor of a clinical program.</p>
-    </div>
-  </section>
-
-  <!-- SECTION 5 -->
-  <section class="section-dark">
-    <div class="section-inner" style="text-align:center;">
-      <span class="eyebrow-label reveal" style="color:var(--gold);">05 · The Close</span>
-      <h2 class="reveal reveal-delay-1" style="font-family:'Fraunces',serif;color:#fff;font-size:clamp(36px,6vw,72px);font-weight:300;line-height:1.05;margin:16px 0 24px;">Til at last:<br>A surface at <em>rest.</em></h2>
-    </div>
-  </section>
-
-  <!-- SECTION 6: Pipeline -->
+  <!-- Pipeline -->
   <section class="section-cream" id="pipeline">
     <div class="section-inner">
       <span class="eyebrow-label reveal">Pipeline</span>
-      <h2 class="reveal reveal-delay-1" style="font-family:'Fraunces',serif;color:var(--charcoal);font-size:clamp(36px,6vw,72px);font-weight:300;line-height:1.05;max-width:700px;margin:16px 0 48px;">Our path<br><em>forward.</em></h2>
+      <h2 class="reveal reveal-delay-1" style="font-family:var(--font-display);color:var(--charcoal);font-size:clamp(36px,6vw,72px);font-weight:300;line-height:1.05;max-width:700px;margin:16px 0 48px;">Our path<br><em>forward.</em></h2>
       <div style="display:flex;gap:24px;flex-wrap:wrap;" class="reveal reveal-delay-2">
         <div style="flex:1;min-width:240px;padding:32px;background:#fff;border-radius:12px;">
           <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--olive);">Observational</span>
-          <p style="font-family:'Fraunces',serif;font-size:20px;color:var(--charcoal);margin-top:8px;">Filamentary Keratitis / Severe Dry Eye</p>
+          <p style="font-family:var(--font-display);font-size:20px;color:var(--charcoal);margin-top:8px;">Filamentary Keratitis / Severe Dry Eye</p>
         </div>
         <div style="flex:1;min-width:240px;padding:32px;background:#fff;border-radius:12px;">
           <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--olive);">Preclinical</span>
-          <p style="font-family:'Fraunces',serif;font-size:20px;color:var(--charcoal);margin-top:8px;">Ophthalmic Safety</p>
+          <p style="font-family:var(--font-display);font-size:20px;color:var(--charcoal);margin-top:8px;">Ophthalmic Safety</p>
         </div>
         <div style="flex:1;min-width:240px;padding:32px;background:#fff;border-radius:12px;">
           <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--olive);">IND Enabling</span>
-          <p style="font-family:'Fraunces',serif;font-size:20px;color:var(--charcoal);margin-top:8px;">Dry Eye Trial</p>
+          <p style="font-family:var(--font-display);font-size:20px;color:var(--charcoal);margin-top:8px;">Dry Eye Trial</p>
         </div>
       </div>
     </div>
@@ -350,12 +430,12 @@
   <!-- Tree -->
   <section class="tree-section">
     <div class="tree-bg">
-      <img src="/images/pine-forest.jpg" alt="Bristlecone pine forest at dusk" loading="lazy">
+      <img src="/images/pine-forest.jpg" alt="Bristlecone pine forest at dusk" width="1920" height="1080" loading="lazy">
       <div class="tree-overlay"></div>
     </div>
     <div class="tree-content">
       <span class="eyebrow-label reveal" style="color:var(--olive-light);margin-bottom:20px;">Our Identity</span>
-      <h2 class="reveal reveal-delay-1" style="font-family:'Fraunces',serif;color:#fff;font-size:clamp(40px,6vw,80px);line-height:1.0;">Rooted in<br>resilience.</h2>
+      <h2 class="reveal reveal-delay-1" style="font-family:var(--font-display);color:#fff;font-size:clamp(40px,6vw,80px);line-height:1.0;">Rooted in<br>resilience.</h2>
       <p class="reveal reveal-delay-2" style="font-size:16px;color:rgba(255,255,255,.5);max-width:400px;line-height:1.6;margin-top:20px;">Patient, deep-rooted, unhurried. Durable science, built to last.</p>
     </div>
   </section>
@@ -363,8 +443,8 @@
   <!-- Gate -->
   <section class="section-dark gate-section">
     <div class="section-inner" style="text-align:center;">
-      <span class="eyebrow-label reveal" style="color:var(--gold);">For Partners &amp; Investors</span>
-      <h2 class="reveal reveal-delay-1" style="font-family:'Fraunces',serif;color:#fff;font-size:clamp(36px,6vw,72px);font-weight:300;line-height:1.05;margin:16px 0 24px;">Learn more.</h2>
+      <span class="eyebrow-label reveal" style="color:var(--navy);">For Partners &amp; Investors</span>
+      <h2 class="reveal reveal-delay-1" style="font-family:var(--font-display);color:#fff;font-size:clamp(36px,6vw,72px);font-weight:300;line-height:1.05;margin:16px 0 24px;">Learn more.</h2>
       <p class="reveal reveal-delay-2" style="font-size:clamp(16px,2vw,20px);color:var(--bone-dim);max-width:520px;margin:0 auto;line-height:1.5;">Science, data, and pipeline &mdash; shared under confidentiality.</p>
       <a href="/vault" class="gate-cta reveal reveal-delay-3">Enter the vault &rarr;</a>
     </div>
@@ -375,7 +455,7 @@
   <footer class="footer" id="footer">
     <div class="footer-grid">
       <div>
-        <img src="/images/logo-dark.png" alt="Identite Therapeutics" style="height:32px;margin-bottom:16px;">
+        <img src="/images/logo-dark.png" alt="Identite Therapeutics" style="height:32px;width:auto;margin-bottom:16px;">
         <div class="body-sm" style="line-height:1.7;">
           <p>Identit&eacute; Therapeutics</p>
           <p>Santa Barbara, California</p>
@@ -414,8 +494,8 @@
   const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
   const clamp=(v,a,b)=>v<a?a:v>b?b:v,lerp=(a,b,t)=>a+(b-a)*t,seg=(p,a,b)=>b===a?0:clamp((p-a)/(b-a),0,1);
   const smooth=t=>t*t*(3-2*t);
-  const SC=[{in:0,full:.02,end:.18,out:.22},{in:.20,full:.25,end:.38,out:.42},{in:.40,full:.45,end:.58,out:.62},
-    {in:.60,full:.65,end:.78,out:.82},{in:.80,full:.85,end:.98,out:1.0}];
+  const SC=[{in:0,full:.03,end:.16,out:.20},{in:.22,full:.28,end:.40,out:.44},{in:.46,full:.52,end:.64,out:.68},
+    {in:.70,full:.76,end:.84,out:.88},{in:.90,full:.94,end:1,out:1.01}];
   const sA=(p,s)=>smooth(seg(p,s.in,s.full))*(1-smooth(seg(p,s.end,s.out)));
   const C=(r,g,b)=>new THREE.Color(r,g,b);
   const lc=(a,b,t,o)=>{o.r=lerp(a.r,b.r,t);o.g=lerp(a.g,b.g,t);o.b=lerp(a.b,b.b,t);return o;};

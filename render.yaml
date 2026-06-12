@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: identite-therapeutics
+    runtime: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+      - key: VAULT_PASSWORD
+        value: 1-Lozina
+      - key: VAULT_SESSION_SECRET
+        value: identite-vault-session-secret-2026
+      - key: OWNER_PHONE
+        value: +18055551234
+      - key: OWNER_EMAIL
+        value: lindendoss@gmail.com
+      - key: VAULT_OWNER_SECRET
+        value: 1-Lozina-Owner

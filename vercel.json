@@ -2,14 +2,15 @@
   "version": 2,
   "rewrites": [
     { "source": "/vault", "destination": "https://identite-api.onrender.com/vault" },
-    { "source": "/api/:path*", "destination": "https://identite-api.onrender.com/api/:path*" }
-  ],
-  "routes": [
-    { "src": "/robots\\.txt", "dest": "/robots.txt" },
-    { "src": "/sitemap\\.xml", "dest": "/sitemap.xml" },
-    { "src": "/images/(.*)", "dest": "/images/$1" },
-    { "src": "/contact", "dest": "/contact.html" },
-    { "src": "/", "dest": "/index.html" },
-    { "handle": "filesystem" }
+    { "source": "/vault/approve", "destination": "https://identite-api.onrender.com/vault/approve" },
+    { "source": "/vault/deny", "destination": "https://identite-api.onrender.com/vault/deny" },
+    { "source": "/api/:path*", "destination": "https://identite-api.onrender.com/api/:path*" },
+    { "source": "/images/:path*", "destination": "https://identite-api.onrender.com/images/:path*" },
+    { "source": "/uploads/:path*", "destination": "https://identite-api.onrender.com/uploads/:path*" },
+    { "source": "/robots.txt", "destination": "https://identite-api.onrender.com/robots.txt" },
+    { "source": "/sitemap.xml", "destination": "https://identite-api.onrender.com/sitemap.xml" },
+    { "source": "/contact", "destination": "https://identite-api.onrender.com/contact.html" },
+    { "source": "/vault.html", "destination": "https://identite-api.onrender.com/vault.html" },
+    { "source": "/(.*)", "destination": "https://identite-api.onrender.com/" }
   ]
 }

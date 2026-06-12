@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>IDENTITÉ Therapeutics — Topical Regadenoson</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Hanken+Grotesk:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bone:#EFE9DB;
+    --bone-deep:#E3DAC4;
+    --ink:#22253A;
+    --ink-soft:#3C4060;
+    --gold:#B5862E;
+    --gold-bright:#D6AC57;
+    --sage:#5E7C6B;
+    --teal:#6E9B96;
+    --terra:#B5543A;
+    --mist:#CBC3AD;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bone);
+    color:var(--ink);
+    font-family:'Hanken Grotesk',sans-serif;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--gold);color:var(--bone);}
+
+  /* fixed chrome */
+  .wordmark-fixed{
+    position:fixed;top:26px;left:34px;z-index:40;
+    font-family:'Fraunces',serif;font-weight:500;font-size:19px;
+    letter-spacing:.16em;color:var(--ink);mix-blend-mode:multiply;
+  }
+  .wordmark-fixed b{font-weight:600;}
+  .meta-fixed{
+    position:fixed;top:30px;right:34px;z-index:40;
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;
+    letter-spacing:.22em;color:var(--ink-soft);text-transform:uppercase;
+    text-align:right;line-height:1.7;mix-blend-mode:multiply;
+  }
+
+  /* scene index rail */
+  .rail{
+    position:fixed;right:34px;top:50%;transform:translateY(-50%);
+    z-index:40;display:flex;flex-direction:column;gap:13px;align-items:flex-end;
+    mix-blend-mode:multiply;
+  }
+  .rail .tick{
+    font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;
+    color:var(--mist);display:flex;align-items:center;gap:9px;transition:color .4s ease;
+  }
+  .rail .tick .bar{width:16px;height:1.5px;background:var(--mist);transition:all .4s ease;}
+  .rail .tick.on{color:var(--ink);}
+  .rail .tick.on .bar{width:30px;background:var(--gold);}
+
+  /* scroll root + sticky stage */
+  .scroll-root{position:relative;height:640vh;}
+  .stage{
+    position:sticky;top:0;height:100vh;width:100%;overflow:hidden;
+  }
+  canvas#scene{position:absolute;inset:0;width:100%;height:100%;display:block;}
+
+  /* grain + vignette overlays */
+  .grain{
+    position:absolute;inset:0;z-index:5;pointer-events:none;
+    opacity:.4;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+  }
+  .vignette{
+    position:absolute;inset:0;z-index:4;pointer-events:none;
+    background:radial-gradient(120% 80% at 50% 42%,transparent 52%,rgba(60,52,34,.16) 100%);
+  }
+
+  /* text panels */
+  .panels{position:absolute;inset:0;z-index:10;pointer-events:none;}
+  .panel{
+    position:absolute;max-width:min(420px,42vw);opacity:0;
+    will-change:opacity,transform;
+  }
+  .panel.left{left:7vw;}
+  .panel.right{right:7vw;text-align:right;}
+  .panel .eyebrow{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.34em;
+    text-transform:uppercase;color:var(--gold);margin-bottom:18px;
+    display:flex;gap:12px;align-items:center;
+  }
+  .panel.right .eyebrow{justify-content:flex-end;}
+  .panel .eyebrow .ln{width:34px;height:1px;background:var(--gold);opacity:.6;}
+  .panel h2{
+    font-family:'Fraunces',serif;font-weight:400;
+    font-size:clamp(34px,5vw,62px);line-height:1.02;letter-spacing:-.015em;
+    color:var(--ink);margin-bottom:20px;
+  }
+  .panel h2 em{font-style:italic;color:var(--gold);}
+  .panel p{
+    font-size:clamp(14px,1.15vw,16.5px);line-height:1.6;color:var(--ink-soft);
+    max-width:38ch;font-weight:400;
+  }
+  .panel.right p{margin-left:auto;}
+  .panel .note{
+    margin-top:18px;font-family:'IBM Plex Mono',monospace;font-size:11px;
+    letter-spacing:.05em;color:var(--ink-soft);opacity:.72;line-height:1.7;
+  }
+
+  /* opening hero */
+  .hero{
+    position:absolute;inset:0;z-index:11;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;text-align:center;
+    will-change:opacity,transform;pointer-events:none;
+  }
+  .hero .kicker{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.4em;
+    text-transform:uppercase;color:var(--gold);margin-bottom:26px;
+  }
+  .hero h1{
+    font-family:'Fraunces',serif;font-weight:300;
+    font-size:clamp(56px,11vw,150px);line-height:.92;letter-spacing:.02em;
+    color:var(--ink);
+  }
+  .hero h1 .acc{font-style:italic;font-weight:400;}
+  .hero .sub{
+    margin-top:28px;font-size:clamp(14px,1.3vw,18px);color:var(--ink-soft);
+    letter-spacing:.01em;max-width:30ch;line-height:1.55;
+  }
+  .hero .cue{
+    position:absolute;bottom:38px;left:50%;transform:translateX(-50%);
+    font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.3em;
+    text-transform:uppercase;color:var(--ink-soft);display:flex;flex-direction:column;
+    align-items:center;gap:12px;
+  }
+  .hero .cue .line{width:1px;height:40px;background:linear-gradient(var(--gold),transparent);
+    animation:drip 2.2s ease-in-out infinite;}
+  @keyframes drip{0%{transform:scaleY(.3);opacity:.4;transform-origin:top;}
+    50%{transform:scaleY(1);opacity:1;}100%{transform:scaleY(.3);opacity:.4;transform-origin:bottom;}}
+
+  /* closing footer (after the sticky journey) */
+  .outro{
+    position:relative;z-index:2;min-height:62vh;background:var(--ink);
+    color:var(--bone);display:flex;flex-direction:column;align-items:center;
+    justify-content:center;text-align:center;padding:80px 24px;
+  }
+  .outro h3{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(30px,4.5vw,58px);
+    letter-spacing:.04em;line-height:1.05;}
+  .outro h3 em{font-style:italic;color:var(--gold-bright);}
+  .outro p{margin-top:22px;max-width:46ch;color:#C9C2AE;font-size:16px;line-height:1.65;}
+  .outro .tag{margin-top:34px;font-family:'IBM Plex Mono',monospace;font-size:11px;
+    letter-spacing:.28em;text-transform:uppercase;color:var(--gold-bright);}
+
+  @media (max-width:680px){
+    .panel{max-width:80vw;}
+    .panel.left{left:6vw;} .panel.right{right:6vw;}
+    .rail{display:none;}
+    .meta-fixed{display:none;}
+  }
+</style>
+</head>
+<body>
+
+  <div class="wordmark-fixed">IDENTIT<b>É</b></div>
+  <div class="meta-fixed">Therapeutics<br>Ocular Surface · A2A</div>
+
+  <nav class="rail" id="rail">
+    <div class="tick" data-i="0"><span>ARRIVAL</span><span class="bar"></span></div>
+    <div class="tick" data-i="1"><span>DWELL</span><span class="bar"></span></div>
+    <div class="tick" data-i="2"><span>BINDING</span><span class="bar"></span></div>
+    <div class="tick" data-i="3"><span>CASCADE</span><span class="bar"></span></div>
+    <div class="tick" data-i="4"><span>RESOLUTION</span><span class="bar"></span></div>
+    <div class="tick" data-i="5"><span>CALM</span><span class="bar"></span></div>
+  </nav>
+
+  <div class="scroll-root" id="root">
+    <div class="stage">
+      <canvas id="scene"></canvas>
+      <div class="vignette"></div>
+      <div class="grain"></div>
+
+      <div class="panels" id="panels">
+        <!-- hero / scene 0 -->
+        <div class="hero" id="hero">
+          <div class="kicker">First-in-class topical A2A agonist</div>
+          <h1>The surface,<br><span class="acc">resolved.</span></h1>
+          <div class="sub">Topical regadenoson — a single molecule that repairs, hydrates, and calms the ocular surface.</div>
+          <div class="cue"><span>Scroll</span><span class="line"></span></div>
+        </div>
+
+        <!-- scene 1 -->
+        <div class="panel right" data-i="1">
+          <div class="eyebrow">Dwell <span class="ln"></span> 02</div>
+          <h2>It holds,<br>then <em>clears</em>.</h2>
+          <p>A mucoadhesive CMC/HA vehicle tunes residence — long enough to engage the surface across the repair window, short enough to clear.</p>
+          <div class="note">vehicle · occupancy × dwell × interval</div>
+        </div>
+
+        <!-- scene 2 -->
+        <div class="panel left" data-i="2">
+          <div class="eyebrow">Binding <span class="ln"></span> 03</div>
+          <h2>One molecule.<br>One <em>receptor</em>.</h2>
+          <p>Regadenoson docks the orthosteric pocket of the adenosine A2A receptor — a Gαs-coupled GPCR on the surface epithelium and resident macrophages.</p>
+          <div class="note">A2A · 7TM GPCR · Kᵢ ≈ 1.3 µM</div>
+        </div>
+
+        <!-- scene 3 -->
+        <div class="panel right" data-i="3">
+          <div class="eyebrow">Cascade <span class="ln"></span> 04</div>
+          <h2>The signal<br><em>cascades</em>.</h2>
+          <p>A2A activates Gαs → adenylyl cyclase → cAMP → PKA — the second-messenger relay that drives the two effects downstream.</p>
+          <div class="note">Gαs → AC → cAMP → PKA</div>
+        </div>
+
+        <!-- scene 4 -->
+        <div class="panel left" data-i="4">
+          <div class="eyebrow">Resolution <span class="ln"></span> 05</div>
+          <h2>Two axes,<br>one <em>molecule</em>.</h2>
+          <p>PKA opens CFTR — bicarbonate and water unfold existing mucin into a functional gel. In parallel, A2A brakes the inflamed macrophage, switching M1 toward resolving M2.</p>
+          <div class="note">CFTR · HCO₃⁻ → mucin · M1→M2</div>
+        </div>
+
+        <!-- scene 5 -->
+        <div class="panel right" data-i="5">
+          <div class="eyebrow">Calm <span class="ln"></span> 06</div>
+          <h2>The surface<br><em>calms</em>.</h2>
+          <p>Hyperosmolarity falls, the film stabilizes, the epithelium recovers — the vicious cycle wound down at its source.</p>
+          <div class="note" id="osmo">osmolarity · 316 → 301 mOsm/L*</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="outro">
+    <h3>Upstream of the <em>surface-control</em> loop.</h3>
+    <p>Not another anti-inflammatory drop. A localized, pulsed, surface-restricted agonist of the body's own resolution signal.</p>
+    <div class="tag">IDENTITÉ Therapeutics</div>
+  </section>
+
+<script>
+(()=>{
+  const cv = document.getElementById('scene');
+  const ctx = cv.getContext('2d');
+  const root = document.getElementById('root');
+  const hero = document.getElementById('hero');
+  const panels = [...document.querySelectorAll('.panel[data-i]')];
+  const ticks = [...document.querySelectorAll('.rail .tick')];
+  const osmo = document.getElementById('osmo');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  let W=0,H=0,DPR=1;
+  function resize(){
+    DPR = Math.min(2, window.devicePixelRatio||1);
+    W = window.innerWidth; H = window.innerHeight;
+    cv.width = W*DPR; cv.height = H*DPR;
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+  }
+  window.addEventListener('resize',resize); resize();
+
+  // ---------- palette ----------
+  const C = {
+    bone:'#EFE9DB', boneDeep:'#E3DAC4', ink:'#22253A', inkSoft:'#3C4060',
+    gold:'#B5862E', goldBright:'#D6AC57', sage:'#5E7C6B', teal:'#6E9B96',
+    terra:'#B5543A', mist:'#CBC3AD'
+  };
+  function rgba(hex,a){
+    const n=parseInt(hex.slice(1),16);
+    return `rgba(${(n>>16)&255},${(n>>8)&255},${n&255},${a})`;
+  }
+
+  // ---------- math ----------
+  const clamp=(v,a,b)=>v<a?a:v>b?b:v;
+  const lerp=(a,b,t)=>a+(b-a)*t;
+  const seg=(p,a,b)=> b===a?0:clamp((p-a)/(b-a),0,1);
+  const smooth=t=>t*t*(3-2*t);
+  const smoother=t=>t*t*t*(t*(t*6-15)+10);
+  const easeOut=t=>1-Math.pow(1-t,3);
+  const easeIn=t=>t*t*t;
+
+  // ---------- scene windows ----------
+  // {in, full, end, out}  (overlap zones create crossfades)
+  const SC = [
+    {in:0.00, full:0.02, end:0.12, out:0.16},
+    {in:0.14, full:0.18, end:0.28, out:0.32},
+    {in:0.30, full:0.35, end:0.48, out:0.52},
+    {in:0.50, full:0.55, end:0.66, out:0.70},
+    {in:0.68, full:0.73, end:0.85, out:0.89},
+    {in:0.87, full:0.91, end:1.00, out:1.01},
+  ];
+  const sAlpha=(p,s)=> smooth(seg(p,s.in,s.full)) * (1-smooth(seg(p,s.end,s.out)));
+  // local action progress within a scene (entrance->exit)
+  const sProg =(p,s)=> seg(p, s.full, s.end);
+
+  // ---------- drifting bokeh field (depth) ----------
+  const field=[];
+  for(let i=0;i<14;i++){
+    field.push({x:Math.random(),y:Math.random(),r:60+Math.random()*150,
+      sp:0.01+Math.random()*0.03, ph:Math.random()*Math.PI*2,
+      c:[C.gold,C.sage,C.mist,C.teal][i%4]});
+  }
+  function drawField(time){
+    for(const f of field){
+      const x=(f.x + Math.sin(time*0.00006*f.sp*60+f.ph)*0.04)*W;
+      const y=(f.y + Math.cos(time*0.00005*f.sp*60+f.ph)*0.05)*H;
+      const g=ctx.createRadialGradient(x,y,0,x,y,f.r);
+      g.addColorStop(0,rgba(f.c,0.05));
+      g.addColorStop(1,rgba(f.c,0));
+      ctx.fillStyle=g; ctx.beginPath(); ctx.arc(x,y,f.r,0,7); ctx.fill();
+    }
+  }
+
+  // ---------- shared primitives ----------
+  function molecule(x,y,s,rot,a,fill){
+    // stylized purine core: fused hexagon+pentagon + pendant nodes
+    ctx.save(); ctx.translate(x,y); ctx.rotate(rot); ctx.globalAlpha=a;
+    ctx.lineWidth=2.2*s/14; ctx.strokeStyle=fill; ctx.fillStyle=rgba(fill,0.12);
+    // hexagon
+    ctx.beginPath();
+    for(let i=0;i<6;i++){const ang=Math.PI/6 + i*Math.PI/3;
+      const px=Math.cos(ang)*s, py=Math.sin(ang)*s;
+      i?ctx.lineTo(px,py):ctx.moveTo(px,py);}
+    ctx.closePath(); ctx.fill(); ctx.stroke();
+    // fused pentagon (right side)
+    const ax=Math.cos(-Math.PI/6)*s, ay=Math.sin(-Math.PI/6)*s;
+    const bx=Math.cos(Math.PI/6)*s, by=Math.sin(Math.PI/6)*s;
+    ctx.beginPath(); ctx.moveTo(ax,ay);
+    ctx.lineTo(ax+s*0.92,ay-s*0.30);
+    ctx.lineTo(bx+s*1.05,by);
+    ctx.lineTo(bx+s*0.55,by+s*0.62);
+    ctx.lineTo(bx,by); ctx.closePath(); ctx.fill(); ctx.stroke();
+    // pendant nodes
+    ctx.fillStyle=fill;
+    [[-s*1.15,-s*0.2],[ -s*0.3,-s*1.15],[bx+s*1.5,by-s*0.2]].forEach(p=>{
+      ctx.beginPath(); ctx.arc(p[0],p[1],s*0.16,0,7); ctx.fill();
+      ctx.lineWidth=1.6*s/14;
+    });
+    ctx.restore();
+  }
+
+  function bilayer(cy,h,a,tint){
+    // two rows of phospholipid heads with tails
+    const heads=Math.ceil(W/26)+2; const step=W/(heads-1);
+    ctx.save(); ctx.globalAlpha=a;
+    ctx.fillStyle=rgba(tint,0.5);
+    ctx.strokeStyle=rgba(tint,0.32); ctx.lineWidth=1.4;
+    for(let i=0;i<heads;i++){
+      const x=i*step;
+      // top row
+      ctx.beginPath(); ctx.arc(x,cy-h/2,4.2,0,7); ctx.fill();
+      ctx.beginPath(); ctx.moveTo(x,cy-h/2+4); ctx.lineTo(x-1.5,cy-2); ctx.moveTo(x,cy-h/2+4); ctx.lineTo(x+1.5,cy-2); ctx.stroke();
+      // bottom row
+      ctx.beginPath(); ctx.arc(x,cy+h/2,4.2,0,7); ctx.fill();
+      ctx.beginPath(); ctx.moveTo(x,cy+h/2-4); ctx.lineTo(x-1.5,cy+2); ctx.moveTo(x,cy+h/2-4); ctx.lineTo(x+1.5,cy+2); ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  function receptor(x,cy,scale,activate,a){
+    // 7 transmembrane helices, tilt on activation
+    ctx.save(); ctx.translate(x,cy); ctx.globalAlpha=a;
+    const cols=[-3,-2,-1,0,1,2,3]; const w=9*scale,h=58*scale, gap=11*scale;
+    cols.forEach((c,i)=>{
+      const tilt=activate*(c*0.05);
+      const yoff=activate*(Math.abs(c)*3*scale);
+      ctx.save(); ctx.translate(c*gap, -yoff); ctx.rotate(tilt);
+      const g=ctx.createLinearGradient(0,-h/2,0,h/2);
+      g.addColorStop(0,rgba(C.ink,0.9)); g.addColorStop(0.5,rgba(C.inkSoft,0.95)); g.addColorStop(1,rgba(C.ink,0.85));
+      ctx.fillStyle=g;
+      roundRect(-w/2,-h/2,w,h,w/2); ctx.fill();
+      ctx.restore();
+    });
+    // orthosteric pocket glow on activation
+    if(activate>0){
+      const gg=ctx.createRadialGradient(0,-h*0.4,0,0,-h*0.4,40*scale);
+      gg.addColorStop(0,rgba(C.goldBright,0.5*activate)); gg.addColorStop(1,rgba(C.goldBright,0));
+      ctx.fillStyle=gg; ctx.beginPath(); ctx.arc(0,-h*0.4,40*scale,0,7); ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  function roundRect(x,y,w,h,r){
+    ctx.beginPath();
+    ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r);
+    ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath();
+  }
+
+  function label(x,y,text,a,align,color){
+    ctx.save(); ctx.globalAlpha=a; ctx.fillStyle=color||C.inkSoft;
+    ctx.font='500 12px "IBM Plex Mono", monospace'; ctx.textAlign=align||'center';
+    ctx.textBaseline='middle'; ctx.fillText(text,x,y); ctx.restore();
+  }
+
+  function node(x,y,r,a,fill,labelText,glow){
+    ctx.save(); ctx.globalAlpha=a;
+    if(glow){const g=ctx.createRadialGradient(x,y,0,x,y,r*3);
+      g.addColorStop(0,rgba(fill,0.4*glow)); g.addColorStop(1,rgba(fill,0));
+      ctx.fillStyle=g; ctx.beginPath(); ctx.arc(x,y,r*3,0,7); ctx.fill();}
+    ctx.fillStyle=rgba(fill,0.16); ctx.strokeStyle=fill; ctx.lineWidth=2;
+    ctx.beginPath(); ctx.arc(x,y,r,0,7); ctx.fill(); ctx.stroke();
+    ctx.restore();
+    if(labelText) label(x,y+r+15,labelText,a,'center',C.inkSoft);
+  }
+
+  function connector(x1,y1,x2,y2,prog,a,color){
+    ctx.save(); ctx.globalAlpha=a; ctx.strokeStyle=color||C.gold; ctx.lineWidth=2;
+    ctx.setLineDash([5,6]);
+    const ex=lerp(x1,x2,prog), ey=lerp(y1,y2,prog);
+    ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(ex,ey); ctx.stroke();
+    ctx.setLineDash([]);
+    // travelling pulse
+    if(prog>0&&prog<1){ctx.fillStyle=color||C.gold; ctx.beginPath(); ctx.arc(ex,ey,3.5,0,7); ctx.fill();}
+    ctx.restore();
+  }
+
+  // corneal surface curve
+  function surface(cy,amp,a,hydrate){
+    ctx.save(); ctx.globalAlpha=a;
+    // body of cornea
+    const g=ctx.createLinearGradient(0,cy,0,H);
+    g.addColorStop(0,rgba(C.boneDeep,0.0)); g.addColorStop(0.4,rgba(C.boneDeep,0.55)); g.addColorStop(1,rgba(C.mist,0.5));
+    ctx.fillStyle=g; ctx.beginPath(); ctx.moveTo(0,H);
+    for(let x=0;x<=W;x+=8){const y=cy + Math.sin(x/W*Math.PI)* -70 + Math.sin(x*0.02+1)*2; ctx.lineTo(x,y);}
+    ctx.lineTo(W,H); ctx.closePath(); ctx.fill();
+    // tear film line
+    ctx.strokeStyle=hydrate>0.5?rgba(C.teal,0.7):rgba(C.gold,0.55);
+    ctx.lineWidth=2.4;
+    ctx.beginPath();
+    for(let x=0;x<=W;x+=6){
+      const base=cy + Math.sin(x/W*Math.PI)*-70;
+      const wob=(1-hydrate)*Math.sin(x*0.06+performance.now()*0.002)*4;
+      const y=base-10+wob; x?ctx.lineTo(x,y):ctx.moveTo(x,y);
+    }
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  // ---------------- SCENES ----------------
+
+  function scene0(p,a){ // arrival: droplet falls onto surface
+    const t=sProg(p,SC[0]);
+    surface(H*0.86,8,a, 0);
+    // droplet
+    const dy=lerp(-H*0.2, H*0.86-40, easeIn(clamp(t/0.85,0,1)));
+    const dx=W*0.5;
+    // trail ghosts
+    for(let i=4;i>=1;i--){
+      const gy=dy-i*26; if(gy< -40) continue;
+      drawDrop(dx,gy,22, a*0.12*(1-i/5));
+    }
+    drawDrop(dx,dy,26,a);
+    label(dx, dy-44, 'regadenoson · CMC/HA', a*clamp(t*2,0,1)*0.9,'center',C.inkSoft);
+  }
+  function drawDrop(x,y,r,a){
+    ctx.save(); ctx.globalAlpha=a;
+    const g=ctx.createRadialGradient(x-r*0.3,y-r*0.4,r*0.1,x,y,r);
+    g.addColorStop(0,rgba(C.goldBright,0.9)); g.addColorStop(0.5,rgba(C.gold,0.5)); g.addColorStop(1,rgba(C.gold,0.12));
+    ctx.fillStyle=g;
+    ctx.beginPath();
+    ctx.moveTo(x,y-r*1.4);
+    ctx.bezierCurveTo(x+r,y-r*0.5,x+r,y+r*0.6,x,y+r);
+    ctx.bezierCurveTo(x-r,y+r*0.6,x-r,y-r*0.5,x,y-r*1.4);
+    ctx.fill();
+    ctx.fillStyle=rgba('#FFFFFF',0.5);
+    ctx.beginPath(); ctx.ellipse(x-r*0.32,y-r*0.3,r*0.16,r*0.28,-0.4,0,7); ctx.fill();
+    ctx.restore();
+  }
+
+  function scene1(p,a){ // dwell + release of single molecule
+    const t=sProg(p,SC[1]);
+    surface(H*0.8,8,a,0);
+    // spreading gel film over surface
+    const spread=easeOut(clamp(t/0.6,0,1));
+    ctx.save(); ctx.globalAlpha=a*0.5;
+    const gw=lerp(W*0.12,W*0.92,spread);
+    const fg=ctx.createLinearGradient(W/2-gw/2,0,W/2+gw/2,0);
+    fg.addColorStop(0,rgba(C.gold,0)); fg.addColorStop(0.5,rgba(C.goldBright,0.34)); fg.addColorStop(1,rgba(C.gold,0));
+    ctx.fillStyle=fg;
+    ctx.beginPath();
+    for(let x=W/2-gw/2;x<=W/2+gw/2;x+=6){const base=H*0.8+Math.sin(x/W*Math.PI)*-70; ctx.lineTo(x,base-18);}
+    for(let x=W/2+gw/2;x>=W/2-gw/2;x-=6){const base=H*0.8+Math.sin(x/W*Math.PI)*-70; ctx.lineTo(x,base-2);}
+    ctx.closePath(); ctx.fill(); ctx.restore();
+    // dwell pulse
+    const pulse=(Math.sin(performance.now()*0.003)*0.5+0.5);
+    label(W/2,H*0.8-90,'dwell window', a*spread*(0.5+pulse*0.5),'center',C.gold);
+    // single molecule detaches, drifts down toward next layer
+    const my=lerp(H*0.62,H*0.78,easeOut(clamp((t-0.4)/0.6,0,1)));
+    if(t>0.35) molecule(W*0.5,my,16,performance.now()*0.0006, a, C.ink);
+  }
+
+  function scene2(p,a){ // receptor docking
+    const t=sProg(p,SC[2]);
+    const cy=H*0.5;
+    bilayer(cy,30,a,C.sage);
+    label(W*0.5, cy+78, 'plasma membrane · surface epithelium', a*0.8,'center',C.inkSoft);
+    const activate=smooth(clamp((t-0.55)/0.4,0,1));
+    receptor(W*0.5,cy,1.5,activate,a);
+    // molecule travels along arc into pocket
+    const dock=easeOut(clamp(t/0.55,0,1));
+    const startX=W*0.18, startY=H*0.16;
+    const endX=W*0.5, endY=cy-58;
+    const mx=lerp(startX,endX,dock);
+    const my=lerp(startY,endY,dock) - Math.sin(dock*Math.PI)*60;
+    molecule(mx,my,16,performance.now()*0.0006*(1-dock)+dock*0.5, a*(dock<0.99?1:1), C.gold);
+    // contact ring
+    if(dock>0.96){
+      const rp=(performance.now()*0.001)%1;
+      ctx.save(); ctx.globalAlpha=a*(1-rp)*0.6; ctx.strokeStyle=C.goldBright; ctx.lineWidth=2;
+      ctx.beginPath(); ctx.arc(endX,endY,10+rp*60,0,7); ctx.stroke(); ctx.restore();
+    }
+    label(W*0.5,cy-130,'A2A · Gαs-coupled GPCR', a*activate,'center',C.gold);
+  }
+
+  function scene3(p,a){ // Gs -> AC -> cAMP -> PKA cascade
+    const t=sProg(p,SC[3]);
+    const cy=H*0.32;
+    bilayer(cy,28,a*0.8,C.sage);
+    receptor(W*0.5,cy,1.1,1,a*0.7);
+    // intracellular nodes laid out, drawn in sequence with scroll
+    const nodes=[
+      {x:W*0.5, y:cy+70, r:13, c:C.gold, l:'Gαs'},
+      {x:W*0.34,y:cy+150,r:16, c:C.gold, l:'adenylyl cyclase'},
+      {x:W*0.5, y:cy+240,r:14, c:C.goldBright, l:'cAMP'},
+      {x:W*0.66,y:cy+330,r:18, c:C.terra, l:'PKA'},
+    ];
+    // connectors fill progressively
+    const segP=[seg(t,0.05,0.30),seg(t,0.28,0.52),seg(t,0.5,0.74),seg(t,0.72,0.95)];
+    connector(W*0.5,cy+28,nodes[0].x,nodes[0].y-nodes[0].r,segP[0],a,C.gold);
+    connector(nodes[0].x,nodes[0].y+nodes[0].r,nodes[1].x,nodes[1].y-nodes[1].r,segP[1],a,C.gold);
+    connector(nodes[1].x,nodes[1].y+nodes[1].r,nodes[2].x,nodes[2].y-nodes[2].r,segP[2],a,C.gold);
+    connector(nodes[2].x,nodes[2].y+nodes[2].r,nodes[3].x,nodes[3].y-nodes[3].r,segP[3],a,C.terra);
+    nodes.forEach((n,i)=>{
+      const na=a*smooth(seg(t, i*0.18+0.02, i*0.18+0.18));
+      const glow=na>0?(0.5+0.5*Math.sin(performance.now()*0.004+i)):0;
+      node(n.x,n.y,n.r,na,n.c,n.l,glow);
+    });
+    // cAMP bloom: little dots multiply around cAMP node
+    const camp=smooth(seg(t,0.5,0.85));
+    for(let i=0;i<10;i++){
+      const ang=i/10*Math.PI*2 + performance.now()*0.0008;
+      const rr=24+ (i%3)*10 + camp*30;
+      const x=nodes[2].x+Math.cos(ang)*rr, y=nodes[2].y+Math.sin(ang)*rr;
+      ctx.save(); ctx.globalAlpha=a*camp*0.7; ctx.fillStyle=C.goldBright;
+      ctx.beginPath(); ctx.arc(x,y,2.4,0,7); ctx.fill(); ctx.restore();
+    }
+  }
+
+  function scene4(p,a){ // dual axis: CFTR/mucin (left) + M1->M2 (right)
+    const t=sProg(p,SC[4]);
+    const cy=H*0.5;
+    // membrane spans, split visually
+    bilayer(cy,26,a*0.7,C.sage);
+    // --- LEFT: CFTR -> ions -> water -> mucin hydration
+    const Lx=W*0.27;
+    // CFTR channel
+    ctx.save(); ctx.globalAlpha=a; ctx.fillStyle=rgba(C.teal,0.85);
+    roundRect(Lx-8,cy-22,16,44,6); ctx.fill();
+    const open=smooth(seg(t,0.1,0.4));
+    ctx.fillStyle=rgba(C.bone,open*0.9); roundRect(Lx-3,cy-18,6,36,3); ctx.fill();
+    ctx.restore();
+    label(Lx,cy+48,'CFTR · Cl⁻ / HCO₃⁻',a*0.85,'center',C.teal);
+    // ions streaming up out of channel
+    const flow=seg(t,0.2,0.7);
+    for(let i=0;i<8;i++){
+      const ph=(performance.now()*0.0012 + i/8)%1;
+      const y=cy-10 - ph*120*flow; const x=Lx + Math.sin(i*2+ph*6)*14;
+      ctx.save(); ctx.globalAlpha=a*flow*(1-ph)*0.9;
+      ctx.fillStyle=i%2?C.teal:C.sage; ctx.beginPath(); ctx.arc(x,y,3.4,0,7); ctx.fill();
+      ctx.restore();
+    }
+    // mucin: condensed coil -> expanded hydrated mesh (above)
+    const hyd=smooth(seg(t,0.4,0.95));
+    drawMucin(Lx,cy-150,a, hyd);
+    label(Lx,cy-225,'mucin → hydrated gel',a*hyd,'center',C.teal);
+
+    // --- RIGHT: macrophage M1 -> M2
+    const Rx=W*0.72, Ry=cy-30;
+    const m2=smooth(seg(t,0.15,0.9));
+    drawMacrophage(Rx,Ry,52,a,m2);
+    label(Rx,Ry+96, m2<0.5?'macrophage · M1':'macrophage · M2', a,'center', m2<0.5?C.terra:C.sage);
+    // emitted cytokine tokens
+    for(let i=0;i<7;i++){
+      const ph=(performance.now()*0.0009 + i/7)%1;
+      const ang=i/7*Math.PI*2;
+      const dist=60+ph*70;
+      const x=Rx+Math.cos(ang)*dist, y=Ry+Math.sin(ang)*dist;
+      const isM1 = m2<0.5;
+      ctx.save(); ctx.globalAlpha=a*(1-ph)*0.85;
+      ctx.fillStyle=isM1?C.terra:C.teal;
+      if(isM1){ // sharp darts
+        ctx.translate(x,y); ctx.rotate(ang); ctx.beginPath();
+        ctx.moveTo(-4,-1.6); ctx.lineTo(4,0); ctx.lineTo(-4,1.6); ctx.closePath(); ctx.fill();
+      } else { // soft rounds
+        ctx.beginPath(); ctx.arc(x,y,3,0,7); ctx.fill();
+      }
+      ctx.restore();
+    }
+    label(Rx,Ry-92, m2<0.5?'TNF-α · IL-1β':'IL-10 · Arg1', a*0.8,'center', m2<0.5?C.terra:C.sage);
+  }
+
+  function drawMucin(x,y,a,hyd){
+    // hyd 0 = tight coil, 1 = expanded mesh
+    ctx.save(); ctx.globalAlpha=a; ctx.strokeStyle=rgba(C.teal,0.8); ctx.lineWidth=2.4;
+    const turns=3, pts=40;
+    ctx.beginPath();
+    for(let i=0;i<=pts;i++){
+      const u=i/pts;
+      const rad=lerp(8,46,hyd) * (0.5+0.5*Math.sin(u*Math.PI));
+      const ang=u*Math.PI*2*turns + performance.now()*0.0004;
+      const sx=x+Math.cos(ang)*rad*lerp(0.6,1.4,hyd);
+      const sy=y+ (u-0.5)*lerp(26,70,hyd) + Math.sin(ang)*rad*0.4;
+      i?ctx.lineTo(sx,sy):ctx.moveTo(sx,sy);
+    }
+    ctx.stroke();
+    // water dots woven in when hydrated
+    for(let i=0;i<Math.floor(hyd*9);i++){
+      const ang=i/9*Math.PI*2; const rr=lerp(10,40,hyd);
+      ctx.fillStyle=rgba(C.bone,0.7);
+      ctx.beginPath(); ctx.arc(x+Math.cos(ang+performance.now()*0.001)*rr,y+Math.sin(ang*2)*rr*0.6,2.6,0,7); ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  function drawMacrophage(x,y,r,a,m2){
+    ctx.save(); ctx.globalAlpha=a;
+    const col = m2<0.5 ? lerpColor(C.terra,C.sage,m2*2) : lerpColor(C.terra,C.sage,1);
+    const spik = 1-m2; // spiky when M1
+    const g=ctx.createRadialGradient(x,y,r*0.2,x,y,r);
+    g.addColorStop(0,rgba(col,0.32)); g.addColorStop(1,rgba(col,0.08));
+    ctx.fillStyle=g; ctx.strokeStyle=rgba(col,0.85); ctx.lineWidth=2.4;
+    ctx.beginPath();
+    const lobes=10;
+    for(let i=0;i<=lobes;i++){
+      const ang=i/lobes*Math.PI*2;
+      const noise = Math.sin(ang*4+performance.now()*0.0015)* (10*spik) + Math.sin(ang*7)* (6*spik);
+      const rr=r + noise;
+      const sx=x+Math.cos(ang)*rr, sy=y+Math.sin(ang)*rr;
+      i?ctx.lineTo(sx,sy):ctx.moveTo(sx,sy);
+    }
+    ctx.closePath(); ctx.fill(); ctx.stroke();
+    // nucleus
+    ctx.fillStyle=rgba(col,0.5);
+    ctx.beginPath(); ctx.arc(x,y,r*0.32,0,7); ctx.fill();
+    ctx.restore();
+  }
+
+  function lerpColor(h1,h2,t){
+    const a=parseInt(h1.slice(1),16),b=parseInt(h2.slice(1),16);
+    const r=Math.round(lerp((a>>16)&255,(b>>16)&255,t));
+    const g=Math.round(lerp((a>>8)&255,(b>>8)&255,t));
+    const bl=Math.round(lerp(a&255,b&255,t));
+    return '#'+((1<<24)+(r<<16)+(g<<8)+bl).toString(16).slice(1);
+  }
+
+  function scene5(p,a){ // calm resolved surface
+    const t=sProg(p,SC[5]);
+    const hyd=smooth(clamp(t/0.7,0,1));
+    surface(H*0.7,6,a,hyd);
+    // SPK dots fading out
+    const fade=1-smooth(clamp(t/0.6,0,1));
+    for(let i=0;i<26;i++){
+      const x=W*0.18 + (i*53)%(W*0.64) + (i%5)*7;
+      const base=H*0.7 + Math.sin(x/W*Math.PI)*-70;
+      const y=base-26-( (i*29)%40 );
+      ctx.save(); ctx.globalAlpha=a*fade*0.6; ctx.fillStyle=C.terra;
+      ctx.beginPath(); ctx.arc(x,y,2.6,0,7); ctx.fill(); ctx.restore();
+    }
+    // calm ripples
+    for(let i=0;i<3;i++){
+      const rp=((performance.now()*0.0004 + i/3)%1);
+      ctx.save(); ctx.globalAlpha=a*hyd*(1-rp)*0.35; ctx.strokeStyle=C.teal; ctx.lineWidth=1.6;
+      ctx.beginPath(); ctx.ellipse(W*0.5,H*0.42,40+rp*260,16+rp*100,0,0,7); ctx.stroke(); ctx.restore();
+    }
+    // osmolarity tick
+    if(osmo){
+      const v=Math.round(lerp(316,301,hyd));
+      osmo.textContent='osmolarity · '+v+' mOsm/L*';
+    }
+  }
+
+  const SCENES=[scene0,scene1,scene2,scene3,scene4,scene5];
+
+  // ---------- panels + rail ----------
+  function updateOverlays(p){
+    // hero fades out over scene 0
+    const ha=1-smooth(seg(p,0.02,0.12));
+    hero.style.opacity=ha;
+    hero.style.transform=`translateY(${(1-ha)*-40}px) scale(${lerp(1,0.96,1-ha)})`;
+    // panels 1..5
+    panels.forEach(panel=>{
+      const i=+panel.dataset.i; const s=SC[i];
+      const al=sAlpha(p,s);
+      panel.style.opacity=al;
+      const dir = panel.classList.contains('right')?1:-1;
+      panel.style.transform=`translateY(${(1-al)*34}px)`;
+    });
+    // rail active
+    let active=0,best=0;
+    SC.forEach((s,i)=>{const al=sAlpha(p,s); if(al>best){best=al;active=i;}});
+    ticks.forEach(t=>t.classList.toggle('on', +t.dataset.i===active));
+  }
+
+  // ---------- render ----------
+  function render(p,time){
+    // background gradient
+    const bg=ctx.createLinearGradient(0,0,0,H);
+    bg.addColorStop(0,C.bone); bg.addColorStop(1,C.boneDeep);
+    ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
+    drawField(time);
+    for(let i=0;i<SCENES.length;i++){
+      const al=sAlpha(p,SC[i]);
+      if(al>0.001) SCENES[i](p,al);
+    }
+  }
+
+  // ---------- loop ----------
+  let target=0, cur=0;
+  function computeTarget(){
+    const rect=root.getBoundingClientRect();
+    const total=root.offsetHeight-window.innerHeight;
+    const scrolled=clamp(-rect.top,0,total);
+    return total>0?scrolled/total:0;
+  }
+  function tick(time){
+    target=computeTarget();
+    const k=reduce?1:0.09;
+    cur+=(target-cur)*k;
+    if(Math.abs(target-cur)<0.0002) cur=target;
+    render(cur,time);
+    updateOverlays(cur);
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
+</script>
+</body>
+</html>

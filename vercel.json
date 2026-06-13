@@ -2,7 +2,6 @@
   "version": 2,
   "rewrites": [
     { "source": "/salon", "destination": "/salon.html" },
-    { "source": "/vault", "destination": "/vault.html" },
     { "source": "/vault/approve", "destination": "https://identite-api.onrender.com/vault/approve" },
     { "source": "/vault/deny", "destination": "https://identite-api.onrender.com/vault/deny" },
     { "source": "/api/:path*", "destination": "https://identite-api.onrender.com/api/:path*" }

@@ -87,8 +87,8 @@ function verifySalonToken(token: string): number | null {
   return parseInt(parts[1]);
 }
 
-function getSalonUser(headers: Headers): any | null {
-  const token = headers.get("x-salon-token");
+function getSalonUser(c: any): any | null {
+  const token = c.req.header("x-salon-token");
   if (!token) return null;
   const userId = verifySalonToken(token);
   if (!userId) return null;
@@ -140,14 +140,14 @@ app.post("/api/salon/login", async (c) => {
 });
 
 app.get("/api/salon/me", async (c) => {
-  const user = getSalonUser(c.req.raw.headers);
+  const user = getSalonUser(c);
   if (!user) return c.json({ error: "Unauthorized" }, 401);
   const remaining = ensureSalonInvites(user.id);
   return c.json({ id: user.id, username: user.username, displayName: user.displayName, role: user.role, invitesRemaining: remaining });
 });
 
 app.post("/api/salon/invites/generate", async (c) => {
-  const user = getSalonUser(c.req.raw.headers);
+  const user = getSalonUser(c);
   if (!user) return c.json({ error: "Unauthorized" }, 401);
   const remaining = ensureSalonInvites(user.id);
   if (remaining <= 0) return c.json({ error: "No invites remaining this month" }, 403);
@@ -163,14 +163,14 @@ app.post("/api/salon/invites/generate", async (c) => {
 });
 
 app.get("/api/salon/invites", async (c) => {
-  const user = getSalonUser(c.req.raw.headers);
+  const user = getSalonUser(c);
   if (!user) return c.json({ error: "Unauthorized" }, 401);
   const invites = select<any>("salonInviteCodes").filter((ic: any) => ic.createdByUserId === user.id).sort((a: any, b: any) => b.createdAt.localeCompare(a.createdAt));
   return c.json(invites.map((ic: any) => ({ code: ic.code, used: ic.usedByUserId !== null, monthYear: ic.monthYear })));
 });
 
 app.post("/api/salon/messages", async (c) => {
-  const user = getSalonUser(c.req.raw.headers);
+  const user = getSalonUser(c);
   if (!user) return c.json({ error: "Unauthorized" }, 401);
   const body = await c.req.json().catch(() => ({}));
   const { content, parentId } = body;
@@ -180,7 +180,7 @@ app.post("/api/salon/messages", async (c) => {
 });
 
 app.get("/api/salon/messages", async (c) => {
-  const user = getSalonUser(c.req.raw.headers);
+  const user = getSalonUser(c);
   if (!user) return c.json({ error: "Unauthorized" }, 401);
   const msgs = select<any>("salonMessages").sort((a: any, b: any) => b.createdAt.localeCompare(a.createdAt));
   const threads = msgs.filter((m: any) => m.parentId === null);

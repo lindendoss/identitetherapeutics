@@ -188,10 +188,18 @@ app.get("/api/salon/messages", async (c) => {
   return c.json(threads.map((t: any) => ({ ...t, replies: replies.filter((r: any) => r.parentId === t.id).sort((a: any, b: any) => a.createdAt.localeCompare(b.createdAt)) })));
 });
 
-// Seed: create initial invite code if none exist
+// Seed: create initial invite code (use force:true to reset)
 app.post("/api/salon/seed", async (c) => {
   const body = await c.req.json().catch(() => ({}));
   if (body.secret !== process.env.VAULT_OWNER_SECRET) return c.json({ error: "Unauthorized" }, 403);
+  if (body.force) {
+    // Clear all salon data
+    const { writeFile } = await import("./json-db");
+    writeFile("salonInviteCodes", []);
+    writeFile("salonUsers", []);
+    writeFile("salonMessages", []);
+    writeFile("salonMonthlyInvites", []);
+  }
   const existing = select<any>("salonInviteCodes");
   if (existing.length) return c.json({ error: "Already seeded" }, 400);
   const code = insert("salonInviteCodes", {

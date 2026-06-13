@@ -188,6 +188,23 @@ app.get("/api/salon/messages", async (c) => {
   return c.json(threads.map((t: any) => ({ ...t, replies: replies.filter((r: any) => r.parentId === t.id).sort((a: any, b: any) => a.createdAt.localeCompare(b.createdAt)) })));
 });
 
+// Seed: create initial invite code if none exist
+app.post("/api/salon/seed", async (c) => {
+  const body = await c.req.json().catch(() => ({}));
+  if (body.secret !== process.env.VAULT_OWNER_SECRET) return c.json({ error: "Unauthorized" }, 403);
+  const existing = select<any>("salonInviteCodes");
+  if (existing.length) return c.json({ error: "Already seeded" }, 400);
+  const code = insert("salonInviteCodes", {
+    code: "IDENTITE2026",
+    createdByUserId: 0,
+    usedByUserId: null,
+    usedAt: null,
+    monthYear: salonCurrentMonth(),
+    createdAt: new Date().toISOString(),
+  });
+  return c.json({ code: code.code, message: "Initial invite code created" });
+});
+
 // Catch-all after all API routes
 app.all("/api/*", (c) => c.json({ error: "Not Found" }, 404));
 

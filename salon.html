@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Le Salon — Identit&eacute;</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0A0A0D;
+    --ink-light:#131318;
+    --bone:#EFE7D6;
+    --bone-dim:#B8AE97;
+    --bone-faint:rgba(239,231,214,0.12);
+    --gold:#C79A4F;
+    --gold-dim:rgba(199,154,79,0.15);
+    --error:#C45B4A;
+    --success:#6B7B3E;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{-webkit-font-smoothing:antialiased;}
+  body{
+    background:var(--ink);
+    color:var(--bone);
+    font-family:'Inter',system-ui,sans-serif;
+    font-weight:300;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--gold);color:var(--ink);}
+
+  /* Typography */
+  .font-serif{font-family:'Cormorant Garamond',Georgia,serif;}
+  .font-mono{font-family:'IBM Plex Mono',monospace;}
+
+  /* Header */
+  .header{
+    height:72px;
+    border-bottom:1px solid rgba(255,255,255,0.04);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 32px;
+    flex-shrink:0;
+  }
+  .header .brand{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    text-decoration:none;
+    color:var(--bone);
+  }
+  .header .brand img{height:40px;width:auto;}
+  .header .brand-text{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:22px;letter-spacing:0.04em;}
+  .header .brand-sub{font-family:'IBM Plex Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:0.28em;color:var(--bone-dim);}
+  .header nav{display:flex;align-items:center;gap:24px;}
+  .header nav a,.header nav button{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--bone-dim);
+    text-decoration:none;
+    background:none;
+    border:none;
+    cursor:pointer;
+    transition:color .2s;
+    padding:0;
+  }
+  .header nav a:hover,.header nav button:hover{color:var(--gold);}
+
+  /* Container */
+  .container{
+    flex:1;
+    max-width:800px;
+    margin:0 auto;
+    width:100%;
+    padding:48px 24px;
+    display:flex;
+    flex-direction:column;
+  }
+
+  /* Screen management */
+  .screen{display:none;animation:fadeIn 0.4s ease;}
+  .screen.active{display:block;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+  /* Hero text */
+  .hero{text-align:center;margin-bottom:64px;}
+  .hero h1{
+    font-family:'Cormorant Garamond',serif;
+    font-weight:300;
+    font-size:clamp(36px,5vw,56px);
+    letter-spacing:-0.01em;
+    line-height:1.1;
+    margin-bottom:16px;
+  }
+  .hero h1 em{font-style:italic;}
+  .hero p{
+    color:var(--bone-dim);
+    font-size:15px;
+    line-height:1.7;
+    max-width:480px;
+    margin:0 auto;
+  }
+
+  /* Forms */
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  @media(max-width:600px){.form-grid{grid-template-columns:1fr;}}
+
+  .field{margin-bottom:20px;}
+  .field label{
+    display:block;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10px;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    color:var(--bone-dim);
+    margin-bottom:8px;
+  }
+  .field input,
+  .field textarea{
+    width:100%;
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:8px;
+    padding:14px 16px;
+    color:var(--bone);
+    font-family:'Inter',sans-serif;
+    font-size:15px;
+    font-weight:300;
+    outline:none;
+    transition:border-color .2s,background .2s;
+  }
+  .field input:focus,.field textarea:focus{
+    border-color:var(--gold);
+    background:rgba(255,255,255,0.05);
+  }
+  .field input::placeholder{color:rgba(255,255,255,0.2);}
+  .field textarea{resize:vertical;min-height:120px;line-height:1.6;}
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    background:var(--gold);
+    color:var(--ink);
+    border:none;
+    border-radius:8px;
+    padding:14px 28px;
+    font-family:'Inter',sans-serif;
+    font-weight:500;
+    font-size:14px;
+    cursor:pointer;
+    transition:opacity .2s,transform .1s;
+    letter-spacing:0.01em;
+  }
+  .btn:hover{opacity:.85;}
+  .btn:active{transform:scale(0.98);}
+  .btn:disabled{opacity:.4;cursor:not-allowed;}
+  .btn.secondary{
+    background:transparent;
+    border:1px solid rgba(255,255,255,0.12);
+    color:var(--bone);
+  }
+  .btn.secondary:hover{background:rgba(255,255,255,0.04);}
+  .btn.small{padding:8px 16px;font-size:12px;}
+
+  .link-btn{
+    background:none;
+    border:none;
+    color:var(--gold);
+    font-family:'Inter',sans-serif;
+    font-size:13px;
+    cursor:pointer;
+    text-decoration:underline;
+    text-underline-offset:3px;
+    padding:0;
+  }
+
+  .error{
+    color:var(--error);
+    font-size:13px;
+    margin-top:12px;
+    padding:12px 16px;
+    background:rgba(196,91,74,0.08);
+    border-radius:8px;
+    display:none;
+  }
+  .error.show{display:block;}
+
+  .success{
+    color:var(--success);
+    font-size:13px;
+    margin-top:12px;
+    padding:12px 16px;
+    background:rgba(107,123,62,0.08);
+    border-radius:8px;
+    display:none;
+  }
+  .success.show{display:block;}
+
+  /* Divider */
+  .divider{
+    height:1px;
+    background:linear-gradient(to right,transparent,rgba(255,255,255,0.08),transparent);
+    margin:40px 0;
+  }
+
+  /* Invite code display */
+  .code-box{
+    background:var(--gold-dim);
+    border:1px dashed var(--gold);
+    border-radius:12px;
+    padding:20px 24px;
+    text-align:center;
+    margin:16px 0;
+  }
+  .code-box .code{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:clamp(18px,3vw,28px);
+    letter-spacing:0.15em;
+    color:var(--gold);
+    font-weight:500;
+  }
+  .code-box .hint{
+    font-size:12px;
+    color:var(--bone-dim);
+    margin-top:8px;
+  }
+
+  /* Stats bar */
+  .stats{
+    display:flex;
+    gap:32px;
+    justify-content:center;
+    margin-bottom:40px;
+    flex-wrap:wrap;
+  }
+  .stat{text-align:center;}
+  .stat .num{
+    font-family:'Cormorant Garamond',serif;
+    font-size:32px;
+    font-weight:300;
+    color:var(--gold);
+  }
+  .stat .lbl{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:9px;
+    text-transform:uppercase;
+    letter-spacing:0.2em;
+    color:var(--bone-dim);
+    margin-top:4px;
+  }
+
+  /* Messages */
+  .message-list{display:flex;flex-direction:column;gap:24px;}
+  .msg{
+    background:rgba(255,255,255,0.02);
+    border:1px solid rgba(255,255,255,0.05);
+    border-radius:12px;
+    padding:24px;
+    transition:border-color .2s;
+  }
+  .msg:hover{border-color:rgba(255,255,255,0.1);}
+  .msg-header{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:12px;
+  }
+  .msg-avatar{
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    background:linear-gradient(135deg,var(--gold-dim),rgba(199,154,79,0.3));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Cormorant Garamond',serif;
+    font-size:16px;
+    font-weight:400;
+    color:var(--gold);
+    flex-shrink:0;
+  }
+  .msg-meta{flex:1;min-width:0;}
+  .msg-name{
+    font-family:'Cormorant Garamond',serif;
+    font-size:17px;
+    font-weight:400;
+    color:var(--bone);
+  }
+  .msg-time{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10px;
+    color:var(--bone-dim);
+    letter-spacing:0.04em;
+  }
+  .msg-body{
+    font-size:15px;
+    line-height:1.7;
+    color:var(--bone-dim);
+    font-weight:300;
+    white-space:pre-wrap;
+  }
+  .msg-actions{
+    display:flex;
+    gap:16px;
+    margin-top:16px;
+    padding-top:16px;
+    border-top:1px solid rgba(255,255,255,0.04);
+  }
+  .msg-action{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--bone-dim);
+    background:none;
+    border:none;
+    cursor:pointer;
+    padding:0;
+    transition:color .2s;
+  }
+  .msg-action:hover{color:var(--gold);}
+
+  /* Replies */
+  .replies{
+    margin-top:16px;
+    margin-left:24px;
+    padding-left:24px;
+    border-left:1px solid rgba(255,255,255,0.06);
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+  }
+  .reply{
+    padding:16px;
+    background:rgba(255,255,255,0.015);
+    border-radius:8px;
+  }
+
+  /* Compose */
+  .compose{
+    position:sticky;
+    bottom:24px;
+    background:var(--ink-light);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:16px;
+    padding:24px;
+    margin-top:32px;
+    box-shadow:0 8px 32px rgba(0,0,0,0.4);
+  }
+  .compose h3{
+    font-family:'Cormorant Garamond',serif;
+    font-weight:300;
+    font-size:22px;
+    margin-bottom:16px;
+  }
+
+  /* Invite panel */
+  .invite-panel{
+    background:rgba(255,255,255,0.02);
+    border:1px solid rgba(255,255,255,0.06);
+    border-radius:12px;
+    padding:24px;
+    margin-bottom:32px;
+  }
+  .invite-panel h3{
+    font-family:'Cormorant Garamond',serif;
+    font-weight:300;
+    font-size:22px;
+    margin-bottom:8px;
+  }
+  .invite-panel p{
+    font-size:13px;
+    color:var(--bone-dim);
+    margin-bottom:20px;
+  }
+
+  /* Toast */
+  .toast{
+    position:fixed;
+    bottom:24px;
+    right:24px;
+    background:var(--success);
+    color:#fff;
+    padding:14px 24px;
+    border-radius:8px;
+    font-size:13px;
+    z-index:200;
+    transform:translateY(100px);
+    opacity:0;
+    transition:all .3s ease;
+  }
+  .toast.show{transform:translateY(0);opacity:1;}
+  .toast.error-toast{background:var(--error);}
+
+  /* Empty state */
+  .empty{
+    text-align:center;
+    padding:80px 0;
+    color:var(--bone-dim);
+  }
+  .empty-icon{
+    font-size:48px;
+    margin-bottom:16px;
+    opacity:0.3;
+  }
+  .empty h3{
+    font-family:'Cormorant Garamond',serif;
+    font-weight:300;
+    font-size:24px;
+    margin-bottom:8px;
+    color:var(--bone);
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <a href="/" class="brand">
+    <img src="/images/logo-white.png" alt="Identit&eacute;">
+    <div>
+      <div class="brand-text">Le Salon</div>
+      <div class="brand-sub">By Invitation Only</div>
+    </div>
+  </a>
+  <nav id="headerNav">
+    <a href="/">Site</a>
+  </nav>
+</header>
+
+<div class="container">
+
+  <!-- Screen: Register -->
+  <div class="screen active" id="registerScreen">
+    <div class="hero">
+      <h1><em>Le Salon</em></h1>
+      <p>An intimate forum for those shaping the future of ocular therapeutics. By invitation only.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div style="max-width:440px;margin:0 auto;">
+      <div class="field">
+        <label>Invite Code</label>
+        <input type="text" id="regInvite" placeholder="XXXX-XXXX-XXXX" style="text-align:center;letter-spacing:4px;font-family:'IBM Plex Mono',monospace;" maxlength="14">
+      </div>
+      <div class="form-grid">
+        <div class="field">
+          <label>Username</label>
+          <input type="text" id="regUsername" placeholder="jane_doe">
+        </div>
+        <div class="field">
+          <label>Display Name</label>
+          <input type="text" id="regDisplay" placeholder="Jane Doe">
+        </div>
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input type="password" id="regPassword" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;">
+      </div>
+      <button class="btn" id="registerBtn" style="width:100%;">Join Le Salon</button>
+      <div class="error" id="registerError"></div>
+      <p style="text-align:center;margin-top:24px;font-size:13px;color:var(--bone-dim);">
+        Already a member? <button class="link-btn" id="showLogin">Sign In</button>
+      </p>
+    </div>
+  </div>
+
+  <!-- Screen: Login -->
+  <div class="screen" id="loginScreen">
+    <div class="hero">
+      <h1><em>Welcome back.</em></h1>
+      <p>Sign in to continue the conversation.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div style="max-width:360px;margin:0 auto;">
+      <div class="field">
+        <label>Username</label>
+        <input type="text" id="loginUsername" placeholder="jane_doe">
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input type="password" id="loginPassword" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;">
+      </div>
+      <button class="btn" id="loginBtn" style="width:100%;">Sign In</button>
+      <div class="error" id="loginError"></div>
+      <p style="text-align:center;margin-top:24px;font-size:13px;color:var(--bone-dim);">
+        Need an invite? Ask a member for their code.
+      </p>
+      <p style="text-align:center;margin-top:8px;font-size:13px;">
+        <button class="link-btn" id="showRegister">Create Account</button>
+      </p>
+    </div>
+  </div>
+
+  <!-- Screen: Forum -->
+  <div class="screen" id="forumScreen">
+    <!-- Invite Panel -->
+    <div class="invite-panel" id="invitePanel">
+      <h3>Invite a Colleague</h3>
+      <p>You receive one invitation per month. Use it wisely.</p>
+      <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+        <div class="stat">
+          <div class="num" id="invitesRemaining">&mdash;</div>
+          <div class="lbl">Remaining</div>
+        </div>
+        <button class="btn" id="generateInviteBtn">Generate Invite Code</button>
+      </div>
+      <div id="generatedCode" style="display:none;">
+        <div class="code-box">
+          <div class="code" id="newCode"></div>
+          <div class="hint">Share this code with one person. Single use.</div>
+        </div>
+      </div>
+      <div class="success" id="inviteSuccess"></div>
+      <div class="error" id="inviteError"></div>
+    </div>
+
+    <!-- Messages -->
+    <div id="messageList" class="message-list">
+      <div class="empty">
+        <div class="empty-icon">&#x270E;</div>
+        <h3>No messages yet</h3>
+        <p>Be the first to start a conversation.</p>
+      </div>
+    </div>
+
+    <!-- Compose -->
+    <div class="compose">
+      <h3>New Thread</h3>
+      <div class="field">
+        <textarea id="msgContent" placeholder="Share your thoughts, questions, or discoveries..."></textarea>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-size:12px;color:var(--bone-dim);" id="charCount">0 / 5000</span>
+        <button class="btn" id="postMsgBtn">Post</button>
+      </div>
+      <div class="error" id="postError"></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// API configuration
+const API = 'https://identite-api.onrender.com/api/salon';
+
+let salonToken = localStorage.getItem('salonToken') || '';
+let currentUser = null;
+
+// Screen management
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+// Show register
+function showRegisterScreen() {
+  showScreen('registerScreen');
+  const nav = document.getElementById('headerNav');
+  nav.innerHTML = '<a href="/">Site</a>';
+}
+
+// Show login
+function showLoginScreen() {
+  showScreen('loginScreen');
+  const nav = document.getElementById('headerNav');
+  nav.innerHTML = '<a href="/">Site</a>';
+}
+
+// Show forum
+async function showForumScreen() {
+  showScreen('forumScreen');
+  await loadUser();
+  await loadMessages();
+  const nav = document.getElementById('headerNav');
+  nav.innerHTML = '<a href="/">Site</a><button id="logoutBtn">Logout</button>';
+  document.getElementById('logoutBtn').addEventListener('click', logout);
+}
+
+// API helpers
+async function apiGet(path) {
+  const headers = {'Content-Type':'application/json'};
+  if (salonToken) headers['x-salon-token'] = salonToken;
+  const res = await fetch(`${API}${path}`, {method:'GET', headers});
+  const data = await res.json().catch(() => ({error:'Network error'}));
+  if (!res.ok || data.error) throw new Error(data.error || `HTTP ${res.status}`);
+  return data;
+}
+
+async function apiPost(path, body) {
+  const headers = {'Content-Type':'application/json'};
+  if (salonToken) headers['x-salon-token'] = salonToken;
+  const res = await fetch(`${API}${path}`, {method:'POST', headers, body: JSON.stringify(body)});
+  const data = await res.json().catch(() => ({error:'Network error'}));
+  if (!res.ok || data.error) throw new Error(data.error || `HTTP ${res.status}`);
+  return data;
+}
+
+// UI helpers
+function showError(el, msg) { el.textContent = msg; el.classList.add('show'); }
+function hideError(el) { el.classList.remove('show'); }
+function showToast(msg, isError) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.toggle('error-toast', !!isError);
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// Register
+async function doRegister() {
+  const invite = document.getElementById('regInvite').value.trim().toUpperCase().replace(/[^A-Z0-9]/g, '');
+  const username = document.getElementById('regUsername').value.trim();
+  const display = document.getElementById('regDisplay').value.trim();
+  const password = document.getElementById('regPassword').value;
+  const errorEl = document.getElementById('registerError');
+  const btn = document.getElementById('registerBtn');
+
+  if (!invite || invite.length < 8) { showError(errorEl, 'Please enter a valid invite code'); return; }
+  if (!username || username.length < 3) { showError(errorEl, 'Username must be at least 3 characters'); return; }
+  if (!display) { showError(errorEl, 'Please enter a display name'); return; }
+  if (!password || password.length < 6) { showError(errorEl, 'Password must be at least 6 characters'); return; }
+
+  // Format invite code with dashes for display
+  const formattedInvite = invite;
+
+  hideError(errorEl);
+  btn.disabled = true; btn.textContent = 'Creating account...';
+
+  try {
+    const result = await apiPost('/register', { inviteCode: formattedInvite, username, displayName: display, password });
+    salonToken = result.token;
+    localStorage.setItem('salonToken', salonToken);
+    currentUser = result.user;
+    showToast('Welcome to Le Salon');
+    showForumScreen();
+  } catch (e) {
+    showError(errorEl, e.message || 'Registration failed');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Join Le Salon';
+  }
+}
+
+// Login
+async function doLogin() {
+  const username = document.getElementById('loginUsername').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  const errorEl = document.getElementById('loginError');
+  const btn = document.getElementById('loginBtn');
+
+  if (!username || !password) { showError(errorEl, 'Please enter username and password'); return; }
+  hideError(errorEl);
+  btn.disabled = true; btn.textContent = 'Signing in...';
+
+  try {
+    const result = await apiPost('/login', { username, password });
+    salonToken = result.token;
+    localStorage.setItem('salonToken', salonToken);
+    currentUser = result.user;
+    showToast('Welcome back');
+    showForumScreen();
+  } catch (e) {
+    showError(errorEl, e.message || 'Invalid credentials');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Sign In';
+  }
+}
+
+// Load user info
+async function loadUser() {
+  try {
+    const me = await apiGet('/me');
+    currentUser = me;
+    document.getElementById('invitesRemaining').textContent = me.invitesRemaining;
+  } catch (e) {
+    console.error('loadUser:', e);
+  }
+}
+
+// Generate invite
+async function doGenerateInvite() {
+  const btn = document.getElementById('generateInviteBtn');
+  const errorEl = document.getElementById('inviteError');
+  const successEl = document.getElementById('inviteSuccess');
+  hideError(errorEl);
+  successEl.classList.remove('show');
+  btn.disabled = true; btn.textContent = 'Generating...';
+
+  try {
+    const result = await apiPost('/invites/generate');
+    document.getElementById('newCode').textContent = result.code.match(/.{4}/g).join('-');
+    document.getElementById('generatedCode').style.display = 'block';
+    await loadUser();
+    showToast('Invite code generated');
+  } catch (e) {
+    showError(errorEl, e.message || 'Failed to generate invite');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Generate Invite Code';
+  }
+}
+
+// Post message
+async function doPostMessage() {
+  const content = document.getElementById('msgContent').value.trim();
+  const errorEl = document.getElementById('postError');
+  const btn = document.getElementById('postMsgBtn');
+
+  if (!content) { showError(errorEl, 'Please enter a message'); return; }
+  hideError(errorEl);
+  btn.disabled = true; btn.textContent = 'Posting...';
+
+  try {
+    await apiPost('/messages', { content });
+    document.getElementById('msgContent').value = '';
+    document.getElementById('charCount').textContent = '0 / 5000';
+    showToast('Message posted');
+    await loadMessages();
+  } catch (e) {
+    showError(errorEl, e.message || 'Failed to post');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Post';
+  }
+}
+
+// Load messages
+async function loadMessages() {
+  const list = document.getElementById('messageList');
+  try {
+    const threads = await apiGet('/messages');
+    if (!threads || !threads.length) {
+      list.innerHTML = `
+        <div class="empty">
+          <div class="empty-icon">&#x270E;</div>
+          <h3>No messages yet</h3>
+          <p>Be the first to start a conversation.</p>
+        </div>`;
+      return;
+    }
+
+    list.innerHTML = threads.map(t => `
+      <div class="msg">
+        <div class="msg-header">
+          <div class="msg-avatar">${(t.displayName || t.username).charAt(0).toUpperCase()}</div>
+          <div class="msg-meta">
+            <div class="msg-name">${escapeHtml(t.displayName || t.username)}</div>
+            <div class="msg-time">${formatTime(t.createdAt)}</div>
+          </div>
+        </div>
+        <div class="msg-body">${escapeHtml(t.content)}</div>
+        ${t.replies && t.replies.length ? `
+        <div class="replies">
+          ${t.replies.map(r => `
+          <div class="reply">
+            <div class="msg-header" style="margin-bottom:8px;">
+              <div class="msg-avatar" style="width:28px;height:28px;font-size:13px;">${(r.displayName || r.username).charAt(0).toUpperCase()}</div>
+              <div class="msg-meta">
+                <div class="msg-name" style="font-size:15px;">${escapeHtml(r.displayName || r.username)}</div>
+                <div class="msg-time">${formatTime(r.createdAt)}</div>
+              </div>
+            </div>
+            <div class="msg-body" style="font-size:14px;">${escapeHtml(r.content)}</div>
+          </div>
+          `).join('')}
+        </div>
+        ` : ''}
+      </div>
+    `).join('');
+  } catch (e) {
+    list.innerHTML = `<div class="empty"><h3>Error loading messages</h3><p>${escapeHtml(e.message)}</p></div>`;
+  }
+}
+
+// Logout
+function logout() {
+  salonToken = '';
+  localStorage.removeItem('salonToken');
+  currentUser = null;
+  showRegisterScreen();
+  showToast('Signed out');
+}
+
+// Utilities
+function escapeHtml(t) {
+  const d = document.createElement('div');
+  d.textContent = t;
+  return d.innerHTML;
+}
+function formatTime(d) {
+  const date = new Date(d);
+  const now = new Date();
+  const diff = (now - date) / 1000;
+  if (diff < 60) return 'Just now';
+  if (diff < 3600) return Math.floor(diff/60) + 'm ago';
+  if (diff < 86400) return Math.floor(diff/3600) + 'h ago';
+  if (diff < 604800) return Math.floor(diff/86400) + 'd ago';
+  return date.toLocaleDateString('en-US', {month:'short', day:'numeric'});
+}
+
+// Event listeners
+document.getElementById('registerBtn').addEventListener('click', doRegister);
+document.getElementById('regPassword').addEventListener('keydown', e => { if(e.key==='Enter') doRegister(); });
+document.getElementById('showLogin').addEventListener('click', e => { e.preventDefault(); showLoginScreen(); });
+document.getElementById('showRegister').addEventListener('click', e => { e.preventDefault(); showRegisterScreen(); });
+document.getElementById('loginBtn').addEventListener('click', doLogin);
+document.getElementById('loginPassword').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+document.getElementById('generateInviteBtn').addEventListener('click', doGenerateInvite);
+document.getElementById('postMsgBtn').addEventListener('click', doPostMessage);
+document.getElementById('msgContent').addEventListener('keydown', e => {
+  if (e.key==='Enter' && (e.metaKey || e.ctrlKey)) doPostMessage();
+});
+document.getElementById('msgContent').addEventListener('input', e => {
+  document.getElementById('charCount').textContent = e.target.value.length + ' / 5000';
+});
+
+// Auto-login if token exists
+if (salonToken) {
+  showForumScreen();
+} else {
+  showRegisterScreen();
+}
+</script>
+</body>
+</html>

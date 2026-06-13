@@ -163,6 +163,141 @@ app.get("/vault/deny", async (c) => {
   ));
 });
 
+// ========================================================================
+// LE SALON — Invite-only forum
+// ========================================================================
+import crypto from "crypto";
+
+const SALON_SECRET = process.env.VAULT_SESSION_SECRET || "salon-fallback-secret";
+
+// Helpers
+function salonCurrentMonth(): string {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+}
+
+function hashSalonPassword(pw: string): string {
+  return crypto.createHmac("sha256", SALON_SECRET).update(pw).digest("base64url");
+}
+
+function genSalonToken(userId: number): string {
+  const payload = `salon:${userId}:${Date.now()}`;
+  const sig = crypto.createHmac("sha256", SALON_SECRET).update(payload).digest("base64url");
+  return `${Buffer.from(payload).toString("base64url")}.${sig}`;
+}
+
+function verifySalonToken(token: string): number | null {
+  const dot = token.indexOf(".");
+  if (dot === -1) return null;
+  const payload = Buffer.from(token.slice(0, dot), "base64url").toString("utf8");
+  const sig = token.slice(dot + 1);
+  const expected = crypto.createHmac("sha256", SALON_SECRET).update(payload).digest("base64url");
+  try { if (!crypto.timingSafeEqual(Buffer.from(sig), Buffer.from(expected))) return null; } catch { return null; }
+  const parts = payload.split(":");
+  if (parts.length !== 3 || parts[0] !== "salon") return null;
+  return parseInt(parts[1]);
+}
+
+function getSalonUser(headers: Headers): any | null {
+  const token = headers.get("x-salon-token");
+  if (!token) return null;
+  const userId = verifySalonToken(token);
+  if (!userId) return null;
+  const users = selectWhere<any>("salonUsers", "id", userId);
+  return users.length ? users[0] : null;
+}
+
+function ensureSalonInvites(userId: number): number {
+  const my = salonCurrentMonth();
+  const existing = selectWhere<any>("salonMonthlyInvites", "userId", userId).filter((m: any) => m.monthYear === my);
+  if (existing.length) return existing[0].remaining;
+  insert("salonMonthlyInvites", { userId, monthYear: my, remaining: 1 });
+  return 1;
+}
+
+// -- Salon API Routes --
+app.post("/api/salon/register", async (c) => {
+  const body = await c.req.json().catch(() => ({}));
+  const { inviteCode, username, displayName, password } = body;
+  if (!inviteCode || !username || !displayName || !password) return c.json({ error: "All fields required" }, 400);
+
+  const codes = selectWhere<any>("salonInviteCodes", "code", inviteCode.toUpperCase().replace(/[^A-Z0-9]/g, ""));
+  if (!codes.length || codes[0].usedByUserId !== null) return c.json({ error: "Invalid or used invite code" }, 400);
+
+  if (selectWhere<any>("salonUsers", "username", username).length) return c.json({ error: "Username taken" }, 409);
+
+  const user = insert("salonUsers", {
+    username, displayName,
+    passwordHash: hashSalonPassword(password),
+    role: "member", inviteCodeUsed: codes[0].code,
+    createdAt: new Date().toISOString(), lastLoginAt: new Date().toISOString(),
+  });
+  const allCodes = select<any>("salonInviteCodes").map((ic: any) => ic.id === codes[0].id ? { ...ic, usedByUserId: user.id, usedAt: new Date().toISOString() } : ic);
+  writeFile("salonInviteCodes", allCodes);
+  insert("salonMonthlyInvites", { userId: user.id, monthYear: salonCurrentMonth(), remaining: 1 });
+
+  return c.json({ token: genSalonToken(user.id), user: { id: user.id, username, displayName, role: "member" } });
+});
+
+app.post("/api/salon/login", async (c) => {
+  const body = await c.req.json().catch(() => ({}));
+  const { username, password } = body;
+  const users = selectWhere<any>("salonUsers", "username", username);
+  if (!users.length || hashSalonPassword(password) !== users[0].passwordHash) return c.json({ error: "Invalid credentials" }, 401);
+  const allUsers = select<any>("salonUsers").map((u: any) => u.id === users[0].id ? { ...u, lastLoginAt: new Date().toISOString() } : u);
+  writeFile("salonUsers", allUsers);
+  return c.json({ token: genSalonToken(users[0].id), user: { id: users[0].id, username: users[0].username, displayName: users[0].displayName, role: users[0].role } });
+});
+
+app.get("/api/salon/me", async (c) => {
+  const user = getSalonUser(c.req.raw.headers);
+  if (!user) return c.json({ error: "Unauthorized" }, 401);
+  const remaining = ensureSalonInvites(user.id);
+  return c.json({ id: user.id, username: user.username, displayName: user.displayName, role: user.role, invitesRemaining: remaining });
+});
+
+app.post("/api/salon/invites/generate", async (c) => {
+  const user = getSalonUser(c.req.raw.headers);
+  if (!user) return c.json({ error: "Unauthorized" }, 401);
+  const remaining = ensureSalonInvites(user.id);
+  if (remaining <= 0) return c.json({ error: "No invites remaining this month" }, 403);
+
+  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  let code = "";
+  for (let i = 0; i < 12; i++) code += chars.charAt(Math.floor(Math.random() * chars.length));
+
+  insert("salonInviteCodes", { code, createdByUserId: user.id, usedByUserId: null, usedAt: null, monthYear: salonCurrentMonth(), createdAt: new Date().toISOString() });
+  const allM = select<any>("salonMonthlyInvites").map((m: any) => m.userId === user.id && m.monthYear === salonCurrentMonth() ? { ...m, remaining: m.remaining - 1 } : m);
+  writeFile("salonMonthlyInvites", allM);
+  return c.json({ code });
+});
+
+app.get("/api/salon/invites", async (c) => {
+  const user = getSalonUser(c.req.raw.headers);
+  if (!user) return c.json({ error: "Unauthorized" }, 401);
+  const invites = select<any>("salonInviteCodes").filter((ic: any) => ic.createdByUserId === user.id).sort((a: any, b: any) => b.createdAt.localeCompare(a.createdAt));
+  return c.json(invites.map((ic: any) => ({ code: ic.code, used: ic.usedByUserId !== null, monthYear: ic.monthYear })));
+});
+
+app.post("/api/salon/messages", async (c) => {
+  const user = getSalonUser(c.req.raw.headers);
+  if (!user) return c.json({ error: "Unauthorized" }, 401);
+  const body = await c.req.json().catch(() => ({}));
+  const { content, parentId } = body;
+  if (!content || content.length > 5000) return c.json({ error: "Content required, max 5000 chars" }, 400);
+  const msg = insert("salonMessages", { userId: user.id, username: user.username, displayName: user.displayName, content, parentId: parentId || null, createdAt: new Date().toISOString() });
+  return c.json({ id: msg.id, createdAt: msg.createdAt });
+});
+
+app.get("/api/salon/messages", async (c) => {
+  const user = getSalonUser(c.req.raw.headers);
+  if (!user) return c.json({ error: "Unauthorized" }, 401);
+  const msgs = select<any>("salonMessages").sort((a: any, b: any) => b.createdAt.localeCompare(a.createdAt));
+  const threads = msgs.filter((m: any) => m.parentId === null);
+  const replies = msgs.filter((m: any) => m.parentId !== null);
+  return c.json(threads.map((t: any) => ({ ...t, replies: replies.filter((r: any) => r.parentId === t.id).sort((a: any, b: any) => a.createdAt.localeCompare(b.createdAt)) })));
+});
+
 // ---- SERVER-RENDERED VAULT (Section 0 enforced) ----
 // Protected content is ONLY rendered after server-side session validation.
 // No vault content exists in static files or client bundles.

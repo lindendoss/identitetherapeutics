@@ -129,6 +129,7 @@
     .vault{max-width:900px;}
   }
 
+  @keyframes spin{to{transform:rotate(360deg);}}
   @media(max-width:640px){
     .header{padding:0 16px;}
     .file-item:hover{margin:0 -8px;padding:16px 8px;}
@@ -159,6 +160,102 @@
       </div>
       <button class="btn" id="loginBtn">Sign In</button>
       <div class="error" id="loginError"></div>
+      <p style="text-align:center;margin-top:24px;font-size:13px;color:var(--bone-dim);">
+        No account? <a href="#" id="showRequest" style="color:var(--gold);text-decoration:none;">Request Access</a>
+      </p>
+    </div>
+
+    <!-- Step 1: Request Access -->
+    <div class="login-box" id="requestBox" style="display:none;">
+      <h1>Request Access</h1>
+      <p class="subtitle">Submit your details for vault access review.</p>
+      <div class="field">
+        <label>Full Name</label>
+        <input type="text" id="reqName" placeholder="Jane Doe">
+      </div>
+      <div class="field">
+        <label>Entity / Company</label>
+        <input type="text" id="reqEntity" placeholder="Company Name">
+      </div>
+      <div class="field">
+        <label>Title</label>
+        <input type="text" id="reqTitle" placeholder="Director">
+      </div>
+      <div class="field">
+        <label>Email</label>
+        <input type="email" id="reqEmail" placeholder="jane@company.com">
+      </div>
+      <div class="field">
+        <label>Phone</label>
+        <input type="tel" id="reqPhone" placeholder="+1 415 555 1234">
+      </div>
+      <button class="btn" id="requestBtn">Submit Request</button>
+      <div class="error" id="requestError"></div>
+      <p style="text-align:center;margin-top:24px;font-size:13px;color:var(--bone-dim);">
+        Already have an account? <a href="#" id="showLogin" style="color:var(--gold);text-decoration:none;">Sign In</a>
+      </p>
+    </div>
+
+    <!-- Step 2: NDA -->
+    <div class="login-box" id="ndaBox" style="display:none;">
+      <h1>Non-Disclosure Agreement</h1>
+      <p class="subtitle">Please review and sign the confidentiality agreement.</p>
+      <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:24px;max-height:320px;overflow-y:auto;margin-bottom:24px;font-size:13px;line-height:1.7;color:var(--bone-dim);">
+        <p style="margin-bottom:12px;"><strong>1. Confidential Information.</strong> All information, documents, data, and materials shared through the IDENTIT&Eacute; Vault (&ldquo;Confidential Information&rdquo;) are the exclusive property of Identit&eacute; Therapeutics.</p>
+        <p style="margin-bottom:12px;"><strong>2. Obligations of Receiving Party.</strong> The receiving party agrees to hold all Confidential Information in strict confidence and not disclose to any third parties without prior written consent.</p>
+        <p style="margin-bottom:12px;"><strong>3. Permitted Use.</strong> Confidential Information may only be used for the purpose of evaluating business and/or scientific collaboration with Identit&eacute; Therapeutics.</p>
+        <p style="margin-bottom:12px;"><strong>4. Term.</strong> This agreement shall remain in effect for a period of five (5) years from the date of signing.</p>
+        <p><strong>5. Remedies.</strong> The receiving party acknowledges that breach may cause irreparable harm and consents to injunctive relief.</p>
+      </div>
+      <div class="field">
+        <label>Type your full name to agree</label>
+        <input type="text" id="ndaName" placeholder="Jane Doe">
+      </div>
+      <label style="display:flex;align-items:center;gap:10px;cursor:pointer;margin-bottom:24px;">
+        <input type="checkbox" id="ndaAgree" style="width:auto;">
+        <span style="font-size:13px;color:var(--bone-dim);">I agree to the terms of this Non-Disclosure Agreement</span>
+      </label>
+      <button class="btn" id="ndaBtn">Sign &amp; Continue</button>
+      <div class="error" id="ndaError"></div>
+    </div>
+
+    <!-- Step 3: Waiting for Approval -->
+    <div class="login-box" id="waitingBox" style="display:none;text-align:center;">
+      <div style="width:48px;height:48px;border:2px solid rgba(255,255,255,.08);border-top-color:var(--gold);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 24px;"></div>
+      <h1 style="font-size:28px;">Awaiting Approval</h1>
+      <p class="subtitle" style="max-width:440px;margin:12px auto 0;">Your request has been submitted to the site owner. You will receive a verification code via email once approved.</p>
+      <p style="font-size:12px;color:var(--bone-dim);margin-top:32px;font-family:'IBM Plex Mono',monospace;">Request ID: <span id="waitingId">-</span></p>
+    </div>
+
+    <!-- Step 4: OTP Verification -->
+    <div class="login-box" id="otpBox" style="display:none;">
+      <h1>Verify Your Identity</h1>
+      <p class="subtitle">A verification code has been sent to your email.</p>
+      <div class="field">
+        <label>Verification Code</label>
+        <input type="text" id="otpCode" placeholder="000000" maxlength="6" style="text-align:center;letter-spacing:8px;font-size:24px;font-family:'IBM Plex Mono',monospace;">
+      </div>
+      <button class="btn" id="otpBtn">Verify Code</button>
+      <div class="error" id="otpError"></div>
+      <p style="text-align:center;margin-top:24px;font-size:13px;color:var(--bone-dim);">
+        Didn&rsquo;t receive it? Ask the owner to re-approve your request.
+      </p>
+    </div>
+
+    <!-- Step 5: Set Password -->
+    <div class="login-box" id="passwordBox" style="display:none;">
+      <h1>Create Password</h1>
+      <p class="subtitle">Set a password for future vault access.</p>
+      <div class="field">
+        <label>Password</label>
+        <input type="password" id="newPassword" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;">
+      </div>
+      <div class="field">
+        <label>Confirm Password</label>
+        <input type="password" id="confirmPassword" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;">
+      </div>
+      <button class="btn" id="setPasswordBtn">Set Password</button>
+      <div class="error" id="passwordError"></div>
     </div>
 
     <!-- File Manager -->
@@ -423,6 +520,145 @@ function formatDate(d) {
   return new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 }
 
+/* ========== VAULT ACCESS WORKFLOW ========== */
+let currentRequestId = null;
+
+// Show/hide screens
+function showScreen(id) {
+  ['loginBox','requestBox','ndaBox','waitingBox','otpBox','passwordBox','vaultBox'].forEach(s => {
+    const el = document.getElementById(s);
+    if (el) el.style.display = 'none';
+  });
+  const target = document.getElementById(id);
+  if (target) target.style.display = id === 'vaultBox' ? 'block' : (id === 'waitingBox' ? 'block' : '');
+  if (target && id !== 'vaultBox') target.style.display = 'block';
+}
+
+// Step 1: Submit Request
+async function submitRequest() {
+  const name = document.getElementById('reqName').value.trim();
+  const entity = document.getElementById('reqEntity').value.trim();
+  const title = document.getElementById('reqTitle').value.trim();
+  const email = document.getElementById('reqEmail').value.trim();
+  const phone = document.getElementById('reqPhone').value.trim();
+  const errorEl = document.getElementById('requestError');
+  const btn = document.getElementById('requestBtn');
+
+  if (!name || !entity || !title || !email || !phone) {
+    showError(errorEl, 'Please fill in all fields'); return;
+  }
+  hideError(errorEl);
+  btn.disabled = true; btn.textContent = 'Submitting...';
+
+  try {
+    const result = await trpcMutate('vault.submitRequest', { fullName: name, entity, title, email, phone });
+    currentRequestId = result.requestId;
+    showScreen('ndaBox');
+  } catch (e) {
+    showError(errorEl, e.message || 'Failed to submit request');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Submit Request';
+  }
+}
+
+// Step 2: Sign NDA
+async function signNda() {
+  const name = document.getElementById('ndaName').value.trim();
+  const agreed = document.getElementById('ndaAgree').checked;
+  const errorEl = document.getElementById('ndaError');
+  const btn = document.getElementById('ndaBtn');
+
+  if (!name) { showError(errorEl, 'Please type your full name'); return; }
+  if (!agreed) { showError(errorEl, 'Please agree to the terms'); return; }
+  hideError(errorEl);
+  btn.disabled = true; btn.textContent = 'Signing...';
+
+  try {
+    await trpcMutate('vault.signNda', { requestId: currentRequestId, typedName: name, agreed: true });
+    showScreen('waitingBox');
+    document.getElementById('waitingId').textContent = currentRequestId;
+    pollForApproval();
+  } catch (e) {
+    showError(errorEl, e.message || 'Failed to sign NDA');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Sign & Continue';
+  }
+}
+
+// Step 3: Poll for approval
+async function pollForApproval() {
+  if (!currentRequestId) return;
+  let attempts = 0;
+  const maxAttempts = 60;
+
+  const check = async () => {
+    attempts++;
+    if (attempts > maxAttempts) {
+      showScreen('otpBox'); // Let them try anyway
+      return;
+    }
+    try {
+      const res = await trpcCall('vault.checkRequestStatus', { requestId: currentRequestId });
+      if (res.status === 'otp_sent' || res.status === 'otp_failed') {
+        showScreen('otpBox');
+        return;
+      } else if (res.status === 'denied') {
+        showError(document.getElementById('requestError'), 'Your request was denied.');
+        showScreen('requestBox');
+        return;
+      }
+      setTimeout(check, 5000);
+    } catch(e) {
+      console.error('[poll]', e);
+      setTimeout(check, 5000);
+    }
+  };
+  check();
+}
+
+// Step 4: Verify OTP
+async function verifyOtp() {
+  const code = document.getElementById('otpCode').value.trim();
+  const errorEl = document.getElementById('otpError');
+  const btn = document.getElementById('otpBtn');
+
+  if (!code || code.length !== 6) { showError(errorEl, 'Please enter the 6-digit code'); return; }
+  hideError(errorEl);
+  btn.disabled = true; btn.textContent = 'Verifying...';
+
+  try {
+    await trpcMutate('vault.verifyOtp', { requestId: currentRequestId, code });
+    showScreen('passwordBox');
+  } catch (e) {
+    showError(errorEl, e.message || 'Invalid or expired code');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Verify Code';
+  }
+}
+
+// Step 5: Set Password
+async function setPassword() {
+  const pw = document.getElementById('newPassword').value;
+  const confirm = document.getElementById('confirmPassword').value;
+  const errorEl = document.getElementById('passwordError');
+  const btn = document.getElementById('setPasswordBtn');
+
+  if (!pw || pw.length < 4) { showError(errorEl, 'Password must be at least 4 characters'); return; }
+  if (pw !== confirm) { showError(errorEl, 'Passwords do not match'); return; }
+  hideError(errorEl);
+  btn.disabled = true; btn.textContent = 'Setting...';
+
+  try {
+    await trpcMutate('vault.setPassword', { requestId: currentRequestId, password: pw });
+    showToast('Password set. Please sign in.');
+    showScreen('loginBox');
+  } catch (e) {
+    showError(errorEl, e.message || 'Failed to set password');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Set Password';
+  }
+}
+
 // Login
 async function login() {
   const username = document.getElementById('username').value.trim();
@@ -621,6 +857,20 @@ document.querySelectorAll('.tab').forEach(tab => {
     document.getElementById(target + 'Panel').classList.add('active');
   });
 });
+
+// Workflow navigation
+document.getElementById('showRequest').addEventListener('click', e => { e.preventDefault(); showScreen('requestBox'); });
+document.getElementById('showLogin').addEventListener('click', e => { e.preventDefault(); showScreen('loginBox'); });
+
+// Workflow buttons
+document.getElementById('requestBtn').addEventListener('click', submitRequest);
+document.getElementById('reqEmail').addEventListener('keydown', e => { if (e.key === 'Enter') submitRequest(); });
+document.getElementById('ndaBtn').addEventListener('click', signNda);
+document.getElementById('ndaAgree').addEventListener('keydown', e => { if (e.key === 'Enter') signNda(); });
+document.getElementById('otpBtn').addEventListener('click', verifyOtp);
+document.getElementById('otpCode').addEventListener('keydown', e => { if (e.key === 'Enter') verifyOtp(); });
+document.getElementById('setPasswordBtn').addEventListener('click', setPassword);
+document.getElementById('confirmPassword').addEventListener('keydown', e => { if (e.key === 'Enter') setPassword(); });
 
 // Auto-login if token exists
 if (token) {

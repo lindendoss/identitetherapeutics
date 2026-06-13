@@ -21,7 +21,7 @@ const app = new Hono<{ Bindings: HttpBindings }>();
 app.use(cors({
   origin: ["https://identitetherapeutics.com", "https://www.identitetherapeutics.com", "https://identite-therapeutics.onrender.com"],
   allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowHeaders: ["Content-Type", "Authorization", "x-vault-token"],
+  allowHeaders: ["Content-Type", "Authorization", "x-vault-token", "x-salon-token"],
   credentials: true,
   maxAge: 600,
 }));

@@ -106,6 +106,15 @@ function ensureSalonInvites(userId: number): number {
 
 // Salon routes
 app.post("/api/salon/register", async (c) => {
+  // Auto-seed if no invite codes exist
+  const existingCodes = select<any>("salonInviteCodes");
+  if (!existingCodes.length) {
+    insert("salonInviteCodes", {
+      code: "IDENTITE2026", createdByUserId: 0, usedByUserId: null, usedAt: null,
+      monthYear: salonCurrentMonth(), createdAt: new Date().toISOString(),
+    });
+  }
+
   const body = await c.req.json().catch(() => ({}));
   const { inviteCode, username, displayName, password } = body;
   if (!inviteCode || !username || !displayName || !password) return c.json({ error: "All fields required" }, 400);

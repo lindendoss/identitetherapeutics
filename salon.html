@@ -204,7 +204,7 @@
 
 <script>
 // ===== CONFIG =====
-const API='https://identite-api.onrender.com/api/salon';
+const API='https://identite-api.lindendoss.workers.dev/api/salon';
 const $=id=>document.getElementById(id);
 const LS={get:k=>{try{return JSON.parse(localStorage.getItem('salon_'+k)||'null')}catch{return null}},set:(k,v)=>localStorage.setItem('salon_'+k,JSON.stringify(v)),del:k=>localStorage.removeItem('salon_'+k)};
 

@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "build": "esbuild api/boot.ts --platform=node --bundle --format=esm --outdir=dist --banner:js=\"import { createRequire } from 'module';const require = createRequire(import.meta.url);\"",
+    "build": "mkdir -p dist && cp -r public/* dist/ 2>/dev/null || true && cp vault.html dist/ 2>/dev/null || true",
     "start": "NODE_ENV=production node dist/boot.js"
   },
   "dependencies": {

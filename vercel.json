@@ -2,8 +2,9 @@
   "version": 2,
   "rewrites": [
     { "source": "/salon", "destination": "/salon.html" },
-    { "source": "/vault/approve", "destination": "https://identite-api.onrender.com/vault/approve" },
-    { "source": "/vault/deny", "destination": "https://identite-api.onrender.com/vault/deny" },
-    { "source": "/api/:path*", "destination": "https://identite-api.onrender.com/api/:path*" }
+    { "source": "/seed", "destination": "/seed.html" },
+    { "source": "/vault/approve", "destination": "https://identite-api.lindendoss.workers.dev/vault/approve" },
+    { "source": "/vault/deny", "destination": "https://identite-api.lindendoss.workers.dev/vault/deny" },
+    { "source": "/api/:path*", "destination": "https://identite-api.lindendoss.workers.dev/api/:path*" }
   ]
 }

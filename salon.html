@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="api-version" content="cloudflare-2026-06-14-v3">
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <meta name="robots" content="noindex, nofollow" />
@@ -205,7 +204,7 @@
 
 <script>
 // ===== CONFIG =====
-const API='https://identite-api.lindendoss.workers.dev/api/salon';
+const API='/api/salon';
 const $=id=>document.getElementById(id);
 const LS={get:k=>{try{return JSON.parse(localStorage.getItem('salon_'+k)||'null')}catch{return null}},set:(k,v)=>localStorage.setItem('salon_'+k,JSON.stringify(v)),del:k=>localStorage.removeItem('salon_'+k)};
 

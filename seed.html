@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head><title>Seed</title></head>
+<body>
+<p>Seeding...</p>
+<pre id="out"></pre>
+<script>
+fetch('https://identite-api.lindendoss.workers.dev/api/salon/seed',{
+  method:'POST',
+  headers:{'Content-Type':'application/json'},
+  body:JSON.stringify({secret:'1-Lozina-Owner',force:true})
+}).then(r=>r.json()).then(d=>{
+  document.getElementById('out').textContent = JSON.stringify(d,null,2);
+  if(d.code) {
+    document.body.innerHTML += '<p style="color:green">Seeded! Code: '+d.code+'</p>';
+    // Auto-register
+    return fetch('https://identite-api.lindendoss.workers.dev/api/salon/register',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({inviteCode:'IDENTITE2026',username:'linden',displayName:'Linden Doss',password:'1-Lozina'})
+    }).then(r=>r.json());
+  }
+}).then(d=>{
+  if(d) document.body.innerHTML += '<pre style="color:green">Registered: '+JSON.stringify(d,null,2)+'</pre>';
+}).catch(e=>{document.getElementById('out').textContent = 'Error: '+e;});
+</script>
+</body>
+</html>

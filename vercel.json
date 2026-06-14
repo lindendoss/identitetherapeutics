@@ -1,7 +1,7 @@
 {
   "version": 2,
   "rewrites": [
-    { "source": "/salon", "destination": "/salon.html" },
+    { "source": "/salon", "destination": "/le-salon.html" },
     { "source": "/seed", "destination": "/seed.html" },
     { "source": "/vault/approve", "destination": "https://identite-api.lindendoss.workers.dev/vault/approve" },
     { "source": "/vault/deny", "destination": "https://identite-api.lindendoss.workers.dev/vault/deny" },

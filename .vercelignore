@@ -1,0 +1,23 @@
+# Ignore Node.js files — this is a static site
+api/
+src/
+contracts/
+db/
+dist/
+node_modules/
+package.json
+package-lock.json
+vite.config.ts
+vitest.config.ts
+tsconfig*.json
+postcss.config.js
+eslint.config.js
+tailwind.config.js
+render.yaml
+.prettierrc
+.prettierignore
+dockerignore
+.env.example
+README.md
+components.json
+drizzle.config.ts

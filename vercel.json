@@ -1,6 +1,7 @@
 {
   "version": 2,
   "rewrites": [
+    { "source": "/vault", "destination": "/vault.html" },
     { "source": "/vault/approve", "destination": "https://identite-api.lindendoss.workers.dev/vault/approve" },
     { "source": "/vault/deny", "destination": "https://identite-api.lindendoss.workers.dev/vault/deny" },
     { "source": "/api/:path*", "destination": "https://identite-api.lindendoss.workers.dev/api/:path*" }

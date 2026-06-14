@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "outputDirectory": "dist",
   "rewrites": [
     { "source": "/vault", "destination": "/vault.html" },
     { "source": "/contact", "destination": "/contact.html" },

@@ -213,6 +213,9 @@ app.post("/api/salon/seed", async (c) => {
   return c.json({ code: code.code, message: "Initial invite code created" });
 });
 
+// Health check — lightweight, no auth, keeps Render awake
+app.get("/health", (c) => c.json({ status: "ok", ts: Date.now() }));
+
 // Catch-all after all API routes
 app.all("/api/*", (c) => c.json({ error: "Not Found" }, 404));
 

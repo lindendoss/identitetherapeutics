@@ -1,6 +1,5 @@
 {
   "version": 2,
-  "builds": [{ "src": "package.json", "use": "@vercel/static" }],
   "rewrites": [
     { "source": "/vault", "destination": "/vault.html" },
     { "source": "/contact", "destination": "/contact.html" },

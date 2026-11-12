@@ -1,0 +1,10 @@
+# IDENTITÉ Therapeutics
+
+> IDENTITÉ Therapeutics publishes information about its ocular surface research and resources for DOSS Visual Acuity, an iPhone visual acuity screening chart.
+
+## Public pages
+
+- [IDENTITÉ Therapeutics](https://identitetherapeutics.com/): Company and ocular surface research overview.
+- [DOSS Visual Acuity](https://identitetherapeutics.com/visualacuity): App information and device requirements.
+- [DOSS Visual Acuity support](https://identitetherapeutics.com/visualacuity/support): Setup, chart controls, troubleshooting, and support contact.
+- [DOSS Visual Acuity privacy policy](https://identitetherapeutics.com/visualacuity/privacy): On-device processing, saved screening sessions, and optional sharing.

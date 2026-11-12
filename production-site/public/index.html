@@ -3,7 +3,35 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>IDENTITÉ Therapeutics — Ocular Surface Resolution</title>
+<title>Ocular Surface Research | IDENTITÉ Therapeutics</title>
+<meta name="description" content="Explore IDENTITÉ Therapeutics’ ocular surface research and find app information, support, and privacy resources for DOSS Visual Acuity." />
+<link rel="canonical" href="https://identitetherapeutics.com/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="IDENTITÉ Therapeutics" />
+<meta property="og:title" content="Ocular Surface Research | IDENTITÉ Therapeutics" />
+<meta property="og:description" content="Explore ocular surface research and find information, support, and privacy resources for DOSS Visual Acuity." />
+<meta property="og:url" content="https://identitetherapeutics.com/" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://identitetherapeutics.com/#organization",
+      "name": "IDENTITÉ Therapeutics",
+      "url": "https://identitetherapeutics.com/"
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://identitetherapeutics.com/#website",
+      "name": "IDENTITÉ Therapeutics",
+      "url": "https://identitetherapeutics.com/",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://identitetherapeutics.com/#organization" }
+    }
+  ]
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Hanken+Grotesk:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -53,6 +81,9 @@
   .outro h3 em{font-style:italic;color:var(--cool);}
   .outro p{margin-top:22px;max-width:46ch;color:var(--bone-dim);font-size:16px;line-height:1.65;font-weight:300;}
   .outro .tag{margin-top:34px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);}
+  .resource-links{display:flex;flex-wrap:wrap;justify-content:center;gap:12px 24px;margin-top:28px;}
+  .resource-links a{color:var(--bone);text-underline-offset:.2em;}
+  .resource-links a:focus-visible{outline:2px solid var(--gold);outline-offset:4px;}
   .loader{position:fixed;inset:0;z-index:60;background:#0A0A0D;display:flex;align-items:center;justify-content:center;transition:opacity .8s ease;}
   .loader span{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);}
 
@@ -64,6 +95,17 @@
   }
   @media (max-width:859px){ .rail,.meta-fixed{display:none;} }
 </style>
+<noscript>
+  <style>
+    .loader,.rail,.hero .cue{display:none;}
+    .scroll-root,.stage,.content{height:auto;}
+    .stage,.hero,.content,.beat{position:relative;inset:auto;}
+    .stage{overflow:visible;}
+    .hero,.content{width:auto;padding:56px 24px;background:none;}
+    .content{gap:40px;}
+    .beat{opacity:1;max-width:none;}
+  </style>
+</noscript>
 </head>
 <body>
   <div class="loader" id="loader"><span>Generating ocean…</span></div>
@@ -118,6 +160,11 @@
     <h3>Upstream of the <em>surface-control</em> loop.</h3>
     <p>Not another anti-inflammatory drop. A localized, pulsed, surface-restricted agonist of the body's own resolution signal.</p>
     <div class="tag">IDENTITÉ Therapeutics</div>
+    <nav class="resource-links" aria-label="DOSS Visual Acuity resources">
+      <a href="/visualacuity">DOSS Visual Acuity</a>
+      <a href="/visualacuity/support">App support</a>
+      <a href="/visualacuity/privacy">App privacy policy</a>
+    </nav>
   </section>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>

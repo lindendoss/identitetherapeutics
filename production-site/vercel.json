@@ -26,6 +26,17 @@
   ],
   "redirects": [
     {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.identitetherapeutics.com"
+        }
+      ],
+      "destination": "https://identitetherapeutics.com/",
+      "permanent": true
+    },
+    {
       "source": "/:path*",
       "has": [
         {
